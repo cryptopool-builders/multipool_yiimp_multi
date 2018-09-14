@@ -15,7 +15,9 @@ if [[ ("$server_type" == "db") ]]; then
   sudo systemctl start wg-quick@wg0
   sudo systemctl enable wg-quick@wg0
   clear
+  dbpublic=$PUBLIC_IP
   mypublic="$(sudo cat /etc/wireguard/publickey)"
+  echo Wgen prompted the public IP of this box is, $dbpublic
   echo Copy this and paste this key when prompted, $mypublic
 
 elif [[ ("$server_type" == "dbshared") ]]; then
@@ -26,7 +28,9 @@ elif [[ ("$server_type" == "dbshared") ]]; then
   sudo systemctl start wg-quick@wg0
   sudo systemctl enable wg-quick@wg0
   clear
+  dbpublic=$PUBLIC_IP
   mypublic="$(sudo cat /etc/wireguard/publickey)"
+  echo Wgen prompted the public IP of this box is, $dbpublic
   echo Copy this and paste this key when prompted, $mypublic
 
 elif [[ ("$server_type" == "web") ]]; then
@@ -41,6 +45,7 @@ elif [[ ("$server_type" == "web") ]]; then
   hide_output sudo systemctl start wg-quick@wg0
   hide_output sudo systemctl enable wg-quick@wg0
   clear
+  mypublic="$(sudo cat /etc/wireguard/publickey)"
   webinternal=$WebInternalIP
   webpublic=$PUBLIC_IP
 echo "Copy this command and run it on the DB Server, Stratum Server, and Daemon Server"
@@ -58,6 +63,7 @@ elif [[ ("$server_type" == "stratum") ]]; then
   sudo systemctl start wg-quick@wg0
   sudo systemctl enable wg-quick@wg0
   clear
+  mypublic="$(sudo cat /etc/wireguard/publickey)"
   stratinternal=$StratumInternalIP
   stratpublic=$PUBLIC_IP
 echo "Copy this command and run it on the DB Server, Web Server, and Daemon Server"
@@ -75,6 +81,7 @@ elif [[ ("$server_type" == "daemon") ]]; then
   sudo systemctl start wg-quick@wg0
   sudo systemctl enable wg-quick@wg0
   clear
+  mypublic="$(sudo cat /etc/wireguard/publickey)"
   daemoninternal=$DaemonInternalIP
   daemonpublic=$PUBLIC_IP
 echo "Copy this command and run it on the DB Server, Web Server, and Stratum Server"
