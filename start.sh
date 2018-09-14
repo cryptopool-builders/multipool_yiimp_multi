@@ -28,7 +28,7 @@ export NCURSES_NO_UTF8_ACS=1
 echo Creating the temporary YiiMP installation folder...
 if [ ! -d $STORAGE_ROOT/yiimp/yiimp_setup ]; then
 sudo mkdir -p $STORAGE_ROOT/yiimp/yiimp_setup
-
+fi
 # Start the installation.
 source warning.sh
 source menu.sh
