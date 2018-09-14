@@ -20,6 +20,7 @@ DBInternalIP='10.0.0.2'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard.conf >/dev/null 2>&1;
 cd $HOME/multipool/yiimp_multi
 source wireguard.sh;
+exit ;
 fi
 
 if [ $RESULT = 2 ]
@@ -35,6 +36,7 @@ DBPublicKey='"${DBPublicKey}"'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard.conf >/dev/null 2>&1;
 cd $HOME/multipool/yiimp_multi
 source wireguard.sh;
+exit ;
 fi
 
 if [ $RESULT = 3 ]
@@ -50,6 +52,7 @@ DBPublicKey='"${DBPublicKey}"'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard.conf >/dev/null 2>&1;
 cd $HOME/multipool/yiimp_multi
 source wireguard.sh;
+exit ;
 fi
 
 if [ $RESULT = 4 ]
@@ -65,6 +68,7 @@ DBPublicKey='"${DBPublicKey}"'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard.conf >/dev/null 2>&1;
 cd $HOME/multipool/yiimp_multi
 source wireguard.sh;
+exit ;
 fi
 
 if [ $RESULT = 5 ]
