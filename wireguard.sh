@@ -11,6 +11,9 @@ if [[ ("$server_type" == "db") ]]; then
   echo "SaveConfig = true" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   echo "Address = ${DBInternalIP}/24" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   cd $HOME
+  sudo systemctl start wg-quick@wg0
+  sudo systemctl enable wg-quick@wg0
+  clear
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   echo Copy this and paste this key when prompted, $mypublic
 
@@ -18,7 +21,10 @@ elif [[ ("$server_type" == "dbshared") ]]; then
   echo "ListenPort = 6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   echo "SaveConfig = true" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   echo "Address = ${DBInternalIP}/24" | hide_output sudo tee -a /etc/wireguard/wg0.conf
-   cd $HOME
+  cd $HOME
+  sudo systemctl start wg-quick@wg0
+  sudo systemctl enable wg-quick@wg0
+  clear
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   echo Copy this and paste this key when prompted, $mypublic
 
@@ -32,6 +38,9 @@ elif [[ ("$server_type" == "web") ]]; then
   echo "AllowedIPs = ${DBInternalIP}/24" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   echo "Endpoint = ${DBServerIP}:6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   cd $HOME
+  sudo systemctl start wg-quick@wg0
+  sudo systemctl enable wg-quick@wg0
+  clear
   webinternal=$WebInternalIP
   webpublic=$WebServerIP
 echo "Copy this command and run it on the DB Server, Stratum Server, and Daemon Server"
@@ -47,6 +56,9 @@ elif [[ ("$server_type" == "stratum") ]]; then
   echo "AllowedIPs = ${DBInternalIP}/24" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   echo "Endpoint = ${DBServerIP}:6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   cd $HOME
+  sudo systemctl start wg-quick@wg0
+  sudo systemctl enable wg-quick@wg0
+  clear
   stratinternal=$StratumInternalIP
   stratpublic=$StratumServerIP
 echo "Copy this command and run it on the DB Server, Web Server, and Daemon Server"
@@ -62,12 +74,13 @@ elif [[ ("$server_type" == "daemon") ]]; then
   echo "AllowedIPs = ${DBInternalIP}/24" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   echo "Endpoint = ${DBServerIP}:6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   cd $HOME
+  sudo systemctl start wg-quick@wg0
+  sudo systemctl enable wg-quick@wg0
+  clear
   daemoninternal=$DaemonInternalIP
   daemonpublic=$DaemonServerIP
 echo "Copy this command and run it on the DB Server, Web Server, and Stratum Server"
 echo "sudo wg set wg0 peer ${mypublic} endpoint ${daemonpublic}:6121 allowed-ips ${daemoninternal}/32"
 fi
 
-sudo systemctl start wg-quick@wg0
-sudo systemctl enable wg-quick@wg0
 exit 0
