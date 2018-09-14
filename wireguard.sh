@@ -7,31 +7,30 @@ sudo apt-get install wireguard-dkms wireguard-tools -y
 wg genkey | sudo tee -a /etc/wireguard/wg0.conf | wg pubkey | sudo tee /etc/wireguard/publickey
 
 if [[ ("$server_type" == "db") ]]; then
-  echo "ListenPort = 6121" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "SaveConfig = true" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "Address = ${DBInternalIP}/24" | sudo tee -a /etc/wireguard/wg0.conf
+  echo "ListenPort = 6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "SaveConfig = true" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "Address = ${DBInternalIP}/24" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   cd $HOME
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   echo Copy this and paste this key when prompted, $mypublic
 
-
 elif [[ ("$server_type" == "dbshared") ]]; then
-  echo "ListenPort = 6121" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "SaveConfig = true" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "Address = ${DBInternalIP}/24" | sudo tee -a /etc/wireguard/wg0.conf
+  echo "ListenPort = 6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "SaveConfig = true" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "Address = ${DBInternalIP}/24" | hide_output sudo tee -a /etc/wireguard/wg0.conf
    cd $HOME
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   echo Copy this and paste this key when prompted, $mypublic
 
 elif [[ ("$server_type" == "web") ]]; then
   source $STORAGE_ROOT/yiimp/.yiimp.conf
-  echo "ListenPort = 6121" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "SaveConfig = true" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "Address = ${WebInternalIP}/32" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "[Peer]" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "PublicKey = ${DBPublicKey}" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "AllowedIPs = ${DBInternalIP}/24" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "Endpoint = ${DBServerIP}:6121" | sudo tee -a /etc/wireguard/wg0.conf
+  echo "ListenPort = 6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "SaveConfig = true" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "Address = ${WebInternalIP}/32" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "[Peer]" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "PublicKey = ${DBPublicKey}" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "AllowedIPs = ${DBInternalIP}/24" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "Endpoint = ${DBServerIP}:6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   cd $HOME
   webinternal=$WebInternalIP
   webpublic=$WebServerIP
@@ -40,13 +39,13 @@ echo "sudo wg set wg0 peer ${mypublic} endpoint ${webpublic}:6121 allowed-ips ${
 
 elif [[ ("$server_type" == "stratum") ]]; then
   source $STORAGE_ROOT/yiimp/.yiimp.conf
-  echo "ListenPort = 6121" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "SaveConfig = true" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "Address = ${StratumInternalIP}/32" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "[Peer]" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "PublicKey = ${DBPublicKey}" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "AllowedIPs = ${DBInternalIP}/24" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "Endpoint = ${DBServerIP}:6121" | sudo tee -a /etc/wireguard/wg0.conf
+  echo "ListenPort = 6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "SaveConfig = true" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "Address = ${StratumInternalIP}/32" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "[Peer]" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "PublicKey = ${DBPublicKey}" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "AllowedIPs = ${DBInternalIP}/24" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "Endpoint = ${DBServerIP}:6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   cd $HOME
   stratinternal=$StratumInternalIP
   stratpublic=$StratumServerIP
@@ -55,13 +54,13 @@ echo "sudo wg set wg0 peer ${mypublic} endpoint ${stratpublic}:6121 allowed-ips 
 
 elif [[ ("$server_type" == "daemon") ]]; then
   source $STORAGE_ROOT/yiimp/.yiimp.conf
-  echo "ListenPort = 6121" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "SaveConfig = true" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "Address = ${DaemonInternalIP}/32" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "[Peer]" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "PublicKey = ${DBPublicKey}" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "AllowedIPs = ${DBInternalIP}/24" | sudo tee -a /etc/wireguard/wg0.conf
-  echo "Endpoint = ${DBServerIP}:6121" | sudo tee -a /etc/wireguard/wg0.conf
+  echo "ListenPort = 6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "SaveConfig = true" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "Address = ${DaemonInternalIP}/32" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "[Peer]" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "PublicKey = ${DBPublicKey}" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "AllowedIPs = ${DBInternalIP}/24" | hide_output sudo tee -a /etc/wireguard/wg0.conf
+  echo "Endpoint = ${DBServerIP}:6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   cd $HOME
   daemoninternal=$DaemonInternalIP
   daemonpublic=$DaemonServerIP
@@ -71,3 +70,4 @@ fi
 
 sudo systemctl start wg-quick@wg0
 sudo systemctl enable wg-quick@wg0
+exit 0
