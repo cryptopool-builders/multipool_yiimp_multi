@@ -1,15 +1,17 @@
-source /etc/functions.sh # load our functions
+#!/bin/bash
+source /etc/functions.sh
 source /etc/multipool.conf
+source $STORAGE_ROOT/yiimp/.yiimp.conf
 
 apt_install lsb-release figlet update-motd \
 landscape-common update-notifier-common
-cd ~/Multi-Pool-Installer/install/ubuntu/etc/update-motd.d
+cd /tmp/update-motd.d
 sudo rm -r /etc/update-motd.d/
 sudo mkdir /etc/update-motd.d/
 sudo touch /etc/update-motd.d/00-header ; sudo touch /etc/update-motd.d/10-sysinfo ; sudo touch /etc/update-motd.d/90-footer
 sudo chmod +x /etc/update-motd.d/*
 sudo cp -r 00-header 10-sysinfo 90-footer /etc/update-motd.d/
-cd ~/Multi-Pool-Installer/install/ubuntu
+cd /tmp
 sudo cp -r screens /usr/bin/
 sudo chmod +x /usr/bin/screens
 echo '
@@ -18,4 +20,3 @@ run-parts /etc/update-motd.d/ | sudo tee /etc/motd
 ' | sudo -E tee /usr/bin/motd >/dev/null 2>&1
 
 sudo chmod +x /usr/bin/motd
-cd ~/Multi-Pool-Installer/install/yiimp-single
