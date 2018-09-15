@@ -48,6 +48,8 @@ elif [[ ("$server_type" == "web") ]]; then
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   webinternal=$WebInternalIP
   webpublic=$PUBLIC_IP
+  sudo rm -r $HOME/multipool
+  sudo rm -r /usr/bin/multipool
 echo "Copy this command and run it on the DB Server, Stratum Server, and Daemon Server"
 echo "sudo wg set wg0 peer ${mypublic} endpoint ${webpublic}:6121 allowed-ips ${webinternal}/32"
 
@@ -66,6 +68,8 @@ elif [[ ("$server_type" == "stratum") ]]; then
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   stratinternal=$StratumInternalIP
   stratpublic=$PUBLIC_IP
+  sudo rm -r $HOME/multipool
+  sudo rm -r /usr/bin/multipool
 echo "Copy this command and run it on the DB Server, Web Server, and Daemon Server"
 echo "sudo wg set wg0 peer ${mypublic} endpoint ${stratpublic}:6121 allowed-ips ${stratinternal}/32"
 
@@ -84,8 +88,10 @@ elif [[ ("$server_type" == "daemon") ]]; then
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   daemoninternal=$DaemonInternalIP
   daemonpublic=$PUBLIC_IP
+  sudo rm -r $HOME/multipool
+  sudo rm -r /usr/bin/multipool
 echo "Copy this command and run it on the DB Server, Web Server, and Stratum Server"
 echo "sudo wg set wg0 peer ${mypublic} endpoint ${daemonpublic}:6121 allowed-ips ${daemoninternal}/32"
 fi
-
+echo "After installing Wireguard on all of your servers run, multipool from the DB server only!!"
 exit 0
