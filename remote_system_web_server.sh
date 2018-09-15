@@ -113,3 +113,4 @@ nginx pwgen
 
 echo Downloading selected YiiMP Repo...
 hide_output sudo git clone $YiiMPRepo $STORAGE_ROOT/yiimp/yiimp_setup/yiimp
+exit 0
