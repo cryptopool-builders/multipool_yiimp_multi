@@ -86,7 +86,7 @@ DEFAULT_DaemonUser='yiimpadmin'
 input_box "Daemon Server User Name" \
 "Enter the user name of the Daemon Server.
 \n\nThis is required for setup to complete.
-\n\Daemon Server User Name:" \
+\n\nDaemon Server User Name:" \
 $DEFAULT_DaemonUser \
 DaemonUser
 
