@@ -1,5 +1,7 @@
-source /etc/functions.sh 
+#!/bin/bash
+source /etc/functions.sh
 source /etc/multipool.conf
+source $STORAGE_ROOT/yiimp/.yiimp.conf
 
 echo Boosting server performance for YiiMP...
 # Boost Network Performance by Enabling TCP BBR
