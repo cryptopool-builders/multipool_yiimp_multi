@@ -20,7 +20,7 @@ echo '[clienthost1]
 user=panel
 password='"${PanelUserDBPassword}"'
 database=yiimpfrontend
-host=$WebInternalIP
+host='"${WebInternalIP}"'
 [clienthost2]
 user=stratum
 password='"${StratumUserDBPassword}"'
