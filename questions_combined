@@ -33,6 +33,68 @@ exit
 fi
 fi
 
+if [ -z "$WebUser" ]; then
+DEFAULT_WebUser='yiimpadmin'
+input_box "Web Server User Name" \
+"Enter the user name of the Web Server.
+\n\nThis is required for setup to complete.
+\n\nWeb Server User Name:" \
+$DEFAULT_WebUser \
+WebUser
+
+if [ -z "$WebUser" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
+if [ -z "$WebPass" ]; then
+DEFAULT_WebPass='password'
+input_box "Web Server User Password" \
+"Enter the user password of the Web Server.
+\n\nThis is required for setup to complete.
+\n\nWhen pasting your password CTRL+V does NOT work, you must either SHIFT+RightMouseClick or SHIFT+INSERT!!
+\n\nWeb Server User Password:" \
+$DEFAULT_WebPass \
+WebPass
+
+if [ -z "$WebPass" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
+if [ -z "$DaemonUser" ]; then
+DEFAULT_DaemonUser='yiimpadmin'
+input_box "Daemon Server User Name" \
+"Enter the user name of the Daemon Server.
+\n\nThis is required for setup to complete.
+\n\Daemon Server User Name:" \
+$DEFAULT_DaemonUser \
+DaemonUser
+
+if [ -z "$DaemonUser" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
+if [ -z "$DaemonPass" ]; then
+DEFAULT_DaemonPass='password'
+input_box "Daemon Server User Password" \
+"Enter the user password of the Daemon Server.
+\n\nThis is required for setup to complete.
+\n\nWhen pasting your password CTRL+V does NOT work, you must either SHIFT+RightMouseClick or SHIFT+INSERT!!
+\n\nDaemon Server User Password:" \
+$DEFAULT_DaemonPass \
+WebPass
+
+if [ -z "$DaemonPass" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
 if [ -z "$DaemonInternalIP" ]; then
 DEFAULT_DaemonInternalIP='10.0.0.5'
 input_box "Daemon Server Private IP" \
@@ -216,4 +278,8 @@ DBInternalIP='"${DBInternalIP}"'
 WebInternalIP='"${WebInternalIP}"'
 DaemonInternalIP='"${DaemonInternalIP}"'
 YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
+WebUser='"${WebUser}"'
+WebPass='"${WebPass}"'
+DaemonUser='"${DaemonUser}"'
+DaemonPass='"${DaemonPass}"'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.yiimp.conf >/dev/null 2>&1
