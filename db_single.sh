@@ -1,5 +1,6 @@
 source /etc/functions.sh
 source $STORAGE_ROOT/yiimp/.yiimp.conf
+cd $HOME/multipool/yiimp_multi
 
 echo Installing MariaDB...
 MARIADB_VERSION='10.3'
@@ -58,4 +59,4 @@ sudo mysql -u root -p"${DBRootPassword}" yiimpfrontend --force < 2018-01-stratum
 sudo mysql -u root -p"${DBRootPassword}" yiimpfrontend --force < 2018-02-coins_getinfo.sql
 
 echo Database build complete...
-cd $HOME/multipool/yiimp_single
+cd $HOME/multipool/yiimp_multi
