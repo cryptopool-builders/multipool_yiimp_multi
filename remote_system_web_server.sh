@@ -75,7 +75,7 @@ if [ ! -f /boot/grub/menu.lst ]; then
 apt_get_quiet upgrade;
 else
 sudo rm /boot/grub/menu.lst
-hide_output sudo update-grub-legacy-ec2 -y
+hide_output sudo update-grub-legacy-ec2 -y;
 apt_get_quiet upgrade;
 fi
 echo Running Dist-Upgrade...
@@ -87,7 +87,7 @@ echo Installing Base system packages...
 apt_install python3 python3-dev python3-pip \
 wget curl git sudo coreutils bc \
 haveged pollinate unzip \
-unattended-upgrades cron ntp fail2ban screen
+unattended-upgrades cron ntp fail2ban screen;
 
 # ### Seed /dev/urandom
 echo Initializing system random number generator...
@@ -110,7 +110,7 @@ php7.2-tidy php7.2-xmlrpc php7.2-xsl memcached php-memcache \
 php-imagick php-gettext php7.2-zip php7.2-mbstring \
 fail2ban ntpdate python3 python3-dev python3-pip \
 curl git sudo coreutils pollinate unzip unattended-upgrades cron \
-nginx pwgen 
+nginx pwgen;
 
 echo Downloading selected YiiMP Repo...
 hide_output sudo git clone $YiiMPRepo $STORAGE_ROOT/yiimp/yiimp_setup/yiimp
