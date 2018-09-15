@@ -9,11 +9,15 @@ if [ -z "$DISABLE_FIREWALL" ]; then
 # Install `ufw` which provides a simple firewall configuration.
 echo Installing UFW...
 apt_install ufw;
+wait $!
 
 # Allow incoming connections.
 ufw_allow ssh;
+wait $!
 ufw_allow http;
+wait $!
 ufw_allow https;
+wait $!
 
 # ssh might be running on an alternate port. Use sshd -T to dump sshd's #NODOC
 # settings, find the port it is supposedly running on, and open that port #NODOC
