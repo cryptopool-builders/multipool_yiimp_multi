@@ -22,8 +22,7 @@ if [ $RESULT = 2 ]
 then
 clear;
 cd $HOME/multipool/yiimp_multi
-source questions_combined.sh;
-source combined.sh;
+source install_combo.sh;
 fi
 
 if [ $RESULT = 3 ]
