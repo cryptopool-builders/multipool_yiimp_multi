@@ -104,7 +104,7 @@ input_box "Daemon Server User Password" \
 \n\nWhen pasting your password CTRL+V does NOT work, you must either SHIFT+RightMouseClick or SHIFT+INSERT!!
 \n\nDaemon Server User Password:" \
 $DEFAULT_DaemonPass \
-WebPass
+DaemonPass
 
 if [ -z "$DaemonPass" ]; then
 user hit ESC/cancel
