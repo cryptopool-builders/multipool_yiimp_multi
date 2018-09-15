@@ -5,7 +5,7 @@ source $STORAGE_ROOT/yiimp/.yiimp.conf
 
 echo Boosting server performance for YiiMP...
 # Boost Network Performance by Enabling TCP BBR
-hide_output sudo apt install -y --install-recommends linux-generic-hwe-16.04
+hide_output sudo apt install -y --install-recommends linux-generic-hwe-16.04;
 echo 'net.core.default_qdisc=fq' | hide_output sudo tee -a /etc/sysctl.conf
 echo 'net.ipv4.tcp_congestion_control=bbr' | hide_output sudo tee -a /etc/sysctl.conf
 
