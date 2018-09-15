@@ -2,8 +2,8 @@ source /etc/functions.sh
 
 RESULT=$(dialog --stdout --title "Ultimate Crypto-Server Setup Installer" --menu "Choose one" -1 60 4 \
 1 "Install Wireguard all servers" \
-2 "YiiMP DB-Stratum Combined, Web Server, Daemon Server" \
-3 "YiiMP DB Server, Web Server, Stratum Server, Daemon Server" \
+2 "YiiMP DB-Stratum, Web, Daemon" \
+3 "YiiMP DB , Web, Stratum, Daemon" \
 4 Exit)
 if [ $RESULT = ]
 then
