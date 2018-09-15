@@ -1,6 +1,5 @@
 source /etc/functions.sh
 source $STORAGE_ROOT/yiimp/.yiimp.conf
-cd $HOME/multipool/yiimp_multi
 
 echo Installing MariaDB...
 MARIADB_VERSION='10.3'
@@ -10,7 +9,7 @@ apt_install mariadb-server mariadb-client
 
 echo Creating DB users for YiiMP...
 Q1="CREATE DATABASE IF NOT EXISTS yiimpfrontend;"
-Q2="GRANT ALL ON *.* TO 'panel'@'$localhost' IDENTIFIED BY '$PanelUserDBPassword';"
+Q2="GRANT ALL ON *.* TO 'panel'@'$WebInternalIP' IDENTIFIED BY '$PanelUserDBPassword';"
 Q3="GRANT ALL ON *.* TO 'stratum'@'localhost' IDENTIFIED BY '$StratumUserDBPassword';"
 Q4="FLUSH PRIVILEGES;"
 SQL="${Q1}${Q2}${Q3}${Q4}"
@@ -21,7 +20,7 @@ echo '[clienthost1]
 user=panel
 password='"${PanelUserDBPassword}"'
 database=yiimpfrontend
-host=localhost
+host=$WebInternalIP
 [clienthost2]
 user=stratum
 password='"${StratumUserDBPassword}"'
@@ -116,5 +115,3 @@ sudo sed -i 's/username = root/username = stratum/g' *.conf
 sudo sed -i 's/password = patofpaq/password = '$StratumUserDBPassword'/g' *.conf
 
 echo Stratum build complete...
-
-cd $HOME/multipool/yiimp_multi
