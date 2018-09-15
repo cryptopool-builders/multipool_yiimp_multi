@@ -2,7 +2,7 @@
 # Set up values.
 #----------------------------------------------------------------------
 source /etc/multipool.conf
-$STORAGE_ROOT/yiimp/.yiimp.conf
+source $STORAGE_ROOT/yiimp/.yiimp.conf
 # User credentials for the remote server.
 WebUser=$WebUser
 WebPass=$WebPass
@@ -12,10 +12,12 @@ WebServer=$WebInternalIP
  
 # The script to run on the remote server.
 script_web='$HOME/multipool/yiimp_multi/system_web.sh'
-script_ssh=''$HOME/multipool/yiimp_multi/ssh.sh'
+script_ssh='$HOME/multipool/yiimp_multi/ssh.sh'
+conf='$STORAGE_ROOT/yiimp/.yiimp.conf'
 # Desired location of the script on the remote server.
-remote_web_path=/tmp/system_web.sh
-remote_ssh_path=/tmp/ssh.sh
+remote_web_path='/tmp/system_web.sh'
+remote_ssh_path='/tmp/ssh.sh'
+remot_conf_path='/tmp'
  
 #----------------------------------------------------------------------
 # Create a temp script to echo the SSH password, used by SSH_ASKPASS
@@ -69,5 +71,6 @@ ssh="${CMD} sh -c 'nohup ${remote_ssh_path}'
 # Log in to the remote server and run the above command.
 # The use of setsid is a part of the machinations to stop ssh
 # prompting for a password.
+setsid scp $conf ${WebUser}@${WebServer}:$remot_conf_path
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${ssh}"
