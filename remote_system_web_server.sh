@@ -69,19 +69,19 @@ sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirrors.evowise.
 
 # Upgrade System Files
 echo Updating system packages...
-hide_output sudo apt-get update
+hide_output sudo apt-get update;
 echo Upgrading system packages...
 if [ ! -f /boot/grub/menu.lst ]; then
-apt_get_quiet upgrade
+apt_get_quiet upgrade;
 else
 sudo rm /boot/grub/menu.lst
 hide_output sudo update-grub-legacy-ec2 -y
-apt_get_quiet upgrade
+apt_get_quiet upgrade;
 fi
 echo Running Dist-Upgrade...
-apt_get_quiet dist-upgrade
+apt_get_quiet dist-upgrade;
 echo Running Autoremove...
-apt_get_quiet autoremove
+apt_get_quiet autoremove;
 
 echo Installing Base system packages...
 apt_install python3 python3-dev python3-pip \
