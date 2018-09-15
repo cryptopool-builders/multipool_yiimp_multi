@@ -64,6 +64,23 @@ exit
 fi
 fi
 
+if [ -z "$DaemonInternalIP" ]; then
+DEFAULT_DaemonInternalIP='10.0.0.5'
+input_box "Daemon Server Private IP" \
+"Enter the private IP address of the Daemon Server, as given to you by your provider.
+\n\nIf you do not have one from your provider leave the Wireguard default below.
+\n\nIf setting up more then one daemon server change to 10.0.0.6 for second daemon server,
+\n\n10.0.0.7 for third server,etc.
+\n\nPrivate IP address:" \
+$DEFAULT_DaemonInternalIP \
+DaemonInternalIP
+
+if [ -z "$DaemonInternalIP" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
 if [ -z "$DaemonUser" ]; then
 DEFAULT_DaemonUser='yiimpadmin'
 input_box "Daemon Server User Name" \
@@ -90,23 +107,6 @@ $DEFAULT_DaemonPass \
 WebPass
 
 if [ -z "$DaemonPass" ]; then
-user hit ESC/cancel
-exit
-fi
-fi
-
-if [ -z "$DaemonInternalIP" ]; then
-DEFAULT_DaemonInternalIP='10.0.0.5'
-input_box "Daemon Server Private IP" \
-"Enter the private IP address of the Daemon Server, as given to you by your provider.
-\n\nIf you do not have one from your provider leave the Wireguard default below.
-\n\nIf setting up more then one daemon server change to 10.0.0.6 for second daemon server,
-\n\n10.0.0.7 for third server,etc.
-\n\nPrivate IP address:" \
-$DEFAULT_DaemonInternalIP \
-DaemonInternalIP
-
-if [ -z "$DaemonInternalIP" ]; then
 user hit ESC/cancel
 exit
 fi
