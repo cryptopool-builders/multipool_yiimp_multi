@@ -8,7 +8,7 @@ source $STORAGE_ROOT/yiimp/.yiimp.conf
 if [ -z "$DISABLE_FIREWALL" ]; then
 # Install `ufw` which provides a simple firewall configuration.
 echo Installing UFW...
-apt_install ufw
+apt_install ufw;
 
 # Allow incoming connections.
 ufw_allow ssh;
