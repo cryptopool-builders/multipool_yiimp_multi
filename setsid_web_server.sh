@@ -6,25 +6,26 @@ source $STORAGE_ROOT/yiimp/.yiimp.conf
 # User credentials for the remote server.
 WebUser=$WebUser
 WebPass=$WebPass
+dir=$HOME
  
 # The server hostname.
 WebServer=$WebInternalIP
  
 # The scripts to run on the remote server.
-script_system_web='$HOME/multipool/yiimp_multi/remote_system_web_server.sh'
-script_web_web='$HOME/multipool/yiimp_multi/remote_web_web_server.sh'
-script_nginx_web='$HOME/multipool/yiimp_multi/nginx_upgrade.sh'
-script_clean_web='$HOME/multipool/yiimp_multi/server_cleanup.sh'
-script_motd_web='$HOME/multipool/yiimp_multi/motd.sh'
-script_harden_web='$HOME/multipool/yiimp_multi/server_harden.sh'
-script_ssh='$HOME/multipool/yiimp_multi/ssh.sh'
+script_system_web=${dir}'/multipool/yiimp_multi/remote_system_web_server.sh'
+script_web_web=${dir}'/multipool/yiimp_multi/remote_web_web_server.sh'
+script_nginx_web=${dir}'/multipool/yiimp_multi/nginx_upgrade.sh'
+script_clean_web=${dir}'/multipool/yiimp_multi/server_cleanup.sh'
+script_motd_web=${dir}'/multipool/yiimp_multi/motd.sh'
+script_harden_web=${dir}'/multipool/yiimp_multi/server_harden.sh'
+script_ssh=${dir}'/multipool/yiimp_multi/ssh.sh'
 
 # Additional files that need to be copied to the remote server
-conf='$STORAGE_ROOT/yiimp/.yiimp.conf'
-screens='$HOME/multipool/yiimp_multi/ubuntu/screens'
-00-header='$HOME/multipool/yiimp_multi/ubuntu/etc/update-motd.d/00-header'
-10-sysinfo='$HOME/multipool/yiimp_multi/ubuntu/etc/update-motd.d/10-sysinfo'
-90-footer='$HOME/multipool/yiimp_multi/ubuntu/etc/update-motd.d/90-footer'
+conf=${STORAGE_ROOT}'/yiimp/.yiimp.conf'
+screens=${dir}'/multipool/yiimp_multi/ubuntu/screens'
+header=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/00-header'
+sysinfo=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/10-sysinfo'
+footer=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/90-footer'
 
 # Desired location of the scripts on the remote server.
 remote_system_web_path='/tmp/remote_system_web_server.sh'
@@ -36,11 +37,11 @@ remote_harden_web_path='/tmp/server_harden.sh'
 remote_ssh_path='/tmp/ssh.sh'
 
 # Desired location of additional files
-remot_conf_path='/tmp'
-remot_screens_path='/tmp'
-remot_00-header_path='/tmp'
-remot_10-sysinfo_path='/tmp'
-remot_90-footer_path='/tmp'
+remote_conf_path='/tmp/.yiimp.conf'
+remote_screens_path='/tmp/screens'
+remote_header_path='/tmp/00-header'
+remote_sysinfo_path='/tmp/10-sysinfo'
+remote_footer_path='/tmp/90-footer'
  
 #----------------------------------------------------------------------
 # Create a temp script to echo the SSH password, used by SSH_ASKPASS
@@ -77,53 +78,53 @@ SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
 #----------------------------------------------------------------------
  
 # Load in a base 64 encoded version of the script.
-B64_SCRIPT=`base64 --wrap=0 ${script_system_web}`
-B64_SCRIPT=`base64 --wrap=0 ${script_web_web}`
-B64_SCRIPT=`base64 --wrap=0 ${script_nginx_web}`
-B64_SCRIPT=`base64 --wrap=0 ${script_clean_web}`
-B64_SCRIPT=`base64 --wrap=0 ${script_motd_web}`
-B64_SCRIPT=`base64 --wrap=0 ${script_harden_web}`
-B64_SCRIPT=`base64 --wrap=0 ${script_ssh}`
+B64_system=`base64 --wrap=0 ${script_system_web}`
+B64_web=`base64 --wrap=0 ${script_web_web}`
+B64_nginx=`base64 --wrap=0 ${script_nginx_web}`
+B64_clean=`base64 --wrap=0 ${script_clean_web}`
+B64_motd=`base64 --wrap=0 ${script_motd_web}`
+B64_harden=`base64 --wrap=0 ${script_harden_web}`
+B64_ssh=`base64 --wrap=0 ${script_ssh}`
  
 # The command that will run remotely. This unpacks the
 # base64-encoded script, makes it executable, and then
 # executes it as a background task.
-system_web="base64 -d - > ${remote_system_web_path} <<< ${B64_SCRIPT};"
-system_web="${CMD} chmod u+x ${remote_system_web_path};"
-system_web="${CMD} sh -c 'nohup ${remote_system_web_path}'
+system_web="base64 -d - > ${remote_system_web_path} <<< ${B64_system};"
+system_web="${system_web} chmod u+x ${remote_system_web_path};"
+system_web="${system_web} sh -c 'nohup ${remote_system_web_path}'"
 
-web_web="base64 -d - > ${remote_web_web_path} <<< ${B64_SCRIPT};"
-web_web="${CMD} chmod u+x ${remote_web_web_path};"
-web_web="${CMD} sh -c 'nohup ${remote_web_web_path}'
+web_web="base64 -d - > ${remote_web_web_path} <<< ${B64_web};"
+web_web="${web_web} chmod u+x ${remote_web_web_path};"
+web_web="${web_web} sh -c 'nohup ${remote_web_web_path}'"
 
-nginx_web="base64 -d - > ${remote_nginx_web_path} <<< ${B64_SCRIPT};"
-nginx_web="${CMD} chmod u+x ${remote_nginx_web_path};"
-nginx_web="${CMD} sh -c 'nohup ${remote_nginx_web_path}'
+nginx_web="base64 -d - > ${remote_nginx_web_path} <<< ${B64_nginx};"
+nginx_web="${nginx_web} chmod u+x ${remote_nginx_web_path};"
+nginx_web="${nginx_web} sh -c 'nohup ${remote_nginx_web_path}'"
 
-clean_web="base64 -d - > ${remote_clean_web_path} <<< ${B64_SCRIPT};"
-clean_web="${CMD} chmod u+x ${remote_clean_web_path};"
-clean_web="${CMD} sh -c 'nohup ${remote_clean_web_path}'
+clean_web="base64 -d - > ${remote_clean_web_path} <<< ${B64_clean};"
+clean_web="${clean_web} chmod u+x ${remote_clean_web_path};"
+clean_web="${clean_web} sh -c 'nohup ${remote_clean_web_path}'"
 
-motd_web="base64 -d - > ${remote_motd_web_path} <<< ${B64_SCRIPT};"
-motd_web="${CMD} chmod u+x ${remote_motd_web_path};"
-motd_web="${CMD} sh -c 'nohup ${remote_motd_web_path}'
+motd_web="base64 -d - > ${remote_motd_web_path} <<< ${B64_motd};"
+motd_web="${motd_web} chmod u+x ${remote_motd_web_path};"
+motd_web="${motd_web} sh -c 'nohup ${remote_motd_web_path}'"
 
-harden_web="base64 -d - > ${remote_harden_web_path} <<< ${B64_SCRIPT};"
-harden_web="${CMD} chmod u+x ${remote_harden_web_path};"
-harden_web="${CMD} sh -c 'nohup ${remote_harden_web_path}'
+harden_web="base64 -d - > ${remote_harden_web_path} <<< ${B64_harden};"
+harden_web="${harden_web} chmod u+x ${remote_harden_web_path};"
+harden_web="${harden_web} sh -c 'nohup ${remote_harden_web_path}'"
 
-ssh="base64 -d - > ${remote_ssh_path} <<< ${B64_SCRIPT};"
-ssh="${CMD} chmod u+x ${remote_ssh_path};"
-ssh="${CMD} sh -c 'nohup ${remote_ssh_path}'
+ssh="base64 -d - > ${remote_ssh_path} <<< ${B64_ssh};"
+ssh="${ssh} chmod u+x ${remote_ssh_path};"
+ssh="${ssh} sh -c 'nohup ${remote_ssh_path}'"
  
 # Log in to the remote server and run the above commands.
 
 # Copy needed files to remote server
-setsid scp ${conf} ${WebUser}@${WebServer}:${remot_conf_path}
-setsid scp ${screens} ${WebUser}@${WebServer}:${remot_screens_path}
-setsid scp ${00-header} ${WebUser}@${WebServer}:${remot_00-header_path}
-setsid scp ${10-sysinfo} ${WebUser}@${WebServer}:${remot_10-sysinfo_path}
-setsid scp ${90-footer} ${WebUser}@${WebServer}:${remot_90-footer_path}
+setsid scp "${conf}" ${WebUser}@${WebServer}:"${remote_conf_path}"
+setsid scp ${screens} ${WebUser}@${WebServer}:${remote_screens_path}
+setsid scp ${header} ${WebUser}@${WebServer}:${remote_header_path}
+setsid scp ${sysinfo} ${WebUser}@${WebServer}:${remote_sysinfo_path}
+setsid scp ${footer} ${WebUser}@${WebServer}:${remote_footer_path}
 
 # Execute scripts on remote server
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_web}"
