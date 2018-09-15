@@ -5,6 +5,7 @@ source $STORAGE_ROOT/yiimp/.yiimp.conf
 
 apt_install lsb-release figlet update-motd \
 landscape-common update-notifier-common
+wait $!
 cd /tmp
 sudo rm -r /etc/update-motd.d/
 sudo mkdir /etc/update-motd.d/
