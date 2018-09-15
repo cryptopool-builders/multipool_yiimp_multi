@@ -1,3 +1,4 @@
+#!/bin/bash
 source /etc/functions.sh
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
