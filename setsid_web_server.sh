@@ -36,13 +36,6 @@ remote_motd_web_path='/tmp/motd.sh'
 remote_harden_web_path='/tmp/server_harden.sh'
 remote_ssh_path='/tmp/ssh.sh'
 
-# Desired location of additional files
-remote_conf_path='/tmp/.yiimp.conf'
-remote_screens_path='/tmp/screens'
-remote_header_path='/tmp/00-header'
-remote_sysinfo_path='/tmp/10-sysinfo'
-remote_footer_path='/tmp/90-footer'
- 
 #----------------------------------------------------------------------
 # Create a temp script to echo the SSH password, used by SSH_ASKPASS
 #----------------------------------------------------------------------
@@ -120,11 +113,11 @@ ssh="${ssh} sh -c 'nohup ${remote_ssh_path}'"
 # Log in to the remote server and run the above commands.
 
 # Copy needed files to remote server
-setsid scp "${conf}" ${WebUser}@${WebServer}:"${remote_conf_path}"
-setsid scp ${screens} ${WebUser}@${WebServer}:${remote_screens_path}
-setsid scp ${header} ${WebUser}@${WebServer}:${remote_header_path}
-setsid scp ${sysinfo} ${WebUser}@${WebServer}:${remote_sysinfo_path}
-setsid scp ${footer} ${WebUser}@${WebServer}:${remote_footer_path}
+cat $conf | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/.yiimp.conf'
+cat $screens | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/screens'
+cat $header | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/00-header'
+cat $sysinfo | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/10-sysinfo'
+cat $footer | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/90-footer'
 
 # Execute scripts on remote server
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_web}"
