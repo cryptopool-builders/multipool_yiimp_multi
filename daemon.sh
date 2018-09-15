@@ -1,4 +1,5 @@
 source /etc/functions.sh
+sudo cp -r /tmp/.yiimp.conf $STORAGE_ROOT/yiimp/
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 
 echo Installing BitCoin PPA...
