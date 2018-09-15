@@ -11,11 +11,13 @@ WebPass=$WebPass
 WebServer=$WebInternalIP
  
 # The script to run on the remote server.
-script_web='$HOME/multipool/yiimp_multi/system_web.sh'
+script_system_web='$HOME/multipool/yiimp_multi/remote_system_web_server.sh'
+script_web_web='$HOME/multipool/yiimp_multi/remote_web_web_server.sh'
 script_ssh='$HOME/multipool/yiimp_multi/ssh.sh'
 conf='$STORAGE_ROOT/yiimp/.yiimp.conf'
 # Desired location of the script on the remote server.
-remote_web_path='/tmp/system_web.sh'
+remote_system_web_path='/tmp/remote_system_web_server.sh'
+remote_web_web_path='/tmp/remote_web_web_server.sh'
 remote_ssh_path='/tmp/ssh.sh'
 remot_conf_path='/tmp'
  
@@ -54,15 +56,20 @@ SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
 #----------------------------------------------------------------------
  
 # Load in a base 64 encoded version of the script.
-B64_SCRIPT=`base64 --wrap=0 ${script_web}`
+B64_SCRIPT=`base64 --wrap=0 ${script_system_web}`
+B64_SCRIPT=`base64 --wrap=0 ${script_web_web}`
 B64_SCRIPT=`base64 --wrap=0 ${script_ssh}`
  
 # The command that will run remotely. This unpacks the
 # base64-encoded script, makes it executable, and then
 # executes it as a background task.
-web="base64 -d - > ${remote_web_path} <<< ${B64_SCRIPT};"
-web="${CMD} chmod u+x ${remote_web_path};"
-web="${CMD} sh -c 'nohup ${remote_web_path}'
+system_web="base64 -d - > ${remote_system_web_path} <<< ${B64_SCRIPT};"
+system_web="${CMD} chmod u+x ${remote_system_web_path};"
+system_web="${CMD} sh -c 'nohup ${remote_system_web_path}'
+
+web_web="base64 -d - > ${remote_web_web_path} <<< ${B64_SCRIPT};"
+web_web="${CMD} chmod u+x ${remote_web_web_path};"
+web_web="${CMD} sh -c 'nohup ${remote_web_web_path}'
 
 ssh="base64 -d - > ${remote_ssh_path} <<< ${B64_SCRIPT};"
 ssh="${CMD} chmod u+x ${remote_ssh_path};"
@@ -72,5 +79,6 @@ ssh="${CMD} sh -c 'nohup ${remote_ssh_path}'
 # The use of setsid is a part of the machinations to stop ssh
 # prompting for a password.
 setsid scp $conf ${WebUser}@${WebServer}:$remot_conf_path
-setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${web}"
-setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${ssh}"
+setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_web}"
+setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${web_web}"
+setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${ssh} > /dev/null 2>&1 &'"
