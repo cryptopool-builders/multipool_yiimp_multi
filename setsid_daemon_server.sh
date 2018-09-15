@@ -11,11 +11,13 @@ DaemonPass=$DaemonPass
 DaemonServer=$DaemonInternalIP
  
 # The script to run on the remote server.
-script_daemon='$HOME/multipool/yiimp_multi/daemon.sh'
+script_daemon='$HOME/multipool/yiimp_multi/remote_daemon.sh'
 script_ssh=''$HOME/multipool/yiimp_multi/ssh.sh'
+conf='$STORAGE_ROOT/yiimp/.yiimp.conf'
 # Desired location of the script on the remote server.
-remote_daemon_path=/tmp/daemon.sh
-remote_ssh_path=/tmp/ssh.sh
+remote_daemon_path='/tmp/remote_daemon.sh'
+remote_ssh_path='/tmp/ssh.sh'
+remot_conf_path='/tmp'
  
 #----------------------------------------------------------------------
 # Create a temp script to echo the SSH password, used by SSH_ASKPASS
@@ -52,7 +54,7 @@ SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
 #----------------------------------------------------------------------
  
 # Load in a base 64 encoded version of the script.
-B64_SCRIPT=`base64 --wrap=0 ${script_web}`
+B64_SCRIPT=`base64 --wrap=0 ${script_daemon}`
 B64_SCRIPT=`base64 --wrap=0 ${script_ssh}`
  
 # The command that will run remotely. This unpacks the
@@ -69,5 +71,6 @@ ssh="${CMD} sh -c 'nohup ${remote_ssh_path}'
 # Log in to the remote server and run the above command.
 # The use of setsid is a part of the machinations to stop ssh
 # prompting for a password.
+setsid scp ${conf} ${WebUser}@${WebServer}:${remot_conf_path}
 setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${daemon}"
-setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${ssh}"
+setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${ssh} > /dev/null 2>&1 &'"
