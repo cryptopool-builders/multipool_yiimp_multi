@@ -17,9 +17,12 @@ if [[ ("$server_type" == "db") ]]; then
   clear
   dbpublic=$PUBLIC_IP
   mypublic="$(sudo cat /etc/wireguard/publickey)"
+  echo
+  echo
   echo Wgen prompted the public IP of this box is, $dbpublic
   echo Copy this and paste this key when prompted, $mypublic
-
+  echo 
+  echo
 elif [[ ("$server_type" == "dbshared") ]]; then
   echo "ListenPort = 6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   echo "SaveConfig = true" | hide_output sudo tee -a /etc/wireguard/wg0.conf
@@ -30,9 +33,13 @@ elif [[ ("$server_type" == "dbshared") ]]; then
   clear
   dbpublic=$PUBLIC_IP
   mypublic="$(sudo cat /etc/wireguard/publickey)"
+  echo
+  echo
   echo Wgen prompted the public IP of this box is, $dbpublic
   echo Copy this and paste this key when prompted, $mypublic
-
+  echo
+  echo
+  
 elif [[ ("$server_type" == "web") ]]; then
   echo "ListenPort = 6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   echo "SaveConfig = true" | hide_output sudo tee -a /etc/wireguard/wg0.conf
@@ -50,6 +57,9 @@ elif [[ ("$server_type" == "web") ]]; then
   webpublic=$PUBLIC_IP
   sudo rm -r $HOME/multipool
   sudo rm -r /usr/bin/multipool
+  clear
+  echo
+  echo
 echo "Copy this command and run it on the DB Server, Stratum Server, and Daemon Server"
 echo "sudo wg set wg0 peer ${mypublic} endpoint ${webpublic}:6121 allowed-ips ${webinternal}/32"
 
@@ -70,6 +80,9 @@ elif [[ ("$server_type" == "stratum") ]]; then
   stratpublic=$PUBLIC_IP
   sudo rm -r $HOME/multipool
   sudo rm -r /usr/bin/multipool
+  clear
+  echo
+  echo
 echo "Copy this command and run it on the DB Server, Web Server, and Daemon Server"
 echo "sudo wg set wg0 peer ${mypublic} endpoint ${stratpublic}:6121 allowed-ips ${stratinternal}/32"
 
@@ -90,6 +103,9 @@ elif [[ ("$server_type" == "daemon") ]]; then
   daemonpublic=$PUBLIC_IP
   sudo rm -r $HOME/multipool
   sudo rm -r /usr/bin/multipool
+  clear
+  echo
+  echo
 echo "Copy this command and run it on the DB Server, Web Server, and Stratum Server"
 echo "sudo wg set wg0 peer ${mypublic} endpoint ${daemonpublic}:6121 allowed-ips ${daemoninternal}/32"
 fi
