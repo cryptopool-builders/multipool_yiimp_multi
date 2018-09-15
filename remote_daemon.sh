@@ -8,7 +8,7 @@ if [ ! -f /etc/apt/sources.list.d/bitcoin.list ]; then
 hide_output sudo add-apt-repository -y ppa:bitcoin/bitcoin
 fi
 echo Installing additional system files required for daemons...
-hide_output sudo apt-get update
+hide_output sudo apt-get update;
 apt_install build-essential libtool autotools-dev \
 automake pkg-config libssl-dev libevent-dev bsdmainutils git libboost-all-dev libminiupnpc-dev \
 libqt5gui5 libqt5core5a libqt5webkit5-dev libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev \
