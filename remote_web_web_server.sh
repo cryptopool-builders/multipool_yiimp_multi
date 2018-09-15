@@ -146,15 +146,20 @@ sudo ln -s /etc/nginx/sites-available/$DomainName.conf /etc/nginx/sites-enabled/
 sudo ln -s $STORAGE_ROOT/yiimp/site/web /var/www/$DomainName/html
 
 restart_service nginx;
+wait $!
 restart_service php7.2-fpm;
+wait $!
 
 if [[ ("$InstallSSL" == "y" || "$InstallSSL" == "Y" || "$InstallSSL" == "yes" || "$InstallSSL" == "Yes" || "$InstallSSL" == "YES") ]]; then
 echo Installing LetsEncrypt and setting up SSL...
 apt_install letsencrypt;
+wait $!
 hide_output sudo letsencrypt certonly -a webroot --staging --webroot-path=$STORAGE_ROOT/yiimp/site/web --email "$SupportEmail" --agree-tos -d "$DomainName";
+wait $!
 sudo rm /etc/nginx/sites-available/$DomainName.conf
 echo Generating DHPARAM, this may take awhile...
 hide_output sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048;
+wait $!
 # I am SSL Man!
 echo 'include /etc/nginx/blockuseragents.rules;
 
@@ -292,7 +297,9 @@ server {
 fi
 
 restart_service nginx;
+wait $!
 restart_service php7.2-fpm;
+wait $!
 
 else
 echo 'include /etc/nginx/blockuseragents.rules;
@@ -409,15 +416,20 @@ sudo ln -s /etc/nginx/sites-available/$DomainName.conf /etc/nginx/sites-enabled/
 sudo ln -s $STORAGE_ROOT/yiimp/site/web /var/www/$DomainName/html
 
 restart_service nginx;
+wait $!
 restart_service php7.2-fpm;
+wait $!
 
 if [[ ("$InstallSSL" == "y" || "$InstallSSL" == "Y" || "$InstallSSL" == "yes" || "$InstallSSL" == "Yes" || "$InstallSSL" == "YES") ]]; then
 echo Installing LetsEncrypt and setting up SSL...
 apt_install letsencrypt;
+wait $!
 hide_output sudo letsencrypt certonly -a webroot --staging --webroot-path=$STORAGE_ROOT/yiimp/site/web --email "$SupportEmail" --agree-tos -d "$DomainName" -d www."$DomainName";
+wait $!
 sudo rm /etc/nginx/sites-available/$DomainName.conf
 echo Generating DHPARAM, this may take awhile...
 hide_output sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048;
+wait $!
 # I am SSL Man!
 echo 'include /etc/nginx/blockuseragents.rules;
 
@@ -555,7 +567,9 @@ server {
 fi
 
 restart_service nginx;
+wait $!
 restart_service php7.2-fpm;
+wait $!
 
 fi
 echo Creating YiiMP configuration files..
@@ -585,7 +599,7 @@ define('"'"'EXCH_POLONIEX_SECRET'"'"', '"'"''"'"');
 define('"'"'EXCH_STOCKSEXCHANGE_SECRET'"'"', '"'"''"'"');
 define('"'"'EXCH_YOBIT_SECRET'"'"', '"'"''"'"');
 ' | sudo -E tee /etc/yiimp/keys.php >/dev/null 2>&1
-
+wait $!
 echo '
 <?php
 ini_set('"'"'date.timezone'"'"', '"'"'UTC'"'"');
@@ -682,7 +696,7 @@ $configCustomPorts = array(
 $configAlgoNormCoef = array(
 // '"'"'x11'"'"' => 5.0,
 );' | sudo -E tee $STORAGE_ROOT/yiimp/site/configuration/serverconfig.php >/dev/null 2>&1
-
+wait $!
 echo Setting correct folder permissions...
 whoami=`whoami`
 sudo usermod -aG www-data $whoami
@@ -695,8 +709,6 @@ sudo find $STORAGE_ROOT/yiimp/site/ -type f -exec chmod 664 {} +
 
 sudo chgrp www-data $STORAGE_ROOT -R
 sudo chmod g+w $STORAGE_ROOT -R
-
-cd ~/Multi-Pool-Installer/install/yiimp-single
 
 #Updating YiiMP files for cryptopool.builders build
 echo Adding the cryptopool.builders flare to YiiMP...
