@@ -1,6 +1,5 @@
 source /etc/functions.sh
 source $STORAGE_ROOT/yiimp/.yiimp.conf
-cd $HOME/multipool/yiimp_multi
 
 echo Installing BitCoin PPA...
 if [ ! -f /etc/apt/sources.list.d/bitcoin.list ]; then
@@ -49,4 +48,3 @@ sudo rm -r openssl-1.0.2g.tar.gz openssl-1.0.2g
 
 
 echo Daemon setup completed...
-cd $HOME/multipool/yiimp_multi
