@@ -1,5 +1,8 @@
 source /etc/functions.sh
 source $STORAGE_ROOT/yiimp/.yiimp.conf
+
+echo Building web file structure and copying files...
+
 sudo mkdir -p $STORAGE_ROOT/yiimp/site/web
 sudo mkdir -p $STORAGE_ROOT/yiimp/site/configuration
 sudo mkdir -p $STORAGE_ROOT/yiimp/site/crons
@@ -7,7 +10,6 @@ sudo mkdir -p $STORAGE_ROOT/yiimp/site/log
 sudo mkdir -p $STORAGE_ROOT/yiimp/starts
 sudo mkdir -p $STORAGE_ROOT/wallets
 
-echo Building web file structure and copying files...
 cd $STORAGE_ROOT/yiimp/yiimp_setup/yiimp
 sudo sed -i 's/AdminRights/'$AdminPanel'/' $STORAGE_ROOT/yiimp/yiimp_setup/yiimp/web/yaamp/modules/site/SiteController.php
 sudo cp -r $STORAGE_ROOT/yiimp/yiimp_setup/yiimp/web $STORAGE_ROOT/yiimp/site/
