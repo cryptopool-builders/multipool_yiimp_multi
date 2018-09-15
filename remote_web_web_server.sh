@@ -145,16 +145,16 @@ server {
 sudo ln -s /etc/nginx/sites-available/$DomainName.conf /etc/nginx/sites-enabled/$DomainName.conf
 sudo ln -s $STORAGE_ROOT/yiimp/site/web /var/www/$DomainName/html
 
-restart_service nginx
-restart_service php7.2-fpm
+restart_service nginx;
+restart_service php7.2-fpm;
 
 if [[ ("$InstallSSL" == "y" || "$InstallSSL" == "Y" || "$InstallSSL" == "yes" || "$InstallSSL" == "Yes" || "$InstallSSL" == "YES") ]]; then
 echo Installing LetsEncrypt and setting up SSL...
-apt_install letsencrypt
-hide_output sudo letsencrypt certonly -a webroot --staging --webroot-path=$STORAGE_ROOT/yiimp/site/web --email "$SupportEmail" --agree-tos -d "$DomainName"
+apt_install letsencrypt;
+hide_output sudo letsencrypt certonly -a webroot --staging --webroot-path=$STORAGE_ROOT/yiimp/site/web --email "$SupportEmail" --agree-tos -d "$DomainName";
 sudo rm /etc/nginx/sites-available/$DomainName.conf
 echo Generating DHPARAM, this may take awhile...
-hide_output sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+hide_output sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048;
 # I am SSL Man!
 echo 'include /etc/nginx/blockuseragents.rules;
 
@@ -291,8 +291,8 @@ server {
 ' | sudo -E tee /etc/nginx/sites-available/$DomainName.conf >/dev/null 2>&1
 fi
 
-restart_service nginx
-restart_service php7.2-fpm
+restart_service nginx;
+restart_service php7.2-fpm;
 
 else
 echo 'include /etc/nginx/blockuseragents.rules;
@@ -408,16 +408,16 @@ server {
 sudo ln -s /etc/nginx/sites-available/$DomainName.conf /etc/nginx/sites-enabled/$DomainName.conf
 sudo ln -s $STORAGE_ROOT/yiimp/site/web /var/www/$DomainName/html
 
-restart_service nginx
-restart_service php7.2-fpm
+restart_service nginx;
+restart_service php7.2-fpm;
 
 if [[ ("$InstallSSL" == "y" || "$InstallSSL" == "Y" || "$InstallSSL" == "yes" || "$InstallSSL" == "Yes" || "$InstallSSL" == "YES") ]]; then
 echo Installing LetsEncrypt and setting up SSL...
-apt_install letsencrypt
-hide_output sudo letsencrypt certonly -a webroot --staging --webroot-path=$STORAGE_ROOT/yiimp/site/web --email "$SupportEmail" --agree-tos -d "$DomainName" -d www."$DomainName"
+apt_install letsencrypt;
+hide_output sudo letsencrypt certonly -a webroot --staging --webroot-path=$STORAGE_ROOT/yiimp/site/web --email "$SupportEmail" --agree-tos -d "$DomainName" -d www."$DomainName";
 sudo rm /etc/nginx/sites-available/$DomainName.conf
 echo Generating DHPARAM, this may take awhile...
-hide_output sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+hide_output sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048;
 # I am SSL Man!
 echo 'include /etc/nginx/blockuseragents.rules;
 
@@ -554,8 +554,8 @@ server {
 ' | sudo -E tee /etc/nginx/sites-available/$DomainName.conf >/dev/null 2>&1
 fi
 
-restart_service nginx
-restart_service php7.2-fpm
+restart_service nginx;
+restart_service php7.2-fpm;
 
 fi
 echo Creating YiiMP configuration files..
