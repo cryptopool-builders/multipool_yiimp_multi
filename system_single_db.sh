@@ -94,9 +94,7 @@ hide_output apt-get -y --purge autoremove
 fi
 hide_output sudo apt-get update
 
-apt_install mariadb-server mariadb-client
-
 echo Downloading selected YiiMP Repo...
 hide_output sudo git clone $YiiMPRepo $STORAGE_ROOT/yiimp/yiimp_setup/yiimp
 
-cd $HOME/multipool/yiimp_single
+cd $HOME/multipool/yiimp_multi
