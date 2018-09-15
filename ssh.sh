@@ -1,3 +1,6 @@
+#!/bin/bash
+# Source https://mailinabox.email/ https://github.com/mail-in-a-box/mailinabox
+# Updated by cryptopool.builders for crypto use...
 source /etc/functions.sh
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
