@@ -27,3 +27,6 @@ fi
 
 sudo ufw --force enable;
 fi #NODOC
+
+
+sudo reboot
