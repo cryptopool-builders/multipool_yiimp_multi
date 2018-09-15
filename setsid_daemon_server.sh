@@ -2,7 +2,7 @@
 # Set up values.
 #----------------------------------------------------------------------
 source /etc/multipool.conf
-$STORAGE_ROOT/yiimp/.yiimp.conf
+source $STORAGE_ROOT/yiimp/.yiimp.conf
 # User credentials for the remote server.
 DaemonUser=$DaemonUser
 DaemonPass=$DaemonPass
