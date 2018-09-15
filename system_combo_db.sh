@@ -100,5 +100,3 @@ automake pkg-config libssl-dev libevent-dev bsdmainutils
 
 echo Downloading selected YiiMP Repo...
 hide_output sudo git clone $YiiMPRepo $STORAGE_ROOT/yiimp/yiimp_setup/yiimp
-
-cd $HOME/multipool/yiimp_multi
