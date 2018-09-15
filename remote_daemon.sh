@@ -1,3 +1,4 @@
+#!/bin/bash
 source /etc/functions.sh
 sudo cp -r /tmp/.yiimp.conf $STORAGE_ROOT/yiimp/
 source $STORAGE_ROOT/yiimp/.yiimp.conf
@@ -47,5 +48,5 @@ hide_output sudo make install
 cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 sudo rm -r openssl-1.0.2g.tar.gz openssl-1.0.2g
 
-
 echo Daemon setup completed...
+exit 0
