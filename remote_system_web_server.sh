@@ -54,18 +54,18 @@ fi
 echo Adding the required repsoitories...
 if [ ! -f /usr/bin/add-apt-repository ]; then
 echo "Installing add-apt-repository..."
-hide_output sudo apt-get -y update
-apt_install software-properties-common
+hide_output sudo apt-get -y update;
+apt_install software-properties-common;
 fi
 # PHP 7
 echo Installing Ondrej PHP PPA...
 if [ ! -f /etc/apt/sources.list.d/ondrej-php-bionic.list ]; then
-hide_output sudo add-apt-repository -y ppa:ondrej/php
+hide_output sudo add-apt-repository -y ppa:ondrej/php;
 fi
 # MariaDB
 echo Installing MariaDB Repository...
-hide_output sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirrors.evowise.com/mariadb/repo/10.3/ubuntu xenial main'
+hide_output sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8;
+sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirrors.evowise.com/mariadb/repo/10.3/ubuntu xenial main';
 
 # Upgrade System Files
 echo Updating system packages...
@@ -97,10 +97,10 @@ hide_output sudo pollinate -q -r
 echo Installing YiiMP Required system packages...
 if [ -f /usr/sbin/apache2 ]; then
 echo Removing apache...
-hide_output apt-get -y purge apache2 apache2-*
-hide_output apt-get -y --purge autoremove
+hide_output apt-get -y purge apache2 apache2-*;
+hide_output apt-get -y --purge autoremove;
 fi
-hide_output sudo apt-get update
+hide_output sudo apt-get update;
 
 apt_install php7.2-fpm php7.2-opcache php7.2-fpm php7.2 php7.2-common php7.2-gd \
 php7.2-mysql php7.2-imap php7.2-cli php7.2-cgi \
@@ -113,5 +113,5 @@ curl git sudo coreutils pollinate unzip unattended-upgrades cron \
 nginx pwgen;
 
 echo Downloading selected YiiMP Repo...
-hide_output sudo git clone $YiiMPRepo $STORAGE_ROOT/yiimp/yiimp_setup/yiimp
+hide_output sudo git clone $YiiMPRepo $STORAGE_ROOT/yiimp/yiimp_setup/yiimp;
 exit 0
