@@ -78,7 +78,7 @@ ssh="${CMD} sh -c 'nohup ${remote_ssh_path}'
 # Log in to the remote server and run the above command.
 # The use of setsid is a part of the machinations to stop ssh
 # prompting for a password.
-setsid scp $conf ${WebUser}@${WebServer}:$remot_conf_path
+setsid scp ${conf} ${WebUser}@${WebServer}:${remot_conf_path}
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${web_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${ssh} > /dev/null 2>&1 &'"
