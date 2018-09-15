@@ -1,6 +1,7 @@
+#!/bin/bash
 source /etc/functions.sh
+source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
-cd ~/Multi-Pool-Installer/install/yiimp-single
 
 # NGINX upgrade
 echo Upgrading NGINX...
@@ -15,7 +16,7 @@ hide_output sudo apt-get update
 apt_install nginx
 
 sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old
-sudo cp -r nginx_confs/nginx.conf /etc/nginx/
+sudo cp -r /tmp/nginx.conf /etc/nginx/
 
 restart_service nginx
 restart_service php7.2-fpm
