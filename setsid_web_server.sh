@@ -26,6 +26,7 @@ screens=${dir}'/multipool/yiimp_multi/ubuntu/screens'
 header=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/00-header'
 sysinfo=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/10-sysinfo'
 footer=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/90-footer'
+first_boot=${dir}'/multipool/yiimp_multi/first_boot.sh'
 
 # Desired location of the scripts on the remote server.
 remote_system_web_path='/tmp/remote_system_web_server.sh'
@@ -118,6 +119,7 @@ cat $screens | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/scr
 cat $header | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/00-header'
 cat $sysinfo | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/10-sysinfo'
 cat $footer | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/90-footer'
+cat $first_boot | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/first_boot.sh'
 
 # Execute scripts on remote server
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_web}"
