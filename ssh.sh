@@ -1,3 +1,7 @@
+source /etc/functions.sh
+source /etc/multipool.conf
+source $STORAGE_ROOT/yiimp/.yiimp.conf
+
 if [ -z "$DISABLE_FIREWALL" ]; then
 # Install `ufw` which provides a simple firewall configuration.
 echo Installing UFW...
