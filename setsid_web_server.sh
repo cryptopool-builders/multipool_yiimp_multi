@@ -18,6 +18,7 @@ script_clean_web='$HOME/multipool/yiimp_multi/server_cleanup.sh'
 script_motd_web='$HOME/multipool/yiimp_multi/motd.sh'
 script_harden_web='$HOME/multipool/yiimp_multi/server_harden.sh'
 script_ssh='$HOME/multipool/yiimp_multi/ssh.sh'
+
 # Additional files that need to be copied to the remote server
 conf='$STORAGE_ROOT/yiimp/.yiimp.conf'
 screens='$HOME/multipool/yiimp_multi/ubuntu/screens'
@@ -78,6 +79,10 @@ SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
 # Load in a base 64 encoded version of the script.
 B64_SCRIPT=`base64 --wrap=0 ${script_system_web}`
 B64_SCRIPT=`base64 --wrap=0 ${script_web_web}`
+B64_SCRIPT=`base64 --wrap=0 ${script_nginx_web}`
+B64_SCRIPT=`base64 --wrap=0 ${script_clean_web}`
+B64_SCRIPT=`base64 --wrap=0 ${script_motd_web}`
+B64_SCRIPT=`base64 --wrap=0 ${script_harden_web}`
 B64_SCRIPT=`base64 --wrap=0 ${script_ssh}`
  
 # The command that will run remotely. This unpacks the
@@ -91,14 +96,40 @@ web_web="base64 -d - > ${remote_web_web_path} <<< ${B64_SCRIPT};"
 web_web="${CMD} chmod u+x ${remote_web_web_path};"
 web_web="${CMD} sh -c 'nohup ${remote_web_web_path}'
 
+nginx_web="base64 -d - > ${remote_nginx_web_path} <<< ${B64_SCRIPT};"
+nginx_web="${CMD} chmod u+x ${remote_nginx_web_path};"
+nginx_web="${CMD} sh -c 'nohup ${remote_nginx_web_path}'
+
+clean_web="base64 -d - > ${remote_clean_web_path} <<< ${B64_SCRIPT};"
+clean_web="${CMD} chmod u+x ${remote_clean_web_path};"
+clean_web="${CMD} sh -c 'nohup ${remote_clean_web_path}'
+
+motd_web="base64 -d - > ${remote_motd_web_path} <<< ${B64_SCRIPT};"
+motd_web="${CMD} chmod u+x ${remote_motd_web_path};"
+motd_web="${CMD} sh -c 'nohup ${remote_motd_web_path}'
+
+harden_web="base64 -d - > ${remote_harden_web_path} <<< ${B64_SCRIPT};"
+harden_web="${CMD} chmod u+x ${remote_harden_web_path};"
+harden_web="${CMD} sh -c 'nohup ${remote_harden_web_path}'
+
 ssh="base64 -d - > ${remote_ssh_path} <<< ${B64_SCRIPT};"
 ssh="${CMD} chmod u+x ${remote_ssh_path};"
 ssh="${CMD} sh -c 'nohup ${remote_ssh_path}'
  
-# Log in to the remote server and run the above command.
-# The use of setsid is a part of the machinations to stop ssh
-# prompting for a password.
+# Log in to the remote server and run the above commands.
+
+# Copy needed files to remote server
 setsid scp ${conf} ${WebUser}@${WebServer}:${remot_conf_path}
+setsid scp ${screens} ${WebUser}@${WebServer}:${remot_screens_path}
+setsid scp ${00-header} ${WebUser}@${WebServer}:${remot_00-header_path}
+setsid scp ${10-sysinfo} ${WebUser}@${WebServer}:${remot_10-sysinfo_path}
+setsid scp ${90-footer} ${WebUser}@${WebServer}:${remot_90-footer_path}
+
+# Execute scripts on remote server
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${web_web}"
+setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${nginx_web}"
+setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${clean_web}"
+setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${motd_web}"
+setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${harden_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${ssh} > /dev/null 2>&1 &'"
