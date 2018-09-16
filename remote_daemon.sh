@@ -5,6 +5,11 @@
 
 source /etc/functions.sh
 source /etc/multipool.conf
+if [[ ! -e '$STORAGE_ROOT/yiimp/' ]]; then
+sudo mkdir -p $STORAGE_ROOT/yiimp/
+sudo cp -r /tmp/.yiimp.conf $STORAGE_ROOT/yiimp/
+source $STORAGE_ROOT/yiimp/.yiimp.conf
+else
 sudo cp -r /tmp/.yiimp.conf $STORAGE_ROOT/yiimp/
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 
