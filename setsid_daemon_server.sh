@@ -18,6 +18,7 @@ dir=$HOME
 DaemonServer=$DaemonInternalIP
 
 # The script to run on the remote server.
+script_create_user=${dir}'/multipool/yiimp_multi/create_user_remote.sh'
 script_daemon=${dir}'/multipool/yiimp_multi/remote_daemon.sh'
 script_ssh=${dir}'/multipool/yiimp_multi/ssh.sh'
 
@@ -29,6 +30,7 @@ sysinfo=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/daemon/10-sysinfo
 footer=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/daemon/90-footer'
 
 # Desired location of the script on the remote server.
+remote_create_user_path='/tmp/create_user_remote.sh'
 remote_daemon_path='/tmp/remote_daemon.sh'
 remote_ssh_path='/tmp/ssh.sh'
 
@@ -67,12 +69,19 @@ SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
 #----------------------------------------------------------------------
 
 # Load in a base 64 encoded version of the script.
+
+B64_user=`base64 --wrap=0 ${script_create_user}`
 B64_daemon=`base64 --wrap=0 ${script_daemon}`
 B64_ssh=`base64 --wrap=0 ${script_ssh}`
 
 # The command that will run remotely. This unpacks the
 # base64-encoded script, makes it executable, and then
 # executes it as a background task.
+
+system_user="base64 -d - > ${remote_create_user_path} <<< ${B64_user};"
+system_user="${system_user} chmod u+x ${remote_create_user_path};"
+system_user="${system_user} sh -c 'nohup ${remote_create_user_path}'"
+
 daemon="base64 -d - > ${remote_daemon_path} <<< ${B64_daemon};"
 daemon="${daemon} chmod u+x ${remote_daemon_path};"
 daemon="${daemon} sh -c 'nohup ${remote_daemon_path}'"
@@ -84,6 +93,7 @@ ssh="${ssh} sh -c 'nohup ${remote_ssh_path} > /dev/null 2>&1 &'"
 # Log in to the remote server and run the above command.
 
 # Copy needed files to remote server
+
 cat $conf | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tmp/.yiimp.conf'
 cat $screens | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tmp/screens'
 cat $header | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tmp/00-header'
@@ -91,5 +101,7 @@ cat $sysinfo | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /t
 cat $footer | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tmp/90-footer'
 
 # Execute scripts on remote server
+
+setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${system_user}"
 setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${daemon}"
 setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${ssh}"

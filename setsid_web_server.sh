@@ -18,6 +18,7 @@ dir=$HOME
 WebServer=$WebInternalIP
 
 # The scripts to run on the remote server.
+script_create_user=${dir}'/multipool/yiimp_multi/create_user_remote.sh'
 script_system_web=${dir}'/multipool/yiimp_multi/remote_system_web_server.sh'
 script_web_web=${dir}'/multipool/yiimp_multi/remote_web_web_server.sh'
 script_nginx_web=${dir}'/multipool/yiimp_multi/nginx_upgrade.sh'
@@ -36,6 +37,7 @@ first_boot=${dir}'/multipool/yiimp_multi/first_boot.sh'
 nginx_conf=${dir}'/multipool/yiimp_multi/ubuntu/etc/nginx/nginx.conf'
 
 # Desired location of the scripts on the remote server.
+remote_create_user_path='/tmp/create_user_remote.sh'
 remote_system_web_path='/tmp/remote_system_web_server.sh'
 remote_web_web_path='/tmp/remote_web_web_server.sh'
 remote_nginx_web_path='/tmp/nginx_upgrade.sh'
@@ -79,6 +81,7 @@ SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
 #----------------------------------------------------------------------
 
 # Load in a base 64 encoded version of the script.
+B64_user=`base64 --wrap=0 ${script_create_user}`
 B64_system=`base64 --wrap=0 ${script_system_web}`
 B64_web=`base64 --wrap=0 ${script_web_web}`
 B64_nginx=`base64 --wrap=0 ${script_nginx_web}`
@@ -90,6 +93,10 @@ B64_ssh=`base64 --wrap=0 ${script_ssh}`
 # The command that will run remotely. This unpacks the
 # base64-encoded script, makes it executable, and then
 # executes it as a background task.
+system_user="base64 -d - > ${remote_create_user_path} <<< ${B64_user};"
+system_user="${system_user} chmod u+x ${remote_create_user_path};"
+system_user="${system_user} sh -c 'nohup ${remote_create_user_path}'"
+
 system_web="base64 -d - > ${remote_system_web_path} <<< ${B64_system};"
 system_web="${system_web} chmod u+x ${remote_system_web_path};"
 system_web="${system_web} sh -c 'nohup ${remote_system_web_path}'"
@@ -130,6 +137,7 @@ cat $first_boot | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/
 cat $nginx_conf | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/nginx.conf'
 
 # Execute scripts on remote server
+setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_user}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${web_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${nginx_web}"

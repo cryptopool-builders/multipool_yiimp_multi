@@ -19,6 +19,7 @@ dir=$HOME
 StratumServer=$StratumInternalIP
 
 # The script to run on the remote server.
+script_create_user=${dir}'/multipool/yiimp_multi/create_user_remote.sh'
 script_system_stratum=${dir}'/multipool/yiimp_multi/remote_system_stratum_server.sh'
 script_stratum=${dir}'/multipool/yiimp_multi/remote_stratum.sh'
 script_ssh=${dir}'/multipool/yiimp_multi/ssh.sh'
@@ -31,6 +32,7 @@ sysinfo=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/stratum/10-sysinf
 footer=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/stratum/90-footer'
 
 # Desired location of the script on the remote server.
+remote_create_user_path='/tmp/create_user_remote.sh'
 remote_system_stratum_path='/tmp/remote_system_stratum_server.sh'
 remote_stratum_path='/tmp/remote_stratum.sh'
 remote_ssh_path='/tmp/ssh.sh'
@@ -70,6 +72,7 @@ SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
 #----------------------------------------------------------------------
 
 # Load in a base 64 encoded version of the script.
+B64_user=`base64 --wrap=0 ${script_create_user}`
 B64_system=`base64 --wrap=0 ${script_system_stratum}`
 B64_stratum=`base64 --wrap=0 ${script_stratum}`
 B64_ssh=`base64 --wrap=0 ${script_ssh}`
@@ -77,6 +80,10 @@ B64_ssh=`base64 --wrap=0 ${script_ssh}`
 # The command that will run remotely. This unpacks the
 # base64-encoded script, makes it executable, and then
 # executes it as a background task.
+
+system_user="base64 -d - > ${remote_create_user_path} <<< ${B64_user};"
+system_user="${system_user} chmod u+x ${remote_create_user_path};"
+system_user="${system_user} sh -c 'nohup ${remote_create_user_path}'"
 
 system_stratum="base64 -d - > ${remote_system_stratum_path} <<< ${B64_system};"
 system_stratum="${system_stratum} chmod u+x ${remote_system_stratum_path};"
@@ -100,6 +107,7 @@ cat $sysinfo | setsid ssh ${SSH_OPTIONS} ${StratumUser}@${StratumServer} 'cat > 
 cat $footer | setsid ssh ${SSH_OPTIONS} ${StratumUser}@${StratumServer} 'cat > /tmp/90-footer'
 
 # Execute scripts on remote server
+setsid ssh ${SSH_OPTIONS} ${StratumUser}@${StratumServer} "${system_user}"
 setsid ssh ${SSH_OPTIONS} ${StratumUser}@${StratumServer} "${system_stratum}"
 setsid ssh ${SSH_OPTIONS} ${StratumUser}@${StratumServer} "${stratum}"
 setsid ssh ${SSH_OPTIONS} ${StratumUser}@${StratumServer} "${ssh}"
