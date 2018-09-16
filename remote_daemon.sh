@@ -1,5 +1,6 @@
 #!/bin/bash
 source /etc/functions.sh
+source /etc/multipool.conf
 sudo cp -r /tmp/.yiimp.conf $STORAGE_ROOT/yiimp/
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 
