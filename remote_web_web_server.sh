@@ -608,7 +608,7 @@ define('"'"'YAAMP_LOGS'"'"', '"'"''"${STORAGE_ROOT}/yiimp/site/log"''"'"');
 define('"'"'YAAMP_HTDOCS'"'"', '"'"''"${STORAGE_ROOT}/yiimp/site/web"''"'"');
 define('"'"'YAAMP_BIN'"'"', '"'"'/bin'"'"');
 
-define('"'"'YAAMP_DBHOST'"'"', '"'"''"localhost"''"'"');
+define('"'"'YAAMP_DBHOST'"'"', '"'"''"${DBInternalIP}"''"'"');
 define('"'"'YAAMP_DBNAME'"'"', '"'"'yiimpfrontend'"'"');
 define('"'"'YAAMP_DBUSER'"'"', '"'"'panel'"'"');
 define('"'"'YAAMP_DBPASSWORD'"'"', '"'"''"${PanelUserDBPassword}"''"'"');
