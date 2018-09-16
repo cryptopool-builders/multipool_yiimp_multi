@@ -1,7 +1,7 @@
 #!/bin/bash
 # Source https://mailinabox.email/ https://github.com/mail-in-a-box/mailinabox
 # Updated by cryptopool.builders for crypto use...
-echo "Starting Remote Web Server Build...
+echo "Starting Remote Web Server Build..."
 clear
 source /etc/functions.sh
 source /etc/multipool.conf
