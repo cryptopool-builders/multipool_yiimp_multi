@@ -73,7 +73,7 @@ daemon="${daemon} sh -c 'nohup ${remote_daemon_path}'"
 
 ssh="base64 -d - > ${remote_ssh_path} <<< ${B64_ssh};"
 ssh="${ssh} chmod u+x ${remote_ssh_path};"
-ssh="${ssh} sh -c 'nohup ${remote_ssh_path}'"
+ssh="${ssh} sh -c 'nohup ${remote_ssh_path} > /dev/null 2>&1 &'"
  
 # Log in to the remote server and run the above command.
 
@@ -86,4 +86,4 @@ cat $footer | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tm
 
 # Execute scripts on remote server
 setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${daemon}"
-setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${ssh} > /dev/null 2>&1 &'"
+setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${ssh}"
