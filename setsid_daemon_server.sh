@@ -78,11 +78,11 @@ ssh="${ssh} sh -c 'nohup ${remote_ssh_path}'"
 # Log in to the remote server and run the above command.
 
 # Copy needed files to remote server
-cat $conf | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/.yiimp.conf'
-cat $screens | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/screens'
-cat $header | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/00-header'
-cat $sysinfo | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/10-sysinfo'
-cat $footer | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/90-footer'
+cat $conf | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tmp/.yiimp.conf'
+cat $screens | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tmp/screens'
+cat $header | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tmp/00-header'
+cat $sysinfo | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tmp/10-sysinfo'
+cat $footer | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tmp/90-footer'
 
 # Execute scripts on remote server
 setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${daemon}"
