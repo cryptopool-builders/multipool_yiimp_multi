@@ -15,7 +15,7 @@ source $STORAGE_ROOT/yiimp/.yiimp.conf
 else
 sudo cp -r /tmp/.yiimp.conf $STORAGE_ROOT/yiimp/
 source $STORAGE_ROOT/yiimp/.yiimp.conf
-
+fi
 # Check swap
 echo Checking if swap space is needed and if so creating...
 SWAP_MOUNTED=$(cat /proc/swaps | tail -n+2)

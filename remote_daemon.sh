@@ -12,7 +12,7 @@ source $STORAGE_ROOT/yiimp/.yiimp.conf
 else
 sudo cp -r /tmp/.yiimp.conf $STORAGE_ROOT/yiimp/
 source $STORAGE_ROOT/yiimp/.yiimp.conf
-
+fi
 echo Installing BitCoin PPA...
 if [ ! -f /etc/apt/sources.list.d/bitcoin.list ]; then
 hide_output sudo add-apt-repository -y ppa:bitcoin/bitcoin
