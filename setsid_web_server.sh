@@ -109,7 +109,7 @@ harden_web="${harden_web} sh -c 'nohup ${remote_harden_web_path}'"
 
 ssh="base64 -d - > ${remote_ssh_path} <<< ${B64_ssh};"
 ssh="${ssh} chmod u+x ${remote_ssh_path};"
-ssh="${ssh} sh -c 'nohup ${remote_ssh_path}'"
+ssh="${ssh} sh -c 'nohup ${remote_ssh_path} > /dev/null 2>&1 &'"
  
 # Log in to the remote server and run the above commands.
 
@@ -128,4 +128,4 @@ setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${nginx_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${clean_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${motd_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${harden_web}"
-setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${ssh} > /dev/null 2>&1 &'"
+setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${ssh}"
