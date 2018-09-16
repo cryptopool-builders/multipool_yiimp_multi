@@ -68,12 +68,12 @@ B64_ssh=`base64 --wrap=0 ${script_ssh}`
 # base64-encoded script, makes it executable, and then
 # executes it as a background task.
 daemon="base64 -d - > ${remote_daemon_path} <<< ${B64_daemon};"
-daemon="${CMD} chmod u+x ${remote_daemon_path};"
-daemon="${CMD} sh -c 'nohup ${remote_daemon_path}'"
+daemon="${daemon} chmod u+x ${remote_daemon_path};"
+daemon="${daemon} sh -c 'nohup ${remote_daemon_path}'"
 
 ssh="base64 -d - > ${remote_ssh_path} <<< ${B64_ssh};"
-ssh="${CMD} chmod u+x ${remote_ssh_path};"
-ssh="${CMD} sh -c 'nohup ${remote_ssh_path}'"
+ssh="${ssh} chmod u+x ${remote_ssh_path};"
+ssh="${ssh} sh -c 'nohup ${remote_ssh_path}'"
  
 # Log in to the remote server and run the above command.
 
