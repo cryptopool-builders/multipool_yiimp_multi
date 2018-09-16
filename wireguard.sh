@@ -62,8 +62,6 @@ elif [[ ("$server_type" == "web") ]]; then
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   webinternal=$WebInternalIP
   webpublic=$PUBLIC_IP
-  sudo rm -r $HOME/multipool
-  sudo rm -r /usr/bin/multipool
   clear
 
 echo "Copy this command and run it on the DB Server, Stratum Server, and Daemon Server"

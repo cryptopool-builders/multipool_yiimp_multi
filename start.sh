@@ -33,13 +33,18 @@ fi
 # Start the installation.
 source warning.sh
 source menu.sh
-
+cd ~
+sudo rm -r $HOME/multipool
+sudo rm -r /usr/bin/multipool
 clear
-echo Installation of your YiiMP single server is now completed.
-echo You *MUST* reboot the machine to finalize the machine updates and folder permissions! YiiMP will not function until a reboot is performed!
+echo Installation of your YiiMP multi server is now completed.
+echo You *MUST* reboot this machine to finalize the system updates and folder permissions! YiiMP will not function until a reboot is performed!
+echo
+echo "Now that installation in completed, all further actions will be done on your web server"
 echo
 echo "Important! After first reboot it may take up to 1 minute for the main|loop2|blocks|debug screens to start!"
 echo "After 1 minute, type motd to refresh"
+echo
 echo You can access your admin panel at, http://$DomainName/site/$AdminPanel
 echo
 echo By default all stratum ports are blocked by the firewall. To allow a port through, from the command prompt type sudo ufw allow port number.

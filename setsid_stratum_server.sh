@@ -25,7 +25,7 @@ script_ssh=${dir}'/multipool/yiimp_multi/ssh.sh'
 
 # Additional files that need to be copied to the remote server
 conf=${STORAGE_ROOT}'/yiimp/.yiimp.conf'
-screens=${dir}'/multipool/yiimp_multi/ubuntu/stratum/screens'
+screens=${dir}'/multipool/yiimp_multi/ubuntu/screens_stratum'
 header=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/stratum/00-header'
 sysinfo=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/stratum/10-sysinfo'
 footer=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/stratum/90-footer'
