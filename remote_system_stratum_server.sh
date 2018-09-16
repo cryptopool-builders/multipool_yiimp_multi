@@ -4,7 +4,7 @@
 # Updated by cryptopool.builders for crypto use...
 #####################################################
 
-echo "Starting Remote Web Server Build..."
+echo "Starting Remote Stratum Server Build..."
 clear
 source /etc/functions.sh
 source /etc/multipool.conf
@@ -60,16 +60,12 @@ echo "Installing add-apt-repository..."
 hide_output sudo apt-get -y update;
 apt_install software-properties-common;
 fi
-# PHP 7
-echo Installing Ondrej PHP PPA...
-if [ ! -f /etc/apt/sources.list.d/ondrej-php-bionic.list ]; then
-hide_output sudo add-apt-repository -y ppa:ondrej/php;
-fi
+
 # MariaDB
 echo Installing MariaDB Repository...
 hide_output sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8;
 sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirrors.evowise.com/mariadb/repo/10.3/ubuntu xenial main';
-wait $!
+
 # Upgrade System Files
 echo Updating system packages...
 hide_output sudo apt-get update;
@@ -98,11 +94,12 @@ wget curl git sudo coreutils bc \
 haveged pollinate unzip \
 unattended-upgrades cron ntp fail2ban screen;
 wait $!
+
 # ### Seed /dev/urandom
 echo Initializing system random number generator...
 hide_output dd if=/dev/random of=/dev/urandom bs=1 count=32 2> /dev/null
 hide_output sudo pollinate -q -r
-wait $!
+
 echo Installing YiiMP Required system packages...
 if [ -f /usr/sbin/apache2 ]; then
 echo Removing apache...
@@ -113,17 +110,13 @@ wait $!
 fi
 hide_output sudo apt-get update;
 wait $!
-apt_install php7.2-fpm php7.2-opcache php7.2-fpm php7.2 php7.2-common php7.2-gd \
-php7.2-mysql php7.2-imap php7.2-cli php7.2-cgi \
-php-pear php-auth-sasl mcrypt imagemagick libruby \
-php7.2-curl php7.2-intl php7.2-pspell php7.2-recode php7.2-sqlite3 \
-php7.2-tidy php7.2-xmlrpc php7.2-xsl memcached php-memcache \
-php-imagick php-gettext php7.2-zip php7.2-mbstring \
-fail2ban ntpdate python3 python3-dev python3-pip \
-curl git sudo coreutils pollinate unzip unattended-upgrades cron \
-nginx pwgen;
+apt_install libgmp3-dev libmysqlclient-dev libcurl4-gnutls-dev libkrb5-dev \
+libldap2-dev libidn11-dev gnutls-dev librtmp-dev build-essential libtool  \
+autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils \
+git pwgen mariadb-client fail2ban;
 wait $!
+
 echo Downloading selected YiiMP Repo...
 hide_output sudo git clone $YiiMPRepo $STORAGE_ROOT/yiimp/yiimp_setup/yiimp;
-wait $!
+
 exit 0

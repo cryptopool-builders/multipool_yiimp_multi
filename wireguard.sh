@@ -1,3 +1,7 @@
+#####################################################
+# Created by cryptopool.builders for crypto use...
+#####################################################
+
 source $STORAGE_ROOT/yiimp/.wireguard.conf
 source /etc/multipool.conf
 
@@ -18,10 +22,12 @@ if [[ ("$server_type" == "db") ]]; then
   dbpublic=$PUBLIC_IP
   mypublic="$(sudo cat /etc/wireguard/publickey)"
 
-  echo When prompted the public IP of this box is, $dbpublic
+  echo Please begin the Wireguard installation on your other servers...
   echo
-  echo Copy this and paste this key when prompted, $mypublic
-  echo 
+  echo The public IP of this box is,  $dbpublic
+  echo
+  echo The Public key of this box is, $mypublic
+  echo
 
 elif [[ ("$server_type" == "dbshared") ]]; then
   echo "ListenPort = 6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
@@ -34,12 +40,13 @@ elif [[ ("$server_type" == "dbshared") ]]; then
   dbpublic=$PUBLIC_IP
   mypublic="$(sudo cat /etc/wireguard/publickey)"
 
-  echo When prompted the public IP of this box is, $dbpublic
+  echo Please begin the Wireguard installation on your other servers...
   echo
-  echo Copy this and paste this key when prompted, $mypublic
+  echo The public IP of this box is,  $dbpublic
   echo
+  echo The Public key of this box is, $mypublic
   echo
-  
+
 elif [[ ("$server_type" == "web") ]]; then
   echo "ListenPort = 6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
   echo "SaveConfig = true" | hide_output sudo tee -a /etc/wireguard/wg0.conf
@@ -62,6 +69,7 @@ elif [[ ("$server_type" == "web") ]]; then
 echo "Copy this command and run it on the DB Server, Stratum Server, and Daemon Server"
 echo
 echo "sudo wg set wg0 peer ${mypublic} endpoint ${webpublic}:6121 allowed-ips ${webinternal}/32"
+echo
 echo
 
 elif [[ ("$server_type" == "stratum") ]]; then
@@ -87,6 +95,7 @@ echo "Copy this command and run it on the DB Server, Web Server, and Daemon Serv
 echo
 echo "sudo wg set wg0 peer ${mypublic} endpoint ${stratpublic}:6121 allowed-ips ${stratinternal}/32"
 echo
+echo
 
 elif [[ ("$server_type" == "daemon") ]]; then
   echo "ListenPort = 6121" | hide_output sudo tee -a /etc/wireguard/wg0.conf
@@ -111,6 +120,8 @@ echo "Copy this command and run it on the DB Server, Web Server, and Stratum Ser
 echo
 echo "sudo wg set wg0 peer ${mypublic} endpoint ${daemonpublic}:6121 allowed-ips ${daemoninternal}/32"
 echo
+echo
 fi
+echo
 echo "After installing Wireguard on all of your servers run, multipool from the DB server only!!"
 exit 0

@@ -1,5 +1,8 @@
+#####################################################
 # Source https://mailinabox.email/ https://github.com/mail-in-a-box/mailinabox
 # Updated by cryptopool.builders for crypto use...
+#####################################################
+
 source /etc/multipool.conf
 
 # Get the IP addresses of the local network interface(s).
@@ -69,8 +72,6 @@ DEFAULT_DaemonInternalIP='10.0.0.5'
 input_box "Daemon Server Private IP" \
 "Enter the private IP address of the Daemon Server, as given to you by your provider.
 \n\nIf you do not have one from your provider leave the Wireguard default below.
-\n\nIf setting up more then one daemon server change to 10.0.0.6 for second daemon server,
-\n\n10.0.0.7 for third server,etc.
 \n\nPrivate IP address:" \
 $DEFAULT_DaemonInternalIP \
 DaemonInternalIP
@@ -277,9 +278,10 @@ InstallSSL='"${InstallSSL}"'
 DBInternalIP='"${DBInternalIP}"'
 WebInternalIP='"${WebInternalIP}"'
 DaemonInternalIP='"${DaemonInternalIP}"'
-YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
 WebUser='"${WebUser}"'
 WebPass='"${WebPass}"'
 DaemonUser='"${DaemonUser}"'
 DaemonPass='"${DaemonPass}"'
+# Unless you do some serious modifications this installer will not work with any other repo of yiimp!
+YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.yiimp.conf >/dev/null 2>&1

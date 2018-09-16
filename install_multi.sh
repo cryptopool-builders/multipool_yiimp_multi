@@ -6,10 +6,11 @@ source /etc/multipool.conf
 cd $HOME/multipool/yiimp_multi
 
 # Begin Installation
-source questions_combined.sh
-source system_combo_db.sh
-source db_combo.sh
+source questions_multi.sh
+source system_multi_db.sh
+source db_multi.sh
 source setsid_web_server.sh
+source setsid_stratum_server.sh
 source setsid_daemon_server.sh
 source server_harden.sh
-source motd_db_combo.sh
+source motd_db.sh

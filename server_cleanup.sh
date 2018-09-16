@@ -1,4 +1,8 @@
 #!/bin/bash
+#####################################################
+# Created by cryptopool.builders for crypto use...
+#####################################################
+
 source /etc/functions.sh
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
@@ -46,3 +50,4 @@ CRONS=$STORAGE_ROOT/yiimp/site/crons
 
 echo "source /etc/multipool.conf" | hide_output tee -a ~/.bashrc
 echo "source $STORAGE_ROOT/yiimp/.prescreens.start.conf" | hide_output tee -a ~/.bashrc
+exit 0

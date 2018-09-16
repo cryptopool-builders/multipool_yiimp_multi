@@ -1,5 +1,7 @@
+#####################################################
 # Source https://mailinabox.email/ https://github.com/mail-in-a-box/mailinabox
 # Updated by cryptopool.builders for crypto use...
+#####################################################
 
 clear
 source /etc/functions.sh
@@ -96,3 +98,5 @@ hide_output sudo apt-get update
 
 echo Downloading selected YiiMP Repo...
 hide_output sudo git clone $YiiMPRepo $STORAGE_ROOT/yiimp/yiimp_setup/yiimp
+
+cd $HOME/multipool/yiimp_multi

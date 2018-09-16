@@ -1,3 +1,8 @@
+#####################################################
+# Source code https://github.com/end222/pacmenu
+# Updated by cryptopool.builders for crypto use...
+#####################################################
+
 source /etc/functions.sh
 
 RESULT=$(dialog --stdout --title "Ultimate Crypto-Server Setup Installer" --menu "Choose one" -1 60 4 \
@@ -29,8 +34,7 @@ if [ $RESULT = 3 ]
 then
 clear;
 cd $HOME/multipool/yiimp_multi
-source questions_singles.sh;
-source singles.sh;
+source install_multi.sh;
 fi
 
 if [ $RESULT = 4 ]

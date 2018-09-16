@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-#    99-footer - write the admin's footer to the MOTD
+#    00-header - create the header of the MOTD
 #    Copyright (c) 2013 Nick Charlton
 #    Copyright (c) 2009-2010 Canonical Ltd.
 #
@@ -24,4 +24,17 @@
 # Updated by cryptopool.builders for crypto use...
 #####################################################
 
-[ -f /etc/motd.tail ] && cat /etc/motd.tail || true
+clear
+
+[ -r /etc/lsb-release ] && . /etc/lsb-release
+
+if [ -z "$DISTRIB_DESCRIPTION" ] && [ -x /usr/bin/lsb_release ]; then
+        # Fall back to using the very slow lsb_release utility
+        DISTRIB_DESCRIPTION=$(lsb_release -s -d)
+fi
+
+figlet -w 100 "cryptopool.builders"
+printf "\n"
+
+printf "Welcome to %s (%s).\n" "$DISTRIB_DESCRIPTION" "Crypto Version"
+printf "\n"

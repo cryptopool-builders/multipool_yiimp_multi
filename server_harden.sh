@@ -1,4 +1,11 @@
 #!/bin/bash
+#####################################################
+# Source various web sources:
+# https://www.linuxbabe.com/ubuntu/enable-google-tcp-bbr-ubuntu
+# https://www.cyberciti.biz/faq/linux-tcp-tuning/
+# Created by cryptopool.builders for crypto use...
+#####################################################
+
 source /etc/functions.sh
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
@@ -22,3 +29,4 @@ echo 'net.ipv4.tcp_no_metrics_save = 1' | hide_output sudo tee -a /etc/sysctl.co
 echo 'net.core.netdev_max_backlog = 5000' | hide_output sudo tee -a /etc/sysctl.conf
 
 echo Tuning complete...
+exit 0

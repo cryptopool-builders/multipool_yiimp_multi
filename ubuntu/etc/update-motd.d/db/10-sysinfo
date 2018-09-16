@@ -22,35 +22,8 @@
 # Updated by cryptopool.builders for crypto use...
 #####################################################
 
+
 date=`date`
-ps -aux | grep "[m]ain" > /dev/null 2>&1
-if [[ "$?" == "0" ]]; then
-        main="running"
-else
-        main="stopped"
-fi
-ps -aux | grep "[b]locks" > /dev/null 2>&1
-if [[ "$?" == "0" ]]; then
-        blocks="running"
-else
-        blocks="stopped"
-fi
-ps -aux | grep "[l]oop2" > /dev/null 2>&1
-if [[ "$?" == "0" ]]; then
-        loop2="running"
-else
-        loop2="stopped"
-fi
-ps -aux | grep "[l]og/debug.log" > /dev/null 2>&1
-if [[ "$?" == "0" ]]; then
-        debug="running"
-else
-        debug="stopped"
-fi
-daemon='/home/crypto-data/wallets'
-site='/home/crypto-data/yiimp/site'
-hint1="To view a screen type, screen -r main|loop2|blocks|debug"
-hint2="To detach from a screen type, ctrl+a+d"
 divider===============================
 divider=$divider$divider
 header=" %-7s %-25s %-16s %-15s\n"
@@ -64,29 +37,8 @@ echo
 echo
 echo "YiiMP Information:"
 printf "%$width.${width}s\n" "$divider"
-if [[ $main = stopped ]]; then
-printf "$header" "Main:" $RED$main$RESTORE "Daemon Directory:" $daemon
-else
-printf "$header" "Main:" $GREEN$main$RESTORE "Daemon Directory:" $daemon
-fi
-if [[ $blocks = stopped ]]; then
-printf "$header" "Blocks:" $RED$blocks$RESTORE "YiiMP Directory:" $site
-else
-printf "$header" "Blocks:" $GREEN$blocks$RESTORE "YiiMP Directory:" $site
-fi
-if [[ $loop2 = stopped ]]; then
-printf "$header" "Loop2:" $RED$loop2$RESTORE "Hint: $hint1"
-else
-printf "$header" "Loop2:" $GREEN$loop2$RESTORE "Hint: $hint1"
-fi
-if [[ $debug = stopped ]]; then
-printf "$header" "Debug:" $RED$debug$RESTORE "Hint: $hint2"
-else
-printf "$header" "Debug:" $GREEN$debug$RESTORE "Hint: $hint2"
-fi
-echo
-echo "To start|stop|restart a screen use the following command..."
-echo "screens start|stop|restart main|loop2|blocks|debug"
+printf "$header" $RED"Warning:"$RESTORE "You are logged in to your db server"
+printf "$header" $RED"Warning:"$RESTORE $GREEN"All changes should be made through your web server"$RESTORE
 echo
 echo "To reload this MOTD just type motd..."
 echo

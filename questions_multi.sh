@@ -1,5 +1,8 @@
+#####################################################
 # Source https://mailinabox.email/ https://github.com/mail-in-a-box/mailinabox
 # Updated by cryptopool.builders for crypto use...
+#####################################################
+
 source /etc/multipool.conf
 
 # Get the IP addresses of the local network interface(s).
@@ -33,8 +36,39 @@ exit
 fi
 fi
 
+if [ -z "$WebUser" ]; then
+DEFAULT_WebUser='yiimpadmin'
+input_box "Web Server User Name" \
+"Enter the user name of the Web Server.
+\n\nThis is required for setup to complete.
+\n\nWeb Server User Name:" \
+$DEFAULT_WebUser \
+WebUser
+
+if [ -z "$WebUser" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
+if [ -z "$WebPass" ]; then
+DEFAULT_WebPass='password'
+input_box "Web Server User Password" \
+"Enter the user password of the Web Server.
+\n\nThis is required for setup to complete.
+\n\nWhen pasting your password CTRL+V does NOT work, you must either SHIFT+RightMouseClick or SHIFT+INSERT!!
+\n\nWeb Server User Password:" \
+$DEFAULT_WebPass \
+WebPass
+
+if [ -z "$WebPass" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
 if [ -z "$StratumInternalIP" ]; then
-DEFAULT_StratumInternalIP='10.0.0.3'
+DEFAULT_StratumInternalIP='10.0.0.4'
 input_box "Stratum Server Private IP" \
 "Enter the private IP address of the Stratum Server, as given to you by your provider.
 \n\nIf you do not have one from your provider leave the Wireguard default below.
@@ -48,18 +82,78 @@ exit
 fi
 fi
 
+if [ -z "$StratumUser" ]; then
+DEFAULT_StratumUser='yiimpadmin'
+input_box "Stratum Server User Name" \
+"Enter the user name of the Stratum Server.
+\n\nThis is required for setup to complete.
+\n\nStratum Server User Name:" \
+$DEFAULT_StratumUser \
+StratumUser
+
+if [ -z "$StratumUser" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
+if [ -z "$StratumPass" ]; then
+DEFAULT_StratumPass='password'
+input_box "Stratum Server User Password" \
+"Enter the user password of the Stratum Server.
+\n\nThis is required for setup to complete.
+\n\nWhen pasting your password CTRL+V does NOT work, you must either SHIFT+RightMouseClick or SHIFT+INSERT!!
+\n\nStratum Server User Password:" \
+$DEFAULT_StratumPass \
+DaemonPass
+
+if [ -z "$StratumPass" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
 if [ -z "$DaemonInternalIP" ]; then
 DEFAULT_DaemonInternalIP='10.0.0.5'
 input_box "Daemon Server Private IP" \
 "Enter the private IP address of the Daemon Server, as given to you by your provider.
 \n\nIf you do not have one from your provider leave the Wireguard default below.
-\n\nIf setting up more then one daemon server change to 10.0.0.6 for second daemon server,
-\n\n10.0.0.7 for third server,etc.
 \n\nPrivate IP address:" \
 $DEFAULT_DaemonInternalIP \
 DaemonInternalIP
 
 if [ -z "$DaemonInternalIP" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
+if [ -z "$DaemonUser" ]; then
+DEFAULT_DaemonUser='yiimpadmin'
+input_box "Daemon Server User Name" \
+"Enter the user name of the Daemon Server.
+\n\nThis is required for setup to complete.
+\n\nDaemon Server User Name:" \
+$DEFAULT_DaemonUser \
+DaemonUser
+
+if [ -z "$DaemonUser" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
+if [ -z "$DaemonPass" ]; then
+DEFAULT_DaemonPass='password'
+input_box "Daemon Server User Password" \
+"Enter the user password of the Daemon Server.
+\n\nThis is required for setup to complete.
+\n\nWhen pasting your password CTRL+V does NOT work, you must either SHIFT+RightMouseClick or SHIFT+INSERT!!
+\n\nDaemon Server User Password:" \
+$DEFAULT_DaemonPass \
+DaemonPass
+
+if [ -z "$DaemonPass" ]; then
 user hit ESC/cancel
 exit
 fi
@@ -228,8 +322,15 @@ StratumUserDBPassword='"${StratumUserDBPassword}"'
 UsingSubDomain='"${UsingSubDomain}"'
 InstallSSL='"${InstallSSL}"'
 DBInternalIP='"${DBInternalIP}"'
-StratumInternalIP='"${StratumInternalIP}"'
 WebInternalIP='"${WebInternalIP}"'
+StratumInternalIP='"${StratumInternalIP}"'
 DaemonInternalIP='"${DaemonInternalIP}"'
+WebUser='"${WebUser}"'
+WebPass='"${WebPass}"'
+StratumUser='"${StratumUser}"'
+StratumPass='"${StratumPass}"'
+DaemonUser='"${DaemonUser}"'
+DaemonPass='"${DaemonPass}"'
+# Unless you do some serious modifications this installer will not work with any other repo of yiimp!
 YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.yiimp.conf >/dev/null 2>&1

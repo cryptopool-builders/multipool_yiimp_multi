@@ -1,3 +1,8 @@
+#####################################################
+# Source https://mailinabox.email/ https://github.com/mail-in-a-box/mailinabox
+# Updated by cryptopool.builders for crypto use...
+#####################################################
+
 message_box "Ultimate Crypto-Server Setup Installer" \
 "You have choosen to install YiiMP Multi Server!
 \n\nThis option will install YiiMP across multiple servers.

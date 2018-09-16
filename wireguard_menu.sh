@@ -1,3 +1,8 @@
+#####################################################
+# Source code https://github.com/end222/pacmenu
+# Updated by cryptopool.builders for crypto use...
+#####################################################
+
 source /etc/functions.sh
 cd $HOME/multipool/yiimp_multi
 
