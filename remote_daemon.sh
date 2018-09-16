@@ -9,11 +9,12 @@ hide_output sudo add-apt-repository -y ppa:bitcoin/bitcoin
 fi
 echo Installing additional system files required for daemons...
 hide_output sudo apt-get update;
+wait $!
 apt_install build-essential libtool autotools-dev \
 automake pkg-config libssl-dev libevent-dev bsdmainutils git libboost-all-dev libminiupnpc-dev \
 libqt5gui5 libqt5core5a libqt5webkit5-dev libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev \
 protobuf-compiler libqrencode-dev libzmq3-dev;
-
+wait $!
 sudo mkdir -p $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 
@@ -23,7 +24,9 @@ hide_output sudo wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.g
 hide_output sudo tar -xzvf db-4.8.30.NC.tar.gz
 cd db-4.8.30.NC/build_unix/
 hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$STORAGE_ROOT/berkeley/db4/;
+wait $!
 hide_output sudo make install;
+wait $!
 cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 sudo rm -r db-4.8.30.NC.tar.gz db-4.8.30.NC
 
@@ -33,7 +36,9 @@ hide_output sudo wget 'http://download.oracle.com/berkeley-db/db-5.3.28.tar.gz'
 hide_output sudo tar -xzvf db-5.3.28.tar.gz
 cd db-5.3.28/build_unix/
 hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$STORAGE_ROOT/berkeley/db5/;
+wait $!
 hide_output sudo make install;
+wait $!
 cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 sudo rm -r db-5.3.28.tar.gz db-5.3.28
 
@@ -43,8 +48,11 @@ hide_output sudo wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz --no-
 hide_output sudo tar -xf openssl-1.0.2g.tar.gz
 cd openssl-1.0.2g
 hide_output sudo ./config --prefix=$STORAGE_ROOT/openssl --openssldir=$STORAGE_ROOT/openssl shared zlib;
+wait $!
 hide_output sudo make;
+wait $!
 hide_output sudo make install;
+wait $!
 cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 sudo rm -r openssl-1.0.2g.tar.gz openssl-1.0.2g
 
