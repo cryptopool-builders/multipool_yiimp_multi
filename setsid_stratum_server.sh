@@ -22,6 +22,8 @@ StratumServer=$StratumInternalIP
 script_create_user=${dir}'/multipool/yiimp_multi/create_user_remote.sh'
 script_system_stratum=${dir}'/multipool/yiimp_multi/remote_system_stratum_server.sh'
 script_stratum=${dir}'/multipool/yiimp_multi/remote_stratum.sh'
+script_motd_web=${dir}'/multipool/yiimp_multi/motd.sh'
+script_harden_web=${dir}'/multipool/yiimp_multi/server_harden.sh'
 script_ssh=${dir}'/multipool/yiimp_multi/ssh.sh'
 
 # Additional files that need to be copied to the remote server
@@ -35,6 +37,8 @@ footer=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/stratum/90-footer'
 remote_create_user_path='/tmp/create_user_remote.sh'
 remote_system_stratum_path='/tmp/remote_system_stratum_server.sh'
 remote_stratum_path='/tmp/remote_stratum.sh'
+remote_motd_web_path='/tmp/motd.sh'
+remote_harden_web_path='/tmp/server_harden.sh'
 remote_ssh_path='/tmp/ssh.sh'
 
 #----------------------------------------------------------------------
@@ -93,6 +97,14 @@ stratum="base64 -d - > ${remote_stratum_path} <<< ${B64_stratum};"
 stratum="${stratum} chmod u+x ${remote_stratum_path};"
 stratum="${stratum} sh -c 'nohup ${remote_stratum_path}'"
 
+motd_web="base64 -d - > ${remote_motd_web_path} <<< ${B64_motd};"
+motd_web="${motd_web} chmod u+x ${remote_motd_web_path};"
+motd_web="${motd_web} sh -c 'nohup ${remote_motd_web_path}'"
+
+harden_web="base64 -d - > ${remote_harden_web_path} <<< ${B64_harden};"
+harden_web="${harden_web} chmod u+x ${remote_harden_web_path};"
+harden_web="${harden_web} sh -c 'nohup ${remote_harden_web_path}'"
+
 ssh="base64 -d - > ${remote_ssh_path} <<< ${B64_ssh};"
 ssh="${ssh} chmod u+x ${remote_ssh_path};"
 ssh="${ssh} sh -c 'nohup ${remote_ssh_path} > /dev/null 2>&1 &'"
@@ -110,4 +122,6 @@ cat $footer | setsid ssh ${SSH_OPTIONS} ${StratumUser}@${StratumServer} 'cat > /
 setsid ssh ${SSH_OPTIONS} ${StratumUser}@${StratumServer} "${system_user}"
 setsid ssh ${SSH_OPTIONS} ${StratumUser}@${StratumServer} "${system_stratum}"
 setsid ssh ${SSH_OPTIONS} ${StratumUser}@${StratumServer} "${stratum}"
+setsid ssh ${SSH_OPTIONS} ${StratumUser}@${StratumServer} "${motd_web}"
+setsid ssh ${SSH_OPTIONS} ${StratumUser}@${StratumServer} "${harden_web}"
 setsid ssh ${SSH_OPTIONS} ${StratumUser}@${StratumServer} "${ssh}"

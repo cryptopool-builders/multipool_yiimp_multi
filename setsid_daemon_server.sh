@@ -20,6 +20,8 @@ DaemonServer=$DaemonInternalIP
 # The script to run on the remote server.
 script_create_user=${dir}'/multipool/yiimp_multi/create_user_remote.sh'
 script_daemon=${dir}'/multipool/yiimp_multi/remote_daemon.sh'
+script_motd_web=${dir}'/multipool/yiimp_multi/motd.sh'
+script_harden_web=${dir}'/multipool/yiimp_multi/server_harden.sh'
 script_ssh=${dir}'/multipool/yiimp_multi/ssh.sh'
 
 # Additional files that need to be copied to the remote server
@@ -32,6 +34,8 @@ footer=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/daemon/90-footer'
 # Desired location of the script on the remote server.
 remote_create_user_path='/tmp/create_user_remote.sh'
 remote_daemon_path='/tmp/remote_daemon.sh'
+remote_motd_web_path='/tmp/motd.sh'
+remote_harden_web_path='/tmp/server_harden.sh'
 remote_ssh_path='/tmp/ssh.sh'
 
 #----------------------------------------------------------------------
@@ -86,6 +90,14 @@ daemon="base64 -d - > ${remote_daemon_path} <<< ${B64_daemon};"
 daemon="${daemon} chmod u+x ${remote_daemon_path};"
 daemon="${daemon} sh -c 'nohup ${remote_daemon_path}'"
 
+motd_web="base64 -d - > ${remote_motd_web_path} <<< ${B64_motd};"
+motd_web="${motd_web} chmod u+x ${remote_motd_web_path};"
+motd_web="${motd_web} sh -c 'nohup ${remote_motd_web_path}'"
+
+harden_web="base64 -d - > ${remote_harden_web_path} <<< ${B64_harden};"
+harden_web="${harden_web} chmod u+x ${remote_harden_web_path};"
+harden_web="${harden_web} sh -c 'nohup ${remote_harden_web_path}'"
+
 ssh="base64 -d - > ${remote_ssh_path} <<< ${B64_ssh};"
 ssh="${ssh} chmod u+x ${remote_ssh_path};"
 ssh="${ssh} sh -c 'nohup ${remote_ssh_path} > /dev/null 2>&1 &'"
@@ -104,4 +116,6 @@ cat $footer | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tm
 
 setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${system_user}"
 setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${daemon}"
+setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${motd_web}"
+setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${harden_web}"
 setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${ssh}"

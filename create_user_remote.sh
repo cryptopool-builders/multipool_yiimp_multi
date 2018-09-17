@@ -5,7 +5,7 @@
 # Updated by cryptopool.builders for crypto use...
 #####################################################
 
-# Need this inc ase user has a provider that offers private IP's and doesnt re-run the multipool installer after user creation
+# Need this in case user has a provider that offers private IP's and doesnt re-run the multipool installer after user creation
 
 source /etc/functions.sh
 
