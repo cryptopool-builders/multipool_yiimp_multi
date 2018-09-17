@@ -70,4 +70,5 @@ sudo sed -i 's|max_allowed_packet      = 16M|max_allowed_packet      = 64M|g' /e
 sudo sed -i 's/#bind-address=0.0.0.0/bind-address='$DBInternalIP'/g' /etc/mysql/my.cnf
 restart_service mysql;
 wait $!
+
 echo Database build complete...

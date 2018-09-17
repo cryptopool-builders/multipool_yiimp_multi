@@ -75,20 +75,25 @@ sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirrors.evowise.
 echo Updating system packages...
 hide_output sudo apt-get update;
 wait $!
+
 echo Upgrading system packages...
 if [ ! -f /boot/grub/menu.lst ]; then
 apt_get_quiet upgrade;
 wait $!
+
 else
 sudo rm /boot/grub/menu.lst
 hide_output sudo update-grub-legacy-ec2 -y;
 wait $!
+
 apt_get_quiet upgrade;
 wait $!
 fi
+
 echo Running Dist-Upgrade...
 apt_get_quiet dist-upgrade;
 wait $!
+
 echo Running Autoremove...
 apt_get_quiet autoremove;
 wait $!
@@ -110,11 +115,14 @@ if [ -f /usr/sbin/apache2 ]; then
 echo Removing apache...
 hide_output apt-get -y purge apache2 apache2-*;
 wait $!
+
 hide_output apt-get -y --purge autoremove;
 wait $!
 fi
+
 hide_output sudo apt-get update;
 wait $!
+
 apt_install libgmp3-dev libmysqlclient-dev libcurl4-gnutls-dev libkrb5-dev \
 libldap2-dev libidn11-dev gnutls-dev librtmp-dev build-essential libtool  \
 autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils \
