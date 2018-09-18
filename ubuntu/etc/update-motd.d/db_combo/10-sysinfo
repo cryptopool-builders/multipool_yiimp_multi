@@ -30,6 +30,7 @@ width=50
 RED=$'\033[00;31m'
 GREEN=$'\033[00;32m'
 RESTORE=$'\033[0m'
+site='/home/crypto-data/yiimp/site/stratum'
 echo "System information as of: $date"
 echo
 /usr/bin/landscape-sysinfo
@@ -37,7 +38,12 @@ echo
 echo "YiiMP Information:"
 printf "%$width.${width}s\n" "$divider"
 printf "$header" $RED"Warning:"$RESTORE "You are logged in to your db/stratum server"
-printf "$header" $RED"Warning:"$RESTORE $GREEN"All changes should be made through your web server"$RESTORE
+printf "$header" $RED"Warning:"$RESTORE $GREEN"All DB changes should be made through your web server"$RESTORE
+echo
+printf "$header" "Stratum Directory:" $site
+echo
+echo "To start|stop|restart a stratm use the following command..."
+echo "stratum start|stop|restart algo"
 echo
 echo "To reload this MOTD just type motd..."
 echo

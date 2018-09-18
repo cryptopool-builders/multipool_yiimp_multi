@@ -30,6 +30,7 @@ width=50
 RED=$'\033[00;31m'
 GREEN=$'\033[00;32m'
 RESTORE=$'\033[0m'
+daemon='/home/crypto-data/wallets'
 echo "System information as of: $date"
 echo
 /usr/bin/landscape-sysinfo
@@ -37,7 +38,9 @@ echo
 echo "YiiMP Information:"
 printf "%$width.${width}s\n" "$divider"
 printf "$header" $RED"Warning:"$RESTORE "You are logged in to your daemon server"
-printf "$header" $RED"Warning:"$RESTORE $GREEN"All changes should be made through your web server"$RESTORE
+printf "$header" $RED"Warning:"$RESTORE $GREEN"All ports are blocked by default, you must run sudo ufw allow port"$RESTORE
+printf "$header" "         "$GREEN"to open the RPC connection to the YiiMP backend"$RESTORE
+printf "$header" "Daemon Directory:" $daemon
 echo
 echo "To reload this MOTD just type motd..."
 echo
