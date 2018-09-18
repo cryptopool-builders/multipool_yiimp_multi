@@ -10,8 +10,8 @@
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 # User credentials for the remote server.
-DaemonUser=$DaemonUser
-DaemonPass=$DaemonPass
+DaemonUser='$DaemonUser'
+DaemonPass='$DaemonPass'
 dir=$HOME
 
 # The server hostname.

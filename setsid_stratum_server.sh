@@ -11,8 +11,8 @@ source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 
 # User credentials for the remote server.
-StratumUser=$StratumUser
-StratumPass=$StratumPass
+StratumUser='$StratumUser'
+StratumPass='$StratumPass'
 dir=$HOME
 
 # The server hostname.

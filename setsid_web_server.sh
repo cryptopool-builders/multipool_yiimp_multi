@@ -10,8 +10,8 @@
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 # User credentials for the remote server.
-WebUser=$WebUser
-WebPass=$WebPass
+WebUser='$WebUser'
+WebPass='$WebPass'
 dir=$HOME
 
 # The server hostname.
