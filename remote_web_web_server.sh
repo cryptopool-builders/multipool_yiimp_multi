@@ -159,7 +159,7 @@ if [[ ("$InstallSSL" == "y" || "$InstallSSL" == "Y" || "$InstallSSL" == "yes" ||
 echo Installing LetsEncrypt and setting up SSL...
 apt_install letsencrypt;
 wait $!
-hide_output sudo letsencrypt certonly -a webroot --staging --webroot-path=$STORAGE_ROOT/yiimp/site/web --email "$SupportEmail" --agree-tos -d "$DomainName";
+hide_output sudo letsencrypt certonly -a webroot --webroot-path=$STORAGE_ROOT/yiimp/site/web --email "$SupportEmail" --agree-tos -d "$DomainName";
 wait $!
 sudo rm /etc/nginx/sites-available/$DomainName.conf
 echo Generating DHPARAM, this may take awhile...
@@ -429,7 +429,7 @@ if [[ ("$InstallSSL" == "y" || "$InstallSSL" == "Y" || "$InstallSSL" == "yes" ||
 echo Installing LetsEncrypt and setting up SSL...
 apt_install letsencrypt;
 wait $!
-hide_output sudo letsencrypt certonly -a webroot --staging --webroot-path=$STORAGE_ROOT/yiimp/site/web --email "$SupportEmail" --agree-tos -d "$DomainName" -d www."$DomainName";
+hide_output sudo letsencrypt certonly -a webroot --webroot-path=$STORAGE_ROOT/yiimp/site/web --email "$SupportEmail" --agree-tos -d "$DomainName" -d www."$DomainName";
 wait $!
 sudo rm /etc/nginx/sites-available/$DomainName.conf
 echo Generating DHPARAM, this may take awhile...
