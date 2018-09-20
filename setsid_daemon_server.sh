@@ -10,8 +10,8 @@
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 # User credentials for the remote server.
-DaemonUser='$DaemonUser'
-DaemonPass='$DaemonPass'
+DaemonUser=$DaemonUser
+DaemonPass="$DaemonPass"
 dir=$HOME
 
 # The server hostname.
@@ -45,7 +45,7 @@ remote_ssh_path='/tmp/ssh.sh'
 SSH_ASKPASS_SCRIPT=/tmp/ssh-askpass-script
 cat > ${SSH_ASKPASS_SCRIPT} <<EOL
 #!/bin/bash
-echo "${DaemonPass}"
+echo '${DaemonPass}'
 EOL
 chmod u+x ${SSH_ASKPASS_SCRIPT}
 

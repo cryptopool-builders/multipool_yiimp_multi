@@ -10,8 +10,8 @@
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 # User credentials for the remote server.
-WebUser='$WebUser'
-WebPass='$WebPass'
+WebUser=$WebUser
+WebPass="$WebPass"
 dir=$HOME
 
 # The server hostname.
@@ -53,7 +53,7 @@ remote_ssh_path='/tmp/ssh.sh'
 SSH_ASKPASS_SCRIPT=/tmp/ssh-askpass-script
 cat > ${SSH_ASKPASS_SCRIPT} <<EOL
 #!/bin/bash
-echo "${WebPass}"
+echo '${WebPass}'
 EOL
 chmod u+x ${SSH_ASKPASS_SCRIPT}
 

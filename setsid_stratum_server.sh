@@ -11,8 +11,8 @@ source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 
 # User credentials for the remote server.
-StratumUser='$StratumUser'
-StratumPass='$StratumPass'
+StratumUser=$StratumUser
+StratumPass="StratumPass"
 dir=$HOME
 
 # The server hostname.
@@ -48,7 +48,7 @@ remote_ssh_path='/tmp/ssh.sh'
 SSH_ASKPASS_SCRIPT=/tmp/ssh-askpass-script
 cat > ${SSH_ASKPASS_SCRIPT} <<EOL
 #!/bin/bash
-echo "${StratumPass}"
+echo '${StratumPass}'
 EOL
 chmod u+x ${SSH_ASKPASS_SCRIPT}
 
