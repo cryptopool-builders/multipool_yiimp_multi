@@ -127,6 +127,41 @@ sudo sed -i 's/database = yaamp/database = yiimpfrontend/g' *.conf
 sudo sed -i 's/username = root/username = stratum/g' *.conf
 sudo sed -i 's/password = patofpaq/password = '$StratumUserDBPassword'/g' *.conf
 
+# copy blocknotify to daemon servers
+# set daemon user and password
+DaemonUser=$DaemonUser
+DaemonPass="$DaemonPass"
+DaemonServer=$DaemonInternalIP
+
+# set script paths
+script_blocknotify='$STORAGE_ROOT/yiimp/site/stratum/blocknotify'
+
+# set ssh Stratum
+SSH_ASKPASS_SCRIPT=/tmp/ssh-askpass-script
+cat > ${SSH_ASKPASS_SCRIPT} <<EOL
+#!/bin/bash
+echo '${DaemonPass}'
+EOL
+chmod u+x ${SSH_ASKPASS_SCRIPT}
+
+# Set no display, necessary for ssh to play nice with setsid and SSH_ASKPASS.
+export DISPLAY=:0
+
+# Tell SSH to read in the output of the provided script as the password.
+# We still have to use setsid to eliminate access to a terminal and thus avoid
+# it ignoring this and asking for a password.
+export SSH_ASKPASS=${SSH_ASKPASS_SCRIPT}
+
+# LogLevel error is to suppress the hosts warning. The others are
+# necessary if working with development servers with self-signed
+# certificates.
+SSH_OPTIONS="-oLogLevel=error"
+SSH_OPTIONS="${SSH_OPTIONS} -oStrictHostKeyChecking=no"
+SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
+
+# Execute scripts on remote server
+cat $script_blocknotify | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tmp/blocknotify'
+
 echo Stratum build complete...
 
 cd $HOME/multipool/yiimp_multi

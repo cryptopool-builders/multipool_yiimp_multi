@@ -23,6 +23,7 @@ script_system_web=${dir}'/multipool/yiimp_multi/remote_system_web_server.sh'
 script_web_web=${dir}'/multipool/yiimp_multi/remote_web_web_server.sh'
 script_nginx_web=${dir}'/multipool/yiimp_multi/nginx_upgrade.sh'
 script_clean_web=${dir}'/multipool/yiimp_multi/server_cleanup.sh'
+script_sendmail_web=${dir}'/multipool/yiimp_multi/send_mail.sh'
 script_motd_web=${dir}'/multipool/yiimp_multi/motd.sh'
 script_harden_web=${dir}'/multipool/yiimp_multi/server_harden.sh'
 script_ssh=${dir}'/multipool/yiimp_multi/ssh.sh'
@@ -42,6 +43,7 @@ remote_system_web_path='/tmp/remote_system_web_server.sh'
 remote_web_web_path='/tmp/remote_web_web_server.sh'
 remote_nginx_web_path='/tmp/nginx_upgrade.sh'
 remote_clean_web_path='/tmp/server_cleanup.sh'
+remote_sendmail_web_path='/tmp/send_mail.sh'
 remote_motd_web_path='/tmp/motd.sh'
 remote_harden_web_path='/tmp/server_harden.sh'
 remote_ssh_path='/tmp/ssh.sh'
@@ -83,6 +85,7 @@ SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
 # Load in a base 64 encoded version of the script.
 B64_user=`base64 --wrap=0 ${script_create_user}`
 B64_system=`base64 --wrap=0 ${script_system_web}`
+B64_mail=`base64 --wrap=0 ${script_sendmail_web}`
 B64_web=`base64 --wrap=0 ${script_web_web}`
 B64_nginx=`base64 --wrap=0 ${script_nginx_web}`
 B64_clean=`base64 --wrap=0 ${script_clean_web}`
@@ -93,6 +96,7 @@ B64_ssh=`base64 --wrap=0 ${script_ssh}`
 # The command that will run remotely. This unpacks the
 # base64-encoded script, makes it executable, and then
 # executes it as a background task.
+
 system_user="base64 -d - > ${remote_create_user_path} <<< ${B64_user};"
 system_user="${system_user} chmod u+x ${remote_create_user_path};"
 system_user="${system_user} sh -c 'nohup ${remote_create_user_path}'"
@@ -121,6 +125,10 @@ harden_web="base64 -d - > ${remote_harden_web_path} <<< ${B64_harden};"
 harden_web="${harden_web} chmod u+x ${remote_harden_web_path};"
 harden_web="${harden_web} sh -c 'nohup ${remote_harden_web_path}'"
 
+system_mail="base64 -d - > ${remote_sendmail_web_path} <<< ${B64_mail};"
+system_mail="${system_mail} chmod u+x ${remote_sendmail_web_path};"
+system_mail="${system_mail} sh -c 'nohup ${remote_sendmail_web_path}'"
+
 ssh="base64 -d - > ${remote_ssh_path} <<< ${B64_ssh};"
 ssh="${ssh} chmod u+x ${remote_ssh_path};"
 ssh="${ssh} sh -c 'nohup ${remote_ssh_path} > /dev/null 2>&1 &'"
@@ -142,6 +150,7 @@ setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${web_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${nginx_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${clean_web}"
+setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_mail}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${motd_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${harden_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${ssh}"

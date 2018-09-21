@@ -142,5 +142,8 @@ wait $!
 cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 sudo rm -r openssl-1.0.2g.tar.gz openssl-1.0.2g
 
+sudo cp -r /tmp/blocknotify /usr/bin
+sudo chmod +x /usr/bin/blocknotify
+
 echo Daemon setup completed...
 exit 0
