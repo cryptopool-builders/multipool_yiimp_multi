@@ -3,11 +3,9 @@
 # Source https://mailinabox.email/ https://github.com/mail-in-a-box/mailinabox
 # Updated by cryptopool.builders for crypto use...
 #####################################################
-
-echo "Starting Remote Web Server Build..."
-clear
 source /etc/functions.sh
 source /etc/multipool.conf
+echo "Starting Remote Web Server Build..."
 if [[ ! -e '$STORAGE_ROOT/yiimp/' ]]; then
 sudo mkdir -p $STORAGE_ROOT/yiimp/
 sudo cp -r /tmp/.yiimp.conf $STORAGE_ROOT/yiimp/

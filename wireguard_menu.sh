@@ -6,12 +6,13 @@
 source /etc/functions.sh
 cd $HOME/multipool/yiimp_multi
 
-RESULT=$(dialog --stdout --title "Ultimate Crypto-Server Setup Installer" --menu "Choose one" -1 60 5 \
+RESULT=$(dialog --stdout --title "Ultimate Crypto-Server Setup Installer" --menu "Choose one" -1 60 6 \
 1 "Install Wireguard on DB Server or DB-Stratum Server" \
 2 "Install Wireguard on Web Server" \
 3 "Install Wireguard on Stratum Server" \
 4 "Install Wireguard on Daemon Server" \
-5 Exit)
+5 "Install Wireguard on additional Server(s)" \
+6 Exit)
 if [ $RESULT = ]
 then
 exit ;
@@ -77,6 +78,65 @@ exit ;
 fi
 
 if [ $RESULT = 5 ]
+then
+clear;
+source wire_warning.sh
+
+if [ -z "$AdditionalInternalIP" ]; then
+DEFAULT_AdditionalInternalIP='10.0.0.x'
+input_box "Additional Server Private IP" \
+"Enter the new Private IP of this server.
+\n\nMake sure not to reuse an IP already in use!
+\n\nPrivate IP address:" \
+$DEFAULT_AdditionalInternalIP \
+AdditionalInternalIP
+
+if [ -z "$AdditionalInternalIP" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
+if [ -z "$DBServerIP" ]; then
+DEFAULT_DBServerIP='x.x.x.x'
+input_box "DB Server Public IP" \
+"Enter the Public IP of your DB Server.
+\n\nDB Public IP address:" \
+$DEFAULT_DBServerIP \
+DBServerIP
+
+if [ -z "$DBServerIP" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
+if [ -z "$DBPublicKey" ]; then
+DEFAULT_DBPublicKey='PublicKey'
+input_box "DB Server Public Key" \
+"Enter the Public Key of your DB Server.
+\n\nDB Public Key:" \
+$DEFAULT_DBPublicKey \
+DBPublicKey
+
+if [ -z "$DBPublicKey" ]; then
+user hit ESC/cancel
+exit
+fi
+fi
+
+echo 'server_type='additional'
+AdditionalInternalIP='"${AdditionalInternalIP}"'
+DBInternalIP='10.0.0.2'
+DBServerIP='"${DBServerIP}"'
+DBPublicKey='"${DBPublicKey}"'
+' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard.conf >/dev/null 2>&1;
+cd $HOME/multipool/yiimp_multi
+source wireguard.sh;
+exit ;
+fi
+
+if [ $RESULT = 6 ]
 then
 clear;
 exit;
