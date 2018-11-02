@@ -69,6 +69,23 @@ exit
 fi
 fi
 
+if [ -z "$blckntifypass" ]; then
+DEFAULT_blckntifypass=blocknotifypassword
+input_box "Blocknotify Password" \
+"Enter the existing blocknotify password from the first stratum server.
+\n\nTo get this log in to your first stratum server and type:
+\n\ncat /home/crypto-data/yiimp/site/stratum/config/a5a.conf
+\n\nThe blocknotify passowrd is the first password in the TCP section.
+\n\nStratum URL:" \
+$DEFAULT_blckntifypass \
+blckntifypass
+
+if [ -z "$blckntifypass" ]; then
+# user hit ESC/cancel
+exit
+fi
+fi
+
 #Generate random conf file name, random StratumDBUser and StratumDBPassword
 generate=$(openssl rand -base64 9 | tr -d "=+/")
 StratumDBUser=$(openssl rand -base64 9 | tr -d "=+/")
@@ -80,6 +97,8 @@ echo 'STORAGE_USER='"${STORAGE_USER}"'
 STORAGE_ROOT='"${STORAGE_ROOT}"'
 DomainName='"${DomainName}"'
 StratumURL='"${StratumURL}"'
+DBInternalIP='"${DBInternalIP}"'
+blckntifypass='"${blckntifypass}"'
 DBRootPassword='"'"''"${DBRootPassword}"''"'"'
 StratumDBUser='"'"''"${StratumDBUser}"''"'"'
 StratumUserDBPassword='"'"''"${StratumUserDBPassword}"''"'"'
@@ -90,4 +109,10 @@ StratumPass='"'"''"${StratumPass}"''"'"'
 YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.$generate.conf >/dev/null 2>&1
 
-sudo cp -r $STORAGE_ROOT/yiimp/.$generate.conf $STORAGE_ROOT/yiimp/.newconf.conf
+# Copy the new config to a static Name
+if [ -f $STORAGE_ROOT/yiimp/.newconf.conf ]; then
+  sudo rm -r $STORAGE_ROOT/yiimp/.newconf.conf
+  sudo cp -r $STORAGE_ROOT/yiimp/.$generate.conf $STORAGE_ROOT/yiimp/.newconf.conf
+else
+  sudo cp -r $STORAGE_ROOT/yiimp/.$generate.conf $STORAGE_ROOT/yiimp/.newconf.conf
+fi

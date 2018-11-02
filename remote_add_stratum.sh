@@ -62,7 +62,7 @@ sudo sed -i 's/password = tu8tu5/password = '$blckntifypass'/g' *.conf
 sudo sed -i 's/server = yaamp.com/server = '$StratumURL'/g' *.conf
 sudo sed -i 's/host = yaampdb/host = '$DBInternalIP'/g' *.conf
 sudo sed -i 's/database = yaamp/database = yiimpfrontend/g' *.conf
-sudo sed -i 's/username = root/username = stratum/g' *.conf
+sudo sed -i 's/username = root/username = '$StratumDBUser'/g' *.conf
 sudo sed -i 's/password = patofpaq/password = '$StratumUserDBPassword'/g' *.conf
 
 echo Stratum build complete...
