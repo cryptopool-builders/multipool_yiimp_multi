@@ -8,62 +8,62 @@ source /etc/functions.sh
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 
 # Get the IP addresses of the local network interface(s).
-if [ -z "$StratumInternalIP" ]; then
-DEFAULT_StratumInternalIP='10.0.0.x'
+if [ -z "$NewStratumInternalIP" ]; then
+DEFAULT_NewStratumInternalIP='10.0.0.x'
 input_box "Stratum Server Private IP" \
 "Enter the private IP address of the Stratum Server, as given to you by your provider.
 \n\nIf you do not have one from your provider enter the IP you assigned with Wireguard.
 \n\nPrivate IP address:" \
-$DEFAULT_StratumInternalIP \
-StratumInternalIP
+$DEFAULT_NewStratumInternalIP \
+NewStratumInternalIP
 
-if [ -z "$StratumInternalIP" ]; then
+if [ -z "$NewStratumInternalIP" ]; then
 user hit ESC/cancel
 exit
 fi
 fi
 
-if [ -z "$StratumUser" ]; then
-DEFAULT_StratumUser='yiimpadmin'
+if [ -z "$NewStratumUser" ]; then
+DEFAULT_NewStratumUser='yiimpadmin'
 input_box "Stratum Server User Name" \
 "Enter the user name of the Stratum Server.
 \n\nThis is required for setup to complete.
 \n\nStratum Server User Name:" \
-$DEFAULT_StratumUser \
-StratumUser
+$DEFAULT_NewStratumUser \
+NewStratumUser
 
-if [ -z "$StratumUser" ]; then
+if [ -z "$NewStratumUser" ]; then
 user hit ESC/cancel
 exit
 fi
 fi
 
-if [ -z "$StratumPass" ]; then
-DEFAULT_StratumPass='password'
+if [ -z "$NewStratumPass" ]; then
+DEFAULT_NewStratumPass='password'
 input_box "Stratum Server User Password" \
 "Enter the user password of the Stratum Server.
 \n\nThis is required for setup to complete.
 \n\nWhen pasting your password CTRL+V does NOT work, you must either SHIFT+RightMouseClick or SHIFT+INSERT!!
 \n\nStratum Server User Password:" \
-$DEFAULT_StratumPass \
-StratumPass
+$DEFAULT_NewStratumPass \
+NewStratumPass
 
-if [ -z "$StratumPass" ]; then
+if [ -z "$NewStratumPass" ]; then
 user hit ESC/cancel
 exit
 fi
 fi
 
-if [ -z "$StratumURL" ]; then
-DEFAULT_StratumURL=stratum.$DomainName
+if [ -z "$NewStratumURL" ]; then
+DEFAULT_NewStratumURL=stratum.$DomainName
 input_box "Stratum URL" \
 "Enter your stratum URL. It is recommended to use another subdomain such as stratum.$DomainName
 \n\nDo not add www. to the domain name.
 \n\nStratum URL:" \
-$DEFAULT_StratumURL \
-StratumURL
+$DEFAULT_NewStratumURL \
+NewStratumURL
 
-if [ -z "$StratumURL" ]; then
+if [ -z "$NewStratumURL" ]; then
 # user hit ESC/cancel
 exit
 fi
@@ -75,8 +75,9 @@ input_box "Blocknotify Password" \
 "Enter the existing blocknotify password from the first stratum server.
 \n\nTo get this log in to your first stratum server and type:
 \n\ncat /home/crypto-data/yiimp/site/stratum/config/a5a.conf
-\n\nThe blocknotify passowrd is the first password in the TCP section.
-\n\nStratum URL:" \
+\n\nThe blocknotify password is the first password in the TCP section.
+\n\nRemember to shift + right click to paste!
+\n\nBlocknotify Password:" \
 $DEFAULT_blckntifypass \
 blckntifypass
 
@@ -96,15 +97,15 @@ StratumUserDBPassword=$(openssl rand -base64 29 | tr -d "=+/")
 echo 'STORAGE_USER='"${STORAGE_USER}"'
 STORAGE_ROOT='"${STORAGE_ROOT}"'
 DomainName='"${DomainName}"'
-StratumURL='"${StratumURL}"'
+StratumURL='"${NewStratumURL}"'
 DBInternalIP='"${DBInternalIP}"'
 blckntifypass='"${blckntifypass}"'
 DBRootPassword='"'"''"${DBRootPassword}"''"'"'
 StratumDBUser='"'"''"${StratumDBUser}"''"'"'
 StratumUserDBPassword='"'"''"${StratumUserDBPassword}"''"'"'
-StratumInternalIP='"${StratumInternalIP}"'
-StratumUser='"${StratumUser}"'
-StratumPass='"'"''"${StratumPass}"''"'"'
+StratumInternalIP='"${NewStratumInternalIP}"'
+StratumUser='"${NewStratumUser}"'
+StratumPass='"'"''"${NewStratumPass}"''"'"'
 # Unless you do some serious modifications this installer will not work with any other repo of yiimp!
 YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.$generate.conf >/dev/null 2>&1
