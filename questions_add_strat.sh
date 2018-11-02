@@ -90,4 +90,4 @@ StratumPass='"'"''"${StratumPass}"''"'"'
 YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.$generate.conf >/dev/null 2>&1
 
-newconf=$STORAGE_ROOT/yiimp/.$generate.conf
+sudo cp -r $STORAGE_ROOT/yiimp/.$generate.conf $STORAGE_ROOT/yiimp/.newconf.conf
