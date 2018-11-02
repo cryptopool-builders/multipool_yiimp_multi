@@ -134,7 +134,10 @@ DaemonPass="$DaemonPass"
 DaemonServer=$DaemonInternalIP
 
 # set script paths
-script_blocknotify='$STORAGE_ROOT/yiimp/site/stratum/blocknotify'
+script_blocknotify="$STORAGE_ROOT/yiimp/site/stratum/blocknotify"
+
+# Desired location of the scripts on the remote server.
+remote_script_blocknotify_path="/tmp/blocknotify"
 
 # set ssh Stratum
 SSH_ASKPASS_SCRIPT=/tmp/ssh-askpass-script
@@ -159,8 +162,17 @@ SSH_OPTIONS="-oLogLevel=error"
 SSH_OPTIONS="${SSH_OPTIONS} -oStrictHostKeyChecking=no"
 SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
 
+# Load in a base 64 encoded version of the script.
+B64_blocknotify=`base64 --wrap=0 ${script_blocknotify}`
+
+# The command that will run remotely. This unpacks the
+# base64-encoded script, makes it executable, and then
+# executes it as a background task.
+blocknotify="base64 -d - > ${remote_script_blocknotify_path} <<< ${B64_blocknotify};"
+blocknotify="${blocknotify} chmod +x ${remote_script_blocknotify_path}; > /dev/null 2>&1 &"
+
 # Execute scripts on remote server
-cat $script_blocknotify | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tmp/blocknotify'
+setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${blocknotify}"
 
 echo Stratum build complete...
 
