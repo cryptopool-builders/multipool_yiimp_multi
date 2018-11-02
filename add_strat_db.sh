@@ -3,7 +3,7 @@
 #####################################################
 
 source /etc/functions.sh
-source $STORAGE_ROOT/yiimp/.$generate.conf
+source $STORAGE_ROOT/yiimp/.newconf.conf
 
 
 echo Creating New DB users for YiiMP...
