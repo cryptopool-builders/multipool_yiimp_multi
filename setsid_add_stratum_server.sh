@@ -8,7 +8,7 @@
 #----------------------------------------------------------------------
 
 source /etc/multipool.conf
-source $STORAGE_ROOT/yiimp/.$generate.conf
+source $STORAGE_ROOT/yiimp/.newconf.conf
 
 # User credentials for the remote server.
 StratumUser=$StratumUser
@@ -28,7 +28,7 @@ script_ssh=${dir}'/multipool/yiimp_multi/ssh.sh'
 
 
 # Additional files that need to be copied to the remote server
-conf=${STORAGE_ROOT}'/yiimp/.$generate.conf'
+conf=${STORAGE_ROOT}'/yiimp/.newconf.conf'
 screens=${dir}'/multipool/yiimp_multi/ubuntu/screens_stratum'
 header=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/stratum/00-header'
 sysinfo=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/stratum/10-sysinfo'
