@@ -79,7 +79,7 @@ SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
 # Load in a base 64 encoded version of the script.
 B64_user=`base64 --wrap=0 ${script_create_user}`
 B64_system=`base64 --wrap=0 ${script_system_stratum}`
-B64_stratum=`base64 --wrap=0 ${script_add_stratum}`
+B64_stratum=`base64 --wrap=0 ${script_stratum}`
 B64_ssh=`base64 --wrap=0 ${script_ssh}`
 
 # The command that will run remotely. This unpacks the
@@ -94,9 +94,9 @@ system_stratum="base64 -d - > ${remote_system_stratum_path} <<< ${B64_system};"
 system_stratum="${system_stratum} chmod u+x ${remote_system_stratum_path};"
 system_stratum="${system_stratum} sh -c 'nohup ${remote_system_stratum_path}'"
 
-stratum="base64 -d - > ${remote_add_stratum_path} <<< ${B64_stratum};"
-stratum="${stratum} chmod u+x ${remote_add_stratum_path};"
-stratum="${stratum} sh -c 'nohup ${remote_add_stratum_path}'"
+stratum="base64 -d - > ${remote_stratum_path} <<< ${B64_stratum};"
+stratum="${stratum} chmod u+x ${remote_stratum_path};"
+stratum="${stratum} sh -c 'nohup ${remote_stratum_path}'"
 
 motd_web="base64 -d - > ${remote_motd_web_path} <<< ${B64_motd};"
 motd_web="${motd_web} chmod u+x ${remote_motd_web_path};"

@@ -9,6 +9,8 @@
 
 source /etc/functions.sh
 
+echo Making proper server configurations...
+
 # If the machine is behind a NAT, inside a VM, etc., it may not know
 # its IP address on the public network / the Internet. Ask the Internet
 # and possibly confirm with user.
