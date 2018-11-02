@@ -105,7 +105,7 @@ input_box "Stratum Server User Password" \
 \n\nWhen pasting your password CTRL+V does NOT work, you must either SHIFT+RightMouseClick or SHIFT+INSERT!!
 \n\nStratum Server User Password:" \
 $DEFAULT_StratumPass \
-DaemonPass
+StratumPass
 
 if [ -z "$StratumPass" ]; then
 user hit ESC/cancel

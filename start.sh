@@ -34,8 +34,6 @@ fi
 source warning.sh
 source menu.sh
 cd ~
-sudo rm -r $HOME/multipool
-sudo rm -r /usr/bin/multipool
 clear
 echo Installation of your YiiMP multi server is now completed.
 echo You *MUST* reboot this machine to finalize the system updates and folder permissions! YiiMP will not function until a reboot is performed!

@@ -39,7 +39,10 @@ echo "YiiMP Information:"
 printf "%$width.${width}s\n" "$divider"
 printf "$header" $RED"Warning:"$RESTORE "You are logged in to your daemon server"
 printf "$header" $RED"Warning:"$RESTORE $GREEN"All ports are blocked by default, you must run sudo ufw allow port"$RESTORE
-printf "$header" "         "$GREEN"to open the RPC connection to the YiiMP backend"$RESTORE
+printf "          "$GREEN"to open the RPC connection to the YiiMP backend"$RESTORE
+echo
+echo
+echo
 printf "$header" "Daemon Directory:" $daemon
 echo
 echo "To reload this MOTD just type motd..."
