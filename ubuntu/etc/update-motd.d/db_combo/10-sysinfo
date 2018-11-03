@@ -40,6 +40,8 @@ printf "%$width.${width}s\n" "$divider"
 printf "$header" $RED"Warning:"$RESTORE "You are logged in to your db/stratum server"
 printf "$header" $RED"Warning:"$RESTORE $GREEN"All DB changes should be made through your web server"$RESTORE
 echo
+printf "$header" $RED"Warning:"$RESTORE $GREEN"All ports are blocked by default, you must run sudo ufw allow port"$RESTORE
+echo
 printf "$header" "Stratum Directory:" $site
 echo
 echo "To start|stop|restart a stratm use the following command..."

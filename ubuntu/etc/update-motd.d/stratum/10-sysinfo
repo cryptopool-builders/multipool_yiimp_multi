@@ -39,6 +39,13 @@ printf "%$width.${width}s\n" "$divider"
 printf "$header" $RED"Warning:"$RESTORE "You are logged in to your stratum server"
 printf "$header" $RED"Warning:"$RESTORE $GREEN"All changes should be made through your web server"$RESTORE
 echo
+printf "$header" $RED"Warning:"$RESTORE $GREEN"All ports are blocked by default, you must run sudo ufw allow port"$RESTORE
+echo
+printf "$header" "Stratum Directory:" $site
+echo
+echo "To start|stop|restart a stratm use the following command..."
+echo "stratum start|stop|restart algo"
+echo
 echo "To reload this MOTD just type motd..."
 echo
 echo "Donations for continued support of this script are welcomed at:"
