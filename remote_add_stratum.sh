@@ -29,8 +29,6 @@ sudo cp -a config.sample/. $STORAGE_ROOT/yiimp/site/stratum/config
 sudo cp -r stratum $STORAGE_ROOT/yiimp/site/stratum
 sudo cp -r run.sh $STORAGE_ROOT/yiimp/site/stratum
 cd $STORAGE_ROOT/yiimp/yiimp_setup/yiimp
-sudo cp -r $STORAGE_ROOT/yiimp/yiimp_setup/yiimp/blocknotify/blocknotify $STORAGE_ROOT/yiimp/site/stratum
-
 sudo rm -r $STORAGE_ROOT/yiimp/site/stratum/config/run.sh
 
 echo '#!/bin/bash

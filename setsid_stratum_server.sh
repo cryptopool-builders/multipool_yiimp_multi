@@ -80,6 +80,8 @@ SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
 B64_user=`base64 --wrap=0 ${script_create_user}`
 B64_system=`base64 --wrap=0 ${script_system_stratum}`
 B64_stratum=`base64 --wrap=0 ${script_stratum}`
+B64_motd=`base64 --wrap=0 ${script_motd_web}`
+B64_harden=`base64 --wrap=0 ${script_harden_web}`
 B64_ssh=`base64 --wrap=0 ${script_ssh}`
 
 # The command that will run remotely. This unpacks the
