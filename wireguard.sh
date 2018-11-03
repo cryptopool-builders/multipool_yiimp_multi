@@ -96,8 +96,6 @@ elif [[ ("$server_type" == "stratum") ]]; then
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   stratinternal=$StratumInternalIP
   stratpublic=$PUBLIC_IP
-  sudo rm -r $HOME/multipool
-  sudo rm -r /usr/bin/multipool
   clear
 
   echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${stratpublic}"':6121 allowed-ips ${webinternal}/32
@@ -124,8 +122,6 @@ elif [[ ("$server_type" == "additional") ]]; then
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   additionalinternal=$AdditionalInternalIP
   additionalpublic=$PUBLIC_IP
-  sudo rm -r $HOME/multipool
-  sudo rm -r /usr/bin/multipool
   clear
 
   echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${additionalpublic}"':6121 allowed-ips ${webinternal}/32
@@ -152,13 +148,11 @@ elif [[ ("$server_type" == "daemon") ]]; then
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   daemoninternal=$DaemonInternalIP
   daemonpublic=$PUBLIC_IP
-  sudo rm -r $HOME/multipool
-  sudo rm -r /usr/bin/multipool
   clear
 
   echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${daemonpublic}"':6121 allowed-ips ${webinternal}/32
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_command.conf >/dev/null 2>&1;
-  
+
 echo "Copy this command and run it on the DB Server, Web Server, and Stratum Server"
 echo
 echo "sudo wg set wg0 peer ${mypublic} endpoint ${daemonpublic}:6121 allowed-ips ${daemoninternal}/32"
