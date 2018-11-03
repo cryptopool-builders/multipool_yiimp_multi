@@ -30,6 +30,7 @@ width=50
 RED=$'\033[00;31m'
 GREEN=$'\033[00;32m'
 RESTORE=$'\033[0m'
+site='/home/crypto-data/yiimp/site/stratum'
 echo "System information as of: $date"
 echo
 /usr/bin/landscape-sysinfo
