@@ -13,3 +13,4 @@ source setsid_add_stratum_server.sh
 cd ~
 clear
 echo Installation of your YiiMP additional stratum server is now completed.
+exit 0
