@@ -727,10 +727,10 @@ sudo sed -i "s|serverconfig.php|$STORAGE_ROOT/yiimp/site/configuration/servercon
 sudo sed -i "s|serverconfig.php|$STORAGE_ROOT/yiimp/site/configuration/serverconfig.php|g" $STORAGE_ROOT/yiimp/site/web/yaamp/yiic.php
 sudo sed -i "s|serverconfig.php|$STORAGE_ROOT/yiimp/site/configuration/serverconfig.php|g" $STORAGE_ROOT/yiimp/site/web/yaamp/modules/thread/CronjobController.php
 if [ -z "$StratumInternalIP" ]; then
-sudo sed -i '/# onlynet=ipv4/i rpcallowip='$WebInternalIP'\nrpcallowip='$DBInternalIP'' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/coin_form.php
+sudo sed -i '/# onlynet=ipv4/i\        echo "rpcallowip='$WebInternalIP'\\n";\n        echo "rpcallowip='$DBInternalIP'\\n";' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/coin_form.php
 sudo sed -i "s|blocknotify=/var/stratum/blocknotify 127.0.0.1:$port {$coin->id} %s\n|blocknotify=blocknotify $DBInternalIP:$port {$coin->id} %s\n|g" $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/coin_form.php
 else
-sudo sed -i '/# onlynet=ipv4/i rpcallowip='$WebInternalIP'\nrpcallowip='$DBInternalIP'\nrpcallowip='$StratumInternalIP'' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/coin_form.php
+sudo sed -i '/# onlynet=ipv4/i\        echo "rpcallowip='$WebInternalIP'\\n";\n        echo "rpcallowip='$DBInternalIP'\\n";\n        echo "rpcallowip='$StratumInternalIP'\\n";' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/coin_form.php
 sudo sed -i "s|blocknotify=/var/stratum/blocknotify 127.0.0.1:$port {$coin->id} %s\n|blocknotify=blocknotify $StratumInternalIP:$port {$coin->id} %s\n|g" $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/coin_form.php
 fi
 sudo sed -i "s|/root/backup|$STORAGE_ROOT/yiimp/site/backup|g" $STORAGE_ROOT/yiimp/site/web/yaamp/core/backend/system.php
