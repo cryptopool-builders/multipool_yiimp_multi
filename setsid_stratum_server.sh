@@ -12,7 +12,7 @@ source $STORAGE_ROOT/yiimp/.yiimp.conf
 
 # User credentials for the remote server.
 StratumUser=$StratumUser
-StratumPass="StratumPass"
+StratumPass="$StratumPass"
 dir=$HOME
 
 # The server hostname.
