@@ -121,3 +121,5 @@ setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${daemon}"
 setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${motd_web}"
 setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${harden_web}"
 setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${ssh}"
+
+cd $HOME/multipool/yiimp_multi

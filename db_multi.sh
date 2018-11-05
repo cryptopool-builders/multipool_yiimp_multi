@@ -69,6 +69,7 @@ sudo sed -i '/wait_timeout/c\wait_timeout            = 60' /etc/mysql/my.cnf
 sudo sed -i '/max_allowed_packet/c\max_allowed_packet      = 64M' /etc/mysql/my.cnf
 sudo sed -i 's/#bind-address=0.0.0.0/bind-address='$DBInternalIP'/g' /etc/mysql/my.cnf
 restart_service mysql;
-wait $!
 
 echo Database build complete...
+
+cd $HOME/multipool/yiimp_multi

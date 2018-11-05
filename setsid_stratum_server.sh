@@ -163,3 +163,5 @@ SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
 
 # Execute scripts on remote server
 cat $script_blocknotify | setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} 'cat > /tmp/blocknotify'
+
+cd $HOME/multipool/yiimp_multi

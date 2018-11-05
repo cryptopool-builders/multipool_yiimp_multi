@@ -154,3 +154,5 @@ setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_mail}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${motd_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${harden_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${ssh}"
+
+cd $HOME/multipool/yiimp_multi
