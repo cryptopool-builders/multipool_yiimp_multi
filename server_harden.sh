@@ -10,6 +10,9 @@ source /etc/functions.sh
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 
+(crontab -l 2>/dev/null; echo "@reboot source /etc/functions.sh") | crontab -
+(crontab -l 2>/dev/null; echo "@reboot source /etc/multipool.conf") | crontab -
+
 echo Boosting server performance for YiiMP...
 # Boost Network Performance by Enabling TCP BBR
 hide_output sudo apt install -y --install-recommends linux-generic-hwe-16.04;

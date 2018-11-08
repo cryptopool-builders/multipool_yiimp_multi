@@ -9,6 +9,8 @@ source $STORAGE_ROOT/yiimp/.yiimp.conf
 
 echo Installing cron screens to crontab...
 (crontab -l 2>/dev/null; echo "@reboot sleep 20 && /home/crypto-data/yiimp/starts/screens.start.sh") | crontab -
+(crontab -l 2>/dev/null; echo "@reboot source /etc/functions.sh") | crontab -
+(crontab -l 2>/dev/null; echo "@reboot source /etc/multipool.conf") | crontab -
 sudo cp -r /tmp/first_boot.sh $STORAGE_ROOT/yiimp/
 
 echo Creating YiiMP Screens startup script...
