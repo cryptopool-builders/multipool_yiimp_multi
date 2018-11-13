@@ -307,6 +307,39 @@ exit
 fi
 fi
 
+clear
+
+dialog --title "Verify Your Answers" \
+--yesno "Please verify your answer before you continue:
+
+Using Sub-Domain : ${InstallSub}
+Install SSL      : ${InstallSSL}
+Domain Name      : ${DomainName}
+Stratum URL      : ${StratumURL}
+System Email     : ${SupportEmail}
+Your Public IP   : ${PublicIP}
+Admin Location   : ${AdminPanel}
+DB Internal IP   : ${DBInternalIP}
+WEB Internal IP  : ${WebInternalIP}
+Stratum Internal IP : ${StratumInternalIP}
+Daemon Internal IP : ${DaemonInternalIP}
+Web User : ${WebUser}
+Web Password : ${WebPass}
+Stratum User : ${StratumUser}
+Stratum Password : ${StratumPass}
+Daemon User : ${DaemonUser}
+Daemon Password : ${DaemonPass}" 15 60
+
+
+# Get exit status
+# 0 means user hit [yes] button.
+# 1 means user hit [no] button.
+# 255 means user hit [Esc] key.
+response=$?
+case $response in
+
+0)
+
 # Save the global options in $STORAGE_ROOT/yiimp/.yiimp.conf so that standalone
 # tools know where to look for data.
 echo 'STORAGE_USER='"${STORAGE_USER}"'
@@ -333,6 +366,16 @@ DaemonUser='"${DaemonUser}"'
 DaemonPass='"'"''"${DaemonPass}"''"'"'
 # Unless you do some serious modifications this installer will not work with any other repo of yiimp!
 YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
-' | sudo -E tee $STORAGE_ROOT/yiimp/.yiimp.conf >/dev/null 2>&1
+' | sudo -E tee $STORAGE_ROOT/yiimp/.yiimp.conf >/dev/null 2>&1 ;;
+
+1)
+
+echo "Run multipool again."
+exit 0;;
+
+255)
+
+echo "[ESC] key pressed."
+exit 0;;
 
 cd $HOME/multipool/yiimp_multi

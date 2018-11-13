@@ -5,7 +5,7 @@
 
 source /etc/functions.sh
 
-RESULT=$(dialog --stdout --title "Ultimate Crypto-Server Setup Installer" --menu "Choose one" -1 60 6 \
+RESULT=$(dialog --stdout --title "Ultimate Crypto-Server Setup Installer v1.06" --menu "Choose one" -1 60 6 \
 1 "Install Wireguard all servers" \
 2 "YiiMP, DB-Stratum, Web, Daemon" \
 3 "YiiMP, DB, Web, Stratum, Daemon" \
