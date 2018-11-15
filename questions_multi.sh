@@ -5,6 +5,7 @@
 
 source /etc/multipool.conf
 
+show_menu(){
 # Get the IP addresses of the local network interface(s).
 if [ -z "$DBInternalIP" ]; then
 DEFAULT_DBInternalIP='10.0.0.2'
@@ -370,12 +371,16 @@ YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
 
 1)
 
-echo "Run multipool again."
-exit 0;;
+clear;
+show_menu;
+;;
 
 255)
 
-echo "[ESC] key pressed."
-exit 0;;
+clear;
+show_menu;
+;;
+
+}
 
 cd $HOME/multipool/yiimp_multi
