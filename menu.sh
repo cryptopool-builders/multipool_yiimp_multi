@@ -7,10 +7,10 @@ source /etc/functions.sh
 
 RESULT=$(dialog --stdout --title "Ultimate Crypto-Server Setup Installer v1.06" --menu "Choose one" -1 60 6 \
 1 "Install Wireguard all servers" \
-2 "YiiMP, DB-Stratum, Web, Daemon" \
-3 "YiiMP, DB, Web, Stratum, Daemon" \
-4 "YiiMP Additional Stratum Server(s)" \
-5 "YiiMP Additional Daemon Server(s)" \
+2 "YiiMP - DB-Stratum, Web, Daemon" \
+3 "YiiMP - DB, Web, Stratum, Daemon" \
+4 "YiiMP - Additional Stratum Server(s)" \
+5 "YiiMP - Additional Daemon Server(s)" \
 6 Exit)
 if [ $RESULT = ]
 then
