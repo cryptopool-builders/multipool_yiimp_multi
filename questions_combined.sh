@@ -279,7 +279,7 @@ Daemon Internal IP : ${DaemonInternalIP}
 Web User : ${WebUser}
 Web Password : ${WebPass}
 Daemon User : ${DaemonUser}
-Daemon Password : ${DaemonPass}" 23 60
+Daemon Password : ${DaemonPass}" 21 60
 
 
 # Get exit status

@@ -312,7 +312,7 @@ clear
 dialog --title "Verify Your Answers" \
 --yesno "Please verify your answer before you continue:
 
-Using Sub-Domain : ${InstallSub}
+Using Sub-Domain : ${UsingSubDomain}
 Install SSL      : ${InstallSSL}
 Domain Name      : ${DomainName}
 Stratum URL      : ${StratumURL}
@@ -328,7 +328,7 @@ Web Password : ${WebPass}
 Stratum User : ${StratumUser}
 Stratum Password : ${StratumPass}
 Daemon User : ${DaemonUser}
-Daemon Password : ${DaemonPass}" 15 60
+Daemon Password : ${DaemonPass}" 24 60
 
 
 # Get exit status
