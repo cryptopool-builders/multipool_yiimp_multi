@@ -12,18 +12,14 @@ source $STORAGE_ROOT/yiimp/.yiimp.conf
 if [ -z "$DISABLE_FIREWALL" ]; then
 # Install `ufw` which provides a simple firewall configuration.
 echo Installing UFW...
-apt_install ufw;
-wait $!
+apt_install ufw
+
 
 # Allow incoming connections.
-ufw_allow ssh;
-wait $!
-ufw_allow http;
-wait $!
-ufw_allow https;
-wait $!
-ufw_allow mysql;
-wait $!
+ufw_allow ssh
+ufw_allow http
+ufw_allow https
+ufw_allow mysql
 
 # ssh might be running on an alternate port. Use sshd -T to dump sshd's #NODOC
 # settings, find the port it is supposedly running on, and open that port #NODOC
@@ -38,8 +34,5 @@ ufw_allow $SSH_PORT #NODOC
 fi
 fi
 
-sudo ufw --force enable;
+sudo ufw --force enable
 fi #NODOC
-
-# Installation of remote server completed.... Force rebot server...
-sudo reboot

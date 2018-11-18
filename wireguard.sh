@@ -18,6 +18,7 @@ if [[ ("$server_type" == "db") ]]; then
   cd $HOME
   sudo systemctl start wg-quick@wg0
   sudo systemctl enable wg-quick@wg0
+  sudo ufw allow 6121
   clear
   dbpublic=$PUBLIC_IP
   mypublic="$(sudo cat /etc/wireguard/publickey)"
@@ -40,6 +41,7 @@ elif [[ ("$server_type" == "dbshared") ]]; then
   cd $HOME
   sudo systemctl start wg-quick@wg0
   sudo systemctl enable wg-quick@wg0
+  sudo ufw allow 6121
   clear
   dbpublic=$PUBLIC_IP
   mypublic="$(sudo cat /etc/wireguard/publickey)"
@@ -66,6 +68,7 @@ elif [[ ("$server_type" == "web") ]]; then
   cd $HOME
   hide_output sudo systemctl start wg-quick@wg0
   hide_output sudo systemctl enable wg-quick@wg0
+  sudo ufw allow 6121
   clear
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   webinternal=$WebInternalIP
@@ -92,6 +95,7 @@ elif [[ ("$server_type" == "stratum") ]]; then
   cd $HOME
   sudo systemctl start wg-quick@wg0
   sudo systemctl enable wg-quick@wg0
+  sudo ufw allow 6121
   clear
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   stratinternal=$StratumInternalIP
@@ -118,6 +122,7 @@ elif [[ ("$server_type" == "additional") ]]; then
   cd $HOME
   sudo systemctl start wg-quick@wg0
   sudo systemctl enable wg-quick@wg0
+  sudo ufw allow 6121
   clear
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   additionalinternal=$AdditionalInternalIP
@@ -144,6 +149,7 @@ elif [[ ("$server_type" == "daemon") ]]; then
   cd $HOME
   sudo systemctl start wg-quick@wg0
   sudo systemctl enable wg-quick@wg0
+  sudo ufw allow 6121
   clear
   mypublic="$(sudo cat /etc/wireguard/publickey)"
   daemoninternal=$DaemonInternalIP

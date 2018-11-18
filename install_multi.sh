@@ -14,3 +14,4 @@ source motd_db.sh
 source setsid_web_server.sh
 source setsid_stratum_server.sh
 source setsid_daemon_server.sh
+source ssh_db.sh
