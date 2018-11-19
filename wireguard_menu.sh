@@ -9,9 +9,9 @@ cd $HOME/multipool/yiimp_multi
 RESULT=$(dialog --stdout --title "Ultimate Crypto-Server Setup Installer" --menu "Choose one" -1 60 6 \
 1 "Install Wireguard on DB Server or DB-Stratum Server" \
 2 "Install Wireguard on Web Server" \
-3 "Install Wireguard on Stratum Server" \
+3 "Install Wireguard on First Stratum Server Only" \
 4 "Install Wireguard on Daemon Server" \
-5 "Install Wireguard on additional Server(s)" \
+5 "Install Wireguard on Additional Server(s)" \
 6 Exit)
 if [ $RESULT = ]
 then
