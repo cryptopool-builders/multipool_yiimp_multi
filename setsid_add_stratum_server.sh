@@ -11,12 +11,12 @@ source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.newconf.conf
 
 # User credentials for the remote server.
-StratumUser=$StratumUser
-StratumPass="$StratumPass"
+StratumUser=${StratumUser}
+StratumPass="${StratumPass}"
 dir=$HOME
 
 # The server hostname.
-StratumServer=$StratumInternalIP
+StratumServer=${StratumInternalIP}
 
 # The script to run on the remote server.
 script_create_user=${dir}'/multipool/yiimp_multi/create_user_remote.sh'

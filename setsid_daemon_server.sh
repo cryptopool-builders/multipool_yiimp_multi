@@ -10,12 +10,12 @@
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 # User credentials for the remote server.
-DaemonUser=$DaemonUser
-DaemonPass="$DaemonPass"
+DaemonUser=${DaemonUser}
+DaemonPass="${DaemonPass}"
 dir=$HOME
 
 # The server hostname.
-DaemonServer=$DaemonInternalIP
+DaemonServer=${DaemonInternalIP}
 
 # The script to run on the remote server.
 script_create_user=${dir}'/multipool/yiimp_multi/create_user_remote.sh'

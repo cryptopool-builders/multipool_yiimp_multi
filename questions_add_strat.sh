@@ -87,6 +87,15 @@ exit
 fi
 fi
 
+dialog --title "Use AutoExchange" \
+--yesno "Would you like the stratum to be built with autoexchange enabled?" 7 60
+response=$?
+case $response in
+   0) AutoExchange=yes;;
+   1) AutoExchange=no;;
+   255) echo "[ESC] key pressed.";;
+esac
+
 #Generate random conf file name, random StratumDBUser and StratumDBPassword
 generate=$(openssl rand -base64 9 | tr -d "=+/")
 StratumDBUser=$(openssl rand -base64 9 | tr -d "=+/")
@@ -106,6 +115,7 @@ StratumUserDBPassword='"'"''"${StratumUserDBPassword}"''"'"'
 StratumInternalIP='"${NewStratumInternalIP}"'
 StratumUser='"${NewStratumUser}"'
 StratumPass='"'"''"${NewStratumPass}"''"'"'
+AutoExchange='"${AutoExchange}"'
 # Unless you do some serious modifications this installer will not work with any other repo of yiimp!
 YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.$generate.conf >/dev/null 2>&1

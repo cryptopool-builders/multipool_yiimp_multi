@@ -20,7 +20,7 @@ if [[ ("$server_type" == "db") ]]; then
   sudo systemctl enable wg-quick@wg0
   sudo ufw allow 6121
   clear
-  dbpublic=$PUBLIC_IP
+  dbpublic=${PUBLIC_IP}
   mypublic="$(sudo cat /etc/wireguard/publickey)"
 
   echo '  Public Ip: '"${dbpublic}"'
@@ -43,7 +43,7 @@ elif [[ ("$server_type" == "dbshared") ]]; then
   sudo systemctl enable wg-quick@wg0
   sudo ufw allow 6121
   clear
-  dbpublic=$PUBLIC_IP
+  dbpublic=${PUBLIC_IP}
   mypublic="$(sudo cat /etc/wireguard/publickey)"
 
   echo '  Public Ip: '"${dbpublic}"'
@@ -71,8 +71,8 @@ elif [[ ("$server_type" == "web") ]]; then
   sudo ufw allow 6121
   clear
   mypublic="$(sudo cat /etc/wireguard/publickey)"
-  webinternal=$WebInternalIP
-  webpublic=$PUBLIC_IP
+  webinternal=${WebInternalIP}
+  webpublic=${PUBLIC_IP}
   clear
 
   echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${webpublic}"':6121 allowed-ips ${webinternal}/32
@@ -98,8 +98,8 @@ elif [[ ("$server_type" == "stratum") ]]; then
   sudo ufw allow 6121
   clear
   mypublic="$(sudo cat /etc/wireguard/publickey)"
-  stratinternal=$StratumInternalIP
-  stratpublic=$PUBLIC_IP
+  stratinternal=${StratumInternalIP}
+  stratpublic=${PUBLIC_IP}
   clear
 
   echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${stratpublic}"':6121 allowed-ips ${webinternal}/32
@@ -125,8 +125,8 @@ elif [[ ("$server_type" == "additional") ]]; then
   sudo ufw allow 6121
   clear
   mypublic="$(sudo cat /etc/wireguard/publickey)"
-  additionalinternal=$AdditionalInternalIP
-  additionalpublic=$PUBLIC_IP
+  additionalinternal=${AdditionalInternalIP}
+  additionalpublic=${PUBLIC_IP}
   clear
 
   echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${additionalpublic}"':6121 allowed-ips ${webinternal}/32
@@ -152,8 +152,8 @@ elif [[ ("$server_type" == "daemon") ]]; then
   sudo ufw allow 6121
   clear
   mypublic="$(sudo cat /etc/wireguard/publickey)"
-  daemoninternal=$DaemonInternalIP
-  daemonpublic=$PUBLIC_IP
+  daemoninternal=${DaemonInternalIP}
+  daemonpublic=${PUBLIC_IP}
   clear
 
   echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${daemonpublic}"':6121 allowed-ips ${webinternal}/32

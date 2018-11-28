@@ -159,33 +159,41 @@ exit
 fi
 fi
 
-if [ -z "$UsingSubDomain" ]; then
-DEFAULT_UsingSubDomain=no
-input_box "Using Sub-Domain" \
-"Are you using a sub-domain for the main website domain? Example pool.example.com?
-\n\nPlease answer (y)es or (n)o only:" \
-$DEFAULT_UsingSubDomain \
-UsingSubDomain
+dialog --title "Using Sub-Domain" \
+--yesno "Are you using a sub-domain for the main website domain? Example pool.example.com?" 7 60
+response=$?
+case $response in
+   0) UsingSubDomain=yes;;
+   1) UsingSubDomain=no;;
+   255) echo "[ESC] key pressed.";;
+esac
 
-if [ -z "$UsingSubDomain" ]; then
-# user hit ESC/cancel
-exit
-fi
-fi
+dialog --title "Install SSL" \
+--yesno "Would you like the system to install SSL automatically?" 7 60
+response=$?
+case $response in
+   0) InstallSSL=yes;;
+   1) InstallSSL=no;;
+   255) echo "[ESC] key pressed.";;
+esac
 
-if [ -z "$InstallSSL" ]; then
-DEFAULT_InstallSSL=yes
-input_box "Install SSL" \
-"Would you like the system to install SSL automatically?
-\n\nPlease answer (y)es or (n)o only:" \
-$DEFAULT_InstallSSL \
-InstallSSL
+dialog --title "Use AutoExchange" \
+--yesno "Would you like the stratum to be built with autoexchange enabled?" 7 60
+response=$?
+case $response in
+   0) AutoExchange=yes;;
+   1) AutoExchange=no;;
+   255) echo "[ESC] key pressed.";;
+esac
 
-if [ -z "$InstallSSL" ]; then
-# user hit ESC/cancel
-exit
-fi
-fi
+dialog --title "Use Dedicated Coin Ports" \
+--yesno "Would you like YiiMP to be built with dedicated coin ports?" 7 60
+response=$?
+case $response in
+   0) CoinPort=yes;;
+   1) CoinPort=no;;
+   255) echo "[ESC] key pressed.";;
+esac
 
 if [ -z "$DomainName" ]; then
 DEFAULT_DomainName=$(get_publicip_from_web_service 4 || get_default_privateip 4)
@@ -312,6 +320,8 @@ clear
 dialog --title "Verify Your Responses" \
 --yesno "Please verify your answers to continue setup:
 
+Dedicated Coin Ports : ${CoinPort}
+AutoExchange : ${AutoExchange}
 Using Sub-Domain : ${UsingSubDomain}
 Install SSL      : ${InstallSSL}
 Domain Name      : ${DomainName}
@@ -328,7 +338,7 @@ Web Password : ${WebPass}
 Stratum User : ${StratumUser}
 Stratum Password : ${StratumPass}
 Daemon User : ${DaemonUser}
-Daemon Password : ${DaemonPass}" 24 60
+Daemon Password : ${DaemonPass}" 30 60
 
 
 # Get exit status
@@ -364,6 +374,8 @@ WebUser='"${WebUser}"'
 WebPass='"'"''"${WebPass}"''"'"'
 DaemonUser='"${DaemonUser}"'
 DaemonPass='"'"''"${DaemonPass}"''"'"'
+CoinPort='"${CoinPort}"'
+AutoExchange='"${AutoExchange}"'
 # Unless you do some serious modifications this installer will not work with any other repo of yiimp!
 YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.yiimp.conf >/dev/null 2>&1 ;;

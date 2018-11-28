@@ -102,7 +102,7 @@ sudo mkdir -p $STORAGE_ROOT/berkeley/db4/
 hide_output sudo wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
 hide_output sudo tar -xzvf db-4.8.30.NC.tar.gz
 cd db-4.8.30.NC/build_unix/
-hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$STORAGE_ROOT/berkeley/db4/;
+hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=${STORAGE_ROOT}/berkeley/db4/;
 wait $!
 
 hide_output sudo make install;
@@ -116,7 +116,7 @@ sudo mkdir -p $STORAGE_ROOT/berkeley/db5/
 hide_output sudo wget 'http://download.oracle.com/berkeley-db/db-5.3.28.tar.gz'
 hide_output sudo tar -xzvf db-5.3.28.tar.gz
 cd db-5.3.28/build_unix/
-hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$STORAGE_ROOT/berkeley/db5/;
+hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=${STORAGE_ROOT}/berkeley/db5/;
 wait $!
 
 hide_output sudo make install;
@@ -130,7 +130,7 @@ cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 hide_output sudo wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz --no-check-certificate
 hide_output sudo tar -xf openssl-1.0.2g.tar.gz
 cd openssl-1.0.2g
-hide_output sudo ./config --prefix=$STORAGE_ROOT/openssl --openssldir=$STORAGE_ROOT/openssl shared zlib;
+hide_output sudo ./config --prefix=${STORAGE_ROOT}/openssl --openssldir=${STORAGE_ROOT}/openssl shared zlib;
 wait $!
 
 hide_output sudo make;
