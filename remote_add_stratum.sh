@@ -63,5 +63,9 @@ sudo sed -i 's/database = yaamp/database = yiimpfrontend/g' *.conf
 sudo sed -i 's/username = root/username = '$StratumDBUser'/g' *.conf
 sudo sed -i 's/password = patofpaq/password = '$StratumUserDBPassword'/g' *.conf
 
+#set permissions
+sudo setfacl -m u:$USER:rwx $STORAGE_ROOT/yiimp/site/stratum/
+sudo setfacl -m u:$USER:rwx $STORAGE_ROOT/yiimp/site/stratum/config
+
 echo Stratum build complete...
 exit 0
