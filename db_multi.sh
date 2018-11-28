@@ -13,8 +13,8 @@ apt_install mariadb-server mariadb-client
 
 echo Creating DB users for YiiMP...
 Q1="CREATE DATABASE IF NOT EXISTS yiimpfrontend;"
-Q2="GRANT ALL ON *.* TO 'panel'@'${WebInternalIP}' IDENTIFIED BY '${PanelUserDBPassword}';"
-Q3="GRANT ALL ON *.* TO 'stratum'@'${StratumInternalIP}' IDENTIFIED BY '${StratumUserDBPassword}';"
+Q2="GRANT ALL ON *.* TO 'panel'@'$WebInternalIP' IDENTIFIED BY '$PanelUserDBPassword';"
+Q3="GRANT ALL ON *.* TO 'stratum'@'$StratumInternalIP' IDENTIFIED BY '$StratumUserDBPassword';"
 Q4="FLUSH PRIVILEGES;"
 SQL="${Q1}${Q2}${Q3}${Q4}"
 sudo mysql -u root -p"${DBRootPassword}" -e "$SQL"

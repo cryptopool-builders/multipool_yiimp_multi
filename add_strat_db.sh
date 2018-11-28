@@ -7,7 +7,7 @@ source $STORAGE_ROOT/yiimp/.newconf.conf
 
 
 echo Creating New DB users for YiiMP...
-Q1="GRANT ALL ON *.* TO '${StratumDBUser}'@'${StratumInternalIP}' IDENTIFIED BY '${StratumUserDBPassword}';"
+Q1="GRANT ALL ON *.* TO '$StratumDBUser'@'$StratumInternalIP' IDENTIFIED BY '$StratumUserDBPassword';"
 Q2="FLUSH PRIVILEGES;"
 SQL="${Q1}${Q2}"
 sudo mysql -u root -p"${DBRootPassword}" -e "$SQL"
