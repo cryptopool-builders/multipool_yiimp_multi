@@ -98,7 +98,7 @@ sudo cp -r $STORAGE_ROOT/yiimp/yiimp_setup/yiimp/blocknotify/blocknotify /usr/bi
 
 sudo rm -r $STORAGE_ROOT/yiimp/site/stratum/config/run.sh
 
-echo '#!/bin/bash
+echo '#!/usr/bin/env bash
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 ulimit -n 10240
@@ -114,7 +114,7 @@ sudo chmod +x $STORAGE_ROOT/yiimp/site/stratum/config/run.sh
 
 sudo rm -r $STORAGE_ROOT/yiimp/site/stratum/run.sh
 
-echo '#!/bin/bash
+echo '#!/usr/bin/env bash
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 cd '""''"${STORAGE_ROOT}"''""'/yiimp/site/stratum/config/ && ./run.sh $*
@@ -149,7 +149,7 @@ remote_script_blocknotify_path="/tmp/blocknotify"
 # set ssh Stratum
 SSH_ASKPASS_SCRIPT=/tmp/ssh-askpass-script
 cat > ${SSH_ASKPASS_SCRIPT} <<EOL
-#!/bin/bash
+#!/usr/bin/env bash
 echo '${DaemonPass}'
 EOL
 chmod u+x ${SSH_ASKPASS_SCRIPT}

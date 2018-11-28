@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -o nounset
+set -o errexit
 #####################################################
 # Source various web sources:
 # https://www.linuxbabe.com/ubuntu/enable-google-tcp-bbr-ubuntu

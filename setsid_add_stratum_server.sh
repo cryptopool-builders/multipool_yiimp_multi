@@ -48,7 +48,7 @@ remote_ssh_path='/tmp/ssh.sh'
 
 SSH_ASKPASS_SCRIPT=/tmp/ssh-askpass-script
 cat > ${SSH_ASKPASS_SCRIPT} <<EOL
-#!/bin/bash
+#!/usr/bin/env bash
 echo '${StratumPass}'
 EOL
 chmod u+x ${SSH_ASKPASS_SCRIPT}

@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -o nounset
+set -o errexit
 #####################################################
 # Created by cryptopool.builders for crypto use...
 #####################################################
@@ -33,7 +35,7 @@ sudo cp -r run.sh $STORAGE_ROOT/yiimp/site/stratum
 cd $STORAGE_ROOT/yiimp/yiimp_setup/yiimp
 sudo rm -r $STORAGE_ROOT/yiimp/site/stratum/config/run.sh
 
-echo '#!/bin/bash
+echo '#!/usr/bin/env bash
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 ulimit -n 10240
@@ -49,7 +51,7 @@ sudo chmod +x $STORAGE_ROOT/yiimp/site/stratum/config/run.sh
 
 sudo rm -r $STORAGE_ROOT/yiimp/site/stratum/run.sh
 
-echo '#!/bin/bash
+echo '#!/usr/bin/env bash
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 cd '""''"${STORAGE_ROOT}"''""'/yiimp/site/stratum/config/ && ./run.sh $*

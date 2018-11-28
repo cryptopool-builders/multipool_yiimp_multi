@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -o nounset
+set -o errexit
 #####################################################
 # Created by cryptopool.builders for crypto use...
 #####################################################
@@ -14,7 +16,7 @@ echo Installing cron screens to crontab...
 sudo cp -r /tmp/first_boot.sh $STORAGE_ROOT/yiimp/
 
 echo Creating YiiMP Screens startup script...
-echo '#!/bin/bash
+echo '#!/usr/bin/env bash
 source /etc/multipool.conf
 # Ugly way to remove junk coins from initial YiiMP database on first boot
 source $STORAGE_ROOT/yiimp/.yiimp.conf
