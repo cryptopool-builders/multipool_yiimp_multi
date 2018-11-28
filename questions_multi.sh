@@ -338,7 +338,7 @@ Web Password : ${WebPass}
 Stratum User : ${StratumUser}
 Stratum Password : ${StratumPass}
 Daemon User : ${DaemonUser}
-Daemon Password : ${DaemonPass}" 30 60
+Daemon Password : ${DaemonPass}" 25 60
 
 
 # Get exit status
@@ -386,7 +386,9 @@ clear
 bash $(basename $0) && exit;;
 
 255)
-
+clear
+echo "User canceled installation"
+exit 0
 ;;
 esac
 

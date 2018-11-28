@@ -289,7 +289,7 @@ Daemon Internal IP : ${DaemonInternalIP}
 Web User : ${WebUser}
 Web Password : ${WebPass}
 Daemon User : ${DaemonUser}
-Daemon Password : ${DaemonPass}" 30 60
+Daemon Password : ${DaemonPass}" 25 60
 
 
 # Get exit status
@@ -334,7 +334,9 @@ clear
 bash $(basename $0) && exit;;
 
 255)
-
+clear
+echo "User canceled installation"
+exit 0
 ;;
 esac
 
