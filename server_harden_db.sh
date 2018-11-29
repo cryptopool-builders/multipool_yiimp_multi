@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -o nounset
 
 #####################################################
 # Source various web sources:

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -o nounset
 
 #####################################################
 # Source https://mailinabox.email/ https://github.com/mail-in-a-box/mailinabox

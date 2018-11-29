@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -o nounset
 
 #####################################################
 # Created by cryptopool.builders for crypto use...

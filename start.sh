@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -o nounset
 
 #####################################################
 # This is the entry point for configuring the system.
