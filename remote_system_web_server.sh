@@ -102,7 +102,7 @@ php7.2-curl php7.2-intl php7.2-pspell php7.2-recode php7.2-sqlite3 \
 php7.2-tidy php7.2-xmlrpc php7.2-xsl memcached php-memcache \
 php-imagick php-gettext php7.2-zip php7.2-mbstring \
 fail2ban ntpdate python3 python3-dev python3-pip \
-curl git sudo coreutils pollinate unzip unattended-upgrades cron \
+curl git sudo coreutils pollinate unzip unattended-upgrades cron mariadb-client \
 nginx pwgen;
 wait $!
 
