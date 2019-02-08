@@ -29,6 +29,7 @@ script_harden_web=${dir}'/multipool/yiimp_multi/server_harden.sh'
 script_ssh=${dir}'/multipool/yiimp_multi/ssh.sh'
 
 # Additional files that need to be copied to the remote server
+functioncopy=${dir}'/multipool/yiimp_multi/required_remote_files/functions.sh'
 conf=${STORAGE_ROOT}'/yiimp/.yiimp.conf'
 screens=${dir}'/multipool/yiimp_multi/ubuntu/screens'
 header=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/00-header'
@@ -136,6 +137,7 @@ ssh="${ssh} sh -c 'nohup ${remote_ssh_path} > /dev/null 2>&1 &'"
 # Log in to the remote server and run the above commands.
 
 # Copy needed files to remote server
+cat $conf | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/functions.sh'
 cat $conf | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/.yiimp.conf'
 cat $screens | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/screens'
 cat $header | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/00-header'
