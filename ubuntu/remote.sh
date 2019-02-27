@@ -29,5 +29,5 @@ cp -r stratum.${coinsymbollower} /home/crypto-data/yiimp/site/stratum/config
 sudo cp -r stratum.${coinsymbollower} /usr/bin
 sudo ufw allow $coinport
 bash stratum.${coinsymbollower} start ${coinsymbollower}
-
+(crontab -l 2>/dev/null; echo "@reboot sleep 10 && bash stratum.${coinsymbollower} start ${coinsymbollower}") | crontab -
 exit 0

@@ -48,7 +48,7 @@ cp -r $coinalgo.conf $coinsymbollower.$coinalgo.conf
 # Insert the port in to the new coin.algo.conf
 sed -i '/port/c\port = '${coinport}'' $coinsymbollower.$coinalgo.conf
 
-# Insert the include 
+# Insert the include
 sed -i -e '$a\
 [WALLETS]\
 include = '${coinsymbol}'' $coinsymbollower.$coinalgo.conf
@@ -108,8 +108,10 @@ for name; do
 done ' | sudo -E tee $STORAGE_ROOT/yiimp/site/stratum/config/stratum.${coinsymbollower} >/dev/null 2>&1
 sudo chmod +x $STORAGE_ROOT/yiimp/site/stratum/config/stratum.${coinsymbollower}
 
-sudo cp -r stratum.${coinsymbollower} /usr/bin 
+sudo cp -r stratum.${coinsymbollower} /usr/bin
 sudo ufw allow $coinport
+
+(crontab -l 2>/dev/null; echo "@reboot sleep 10 && bash stratum.${coinsymbollower} start ${coinsymbollower}") | crontab -
 
 
 echo "Adding port and config files to remote stratums, script will seem to hang for a few minutes..."
@@ -270,6 +272,3 @@ echo "If you do not update this you will get blocknotify errors!"
 
 cd ~
 exit 0
-
-
-

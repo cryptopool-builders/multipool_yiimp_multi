@@ -91,7 +91,7 @@ wait $!
 
 apt_install libgmp3-dev libmysqlclient-dev libcurl4-gnutls-dev libkrb5-dev \
 libldap2-dev libidn11-dev gnutls-dev librtmp-dev build-essential libtool  \
-autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils \
+autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libssl-dev \
 git pwgen mariadb-client fail2ban;
 wait $!
 
