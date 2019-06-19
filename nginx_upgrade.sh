@@ -31,6 +31,10 @@ wait $!
 sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old
 sudo cp -r /tmp/nginx.conf /etc/nginx/
 
+sudo rm -r /etc/nginx/conf.d/default.conf
+sudo rm -r /etc/nginx/sites-available/default
+sudo rm -r /etc/nginx/sites-enabled/default
+
 restart_service nginx;
 wait $!
 
