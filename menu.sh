@@ -5,18 +5,21 @@
 
 source /etc/functions.sh
 
-RESULT=$(dialog --stdout --title "Ultimate Crypto-Server Setup Installer v1.26" --menu "Choose one" -1 60 6 \
-1 "Install Wireguard all servers" \
+RESULT=$(dialog --stdout --nocancel --default-item 1 --title "Ultimate Crypto-Server Setup Installer v1.29" --menu "Choose one" -1 63 10 \
+' ' "- Required if your Host does Not provide Private IPs -" \
+1 "Install Wireguard Network" \
+' ' "- Three Server Configuration -" \
 2 "YiiMP - DB-Stratum, Web, Daemon" \
+' ' "- Four Server Configuration -" \
 3 "YiiMP - DB, Web, Stratum, Daemon" \
+' ' "- Add Additional Servers -" \
 4 "YiiMP - Additional Stratum Server(s)" \
 5 "YiiMP - Additional Daemon Server(s)" \
 6 Exit)
 if [ $RESULT = ]
 then
-exit ;
+bash $(basename $0) && exit;
 fi
-
 
 if [ $RESULT = 1 ]
 then
