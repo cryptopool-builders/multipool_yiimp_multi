@@ -6,7 +6,7 @@ source /etc/functions.sh
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 
 echo Installing MariaDB...
-MARIADB_VERSION='10.3'
+MARIADB_VERSION='10.4'
 sudo debconf-set-selections <<< "maria-db-$MARIADB_VERSION mysql-server/root_password password $DBRootPassword"
 sudo debconf-set-selections <<< "maria-db-$MARIADB_VERSION mysql-server/root_password_again password $DBRootPassword"
 apt_install mariadb-server mariadb-client

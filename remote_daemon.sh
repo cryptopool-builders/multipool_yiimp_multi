@@ -98,33 +98,38 @@ wait $!
 sudo mkdir -p $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 
-echo Building Berkeley 4.8, this may take several minutes...
+echo -e " Building Berkeley 4.8, this may take several minutes...$COL_RESET"
 sudo mkdir -p $STORAGE_ROOT/berkeley/db4/
 hide_output sudo wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
 hide_output sudo tar -xzvf db-4.8.30.NC.tar.gz
 cd db-4.8.30.NC/build_unix/
-hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=${STORAGE_ROOT}/berkeley/db4/;
-wait $!
-
-hide_output sudo make install;
-wait $!
-
+hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$STORAGE_ROOT/berkeley/db4/
+hide_output sudo make install
 cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 sudo rm -r db-4.8.30.NC.tar.gz db-4.8.30.NC
+echo -e "$GREEN Berkeley 4.8 Completed...$COL_RESET"
 
-echo Building Berkeley 5.3, this may take several minutes...
+echo -e " Building Berkeley 5.1, this may take several minutes...$COL_RESET"
 sudo mkdir -p $STORAGE_ROOT/berkeley/db5/
-hide_output sudo wget 'http://download.oracle.com/berkeley-db/db-5.3.28.tar.gz'
+hide_output sudo wget 'http://download.oracle.com/berkeley-db/db-5.1.29.tar.gz'
+hide_output sudo tar -xzvf db-5.1.29.tar.gz
+cd db-5.1.29/build_unix/
+hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$STORAGE_ROOT/berkeley/db5/
+hide_output sudo make install
+cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
+sudo rm -r db-5.1.29.tar.gz db-5.1.29
+echo -e "$GREEN Berkeley 5.1 Completed...$COL_RESET"
+
+echo -e " Building Berkeley 5.3, this may take several minutes...$COL_RESET"
+sudo mkdir -p $STORAGE_ROOT/berkeley/db5.3/
+hide_output sudo wget 'http://anduin.linuxfromscratch.org/BLFS/bdb/db-5.3.28.tar.gz'
 hide_output sudo tar -xzvf db-5.3.28.tar.gz
 cd db-5.3.28/build_unix/
-hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=${STORAGE_ROOT}/berkeley/db5/;
-wait $!
-
-hide_output sudo make install;
-wait $!
-
+hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$STORAGE_ROOT/berkeley/db5.3/
+hide_output sudo make install
 cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 sudo rm -r db-5.3.28.tar.gz db-5.3.28
+echo -e "$GREEN Berkeley 5.3 Completed...$COL_RESET"
 
 echo Building OpenSSL 1.0.2g, this may take several minutes...
 cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp

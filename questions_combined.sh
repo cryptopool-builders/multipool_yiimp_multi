@@ -5,6 +5,91 @@
 
 source /etc/multipool.conf
 
+# Set if user is using domain name or not to avoid confusing questions if only using server ip.
+dialog --title "Using Domain Name" \
+--yesno "Are you using a domain name? Example: example.com?
+Make sure the DNS is updated!" 7 60
+response=$?
+case $response in
+   0) UsingDomain=yes;;
+   1) UsingDomain=no;;
+   255) echo "[ESC] key pressed.";;
+esac
+
+if [[ ("$UsingDomain" == "yes") ]]; then
+
+dialog --title "Using Sub-Domain" \
+--yesno "Are you using a sub-domain for the main website domain? Example pool.example.com?" 7 60
+response=$?
+  case $response in
+     0) UsingSubDomain=yes;;
+     1) UsingSubDomain=no;;
+     255) echo "[ESC] key pressed.";;
+esac
+
+if [ -z "$DomainName" ]; then
+DEFAULT_DomainName=example.com
+input_box "Domain Name" \
+"Enter your domain name. If using a subdomain enter the full domain as in pool.example.com
+\n\nDo not add www. to the domain name.
+\n\nDomain Name:" \
+$DEFAULT_DomainName \
+DomainName
+
+if [ -z "$DomainName" ]; then
+# user hit ESC/cancel
+exit
+fi
+fi
+
+if [ -z "$StratumURL" ]; then
+DEFAULT_StratumURL=stratum.$DomainName
+input_box "Stratum URL" \
+"Enter your stratum URL. It is recommended to use another subdomain such as stratum.$DomainName
+\n\nDo not add www. to the domain name.
+\n\nStratum URL:" \
+$DEFAULT_StratumURL \
+StratumURL
+
+if [ -z "$StratumURL" ]; then
+# user hit ESC/cancel
+exit
+fi
+fi
+
+dialog --title "Install SSL" \
+--yesno "Would you like the system to install SSL automatically?" 7 60
+response=$?
+  case $response in
+     0) InstallSSL=yes;;
+     1) InstallSSL=no;;
+     255) echo "[ESC] key pressed.";;
+esac
+
+else
+  # If user is not using a domain and is just using the server IP these fileds can be automatically detected.
+
+  # Sets server IP automatically
+DomainName=$(get_publicip_from_web_service 4 || get_default_privateip 4)
+StratumURL=$(get_publicip_from_web_service 4 || get_default_privateip 4)
+UsingSubDomain=no
+InstallSSL=no
+fi
+
+if [ -z "$SupportEmail" ]; then
+DEFAULT_SupportEmail=root@localhost
+input_box "System Email" \
+"Enter an email address for the system to send alerts and other important messages.
+\n\nSystem Email:" \
+$DEFAULT_SupportEmail \
+SupportEmail
+
+if [ -z "$SupportEmail" ]; then
+# user hit ESC/cancel
+exit
+fi
+fi
+
 # Get the IP addresses of the local network interface(s).
 if [ -z "$DBInternalIP" ]; then
 DEFAULT_DBInternalIP='10.0.0.2'
@@ -113,24 +198,6 @@ exit
 fi
 fi
 
-dialog --title "Using Sub-Domain" \
---yesno "Are you using a sub-domain for the main website domain? Example pool.example.com?" 7 60
-response=$?
-case $response in
-   0) UsingSubDomain=yes;;
-   1) UsingSubDomain=no;;
-   255) echo "[ESC] key pressed.";;
-esac
-
-dialog --title "Install SSL" \
---yesno "Would you like the system to install SSL automatically?" 7 60
-response=$?
-case $response in
-   0) InstallSSL=yes;;
-   1) InstallSSL=no;;
-   255) echo "[ESC] key pressed.";;
-esac
-
 dialog --title "Use AutoExchange" \
 --yesno "Would you like the stratum to be built with autoexchange enabled?" 7 60
 response=$?
@@ -148,50 +215,6 @@ case $response in
    1) CoinPort=no;;
    255) echo "[ESC] key pressed.";;
 esac
-
-if [ -z "$DomainName" ]; then
-DEFAULT_DomainName=$(get_publicip_from_web_service 4 || get_default_privateip 4)
-input_box "Domain Name" \
-"Enter your domain name. If using a subdomain enter the full domain as in pool.example.com
-\n\nDo not add www. to the domain name.
-\n\nDomain Name:" \
-$DEFAULT_DomainName \
-DomainName
-
-if [ -z "$DomainName" ]; then
-# user hit ESC/cancel
-exit
-fi
-fi
-
-if [ -z "$StratumURL" ]; then
-DEFAULT_StratumURL=stratum.$DomainName
-input_box "Stratum URL" \
-"Enter your stratum URL. It is recommended to use another subdomain such as stratum.$DomainName
-\n\nDo not add www. to the domain name.
-\n\nStratum URL:" \
-$DEFAULT_StratumURL \
-StratumURL
-
-if [ -z "$StratumURL" ]; then
-# user hit ESC/cancel
-exit
-fi
-fi
-
-if [ -z "$SupportEmail" ]; then
-DEFAULT_SupportEmail=support@$DomainName
-input_box "System Email" \
-"Enter an email address for the system to send alerts and other important messages.
-\n\nSystem Email:" \
-$DEFAULT_SupportEmail \
-SupportEmail
-
-if [ -z "$SupportEmail" ]; then
-# user hit ESC/cancel
-exit
-fi
-fi
 
 if [ -z "$PublicIP" ]; then
 DEFAULT_PublicIP=$(echo $SSH_CLIENT | awk '{ print $1}')
@@ -324,6 +347,7 @@ DaemonUser='"${DaemonUser}"'
 DaemonPass='"'"''"${DaemonPass}"''"'"'
 CoinPort='"${CoinPort}"'
 AutoExchange='"${AutoExchange}"'
+UsingDomain='"${UsingDomain}"'
 # Unless you do some serious modifications this installer will not work with any other repo of yiimp!
 YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.yiimp.conf >/dev/null 2>&1 ;;

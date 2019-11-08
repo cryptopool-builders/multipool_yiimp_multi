@@ -54,6 +54,7 @@ exit
 fi
 fi
 
+if [[ ("$UsingDomain" == "yes") ]]; then
 if [ -z "$NewStratumURL" ]; then
 DEFAULT_NewStratumURL=stratum.$DomainName
 input_box "Stratum URL" \
@@ -68,7 +69,9 @@ if [ -z "$NewStratumURL" ]; then
 exit
 fi
 fi
-
+else
+NewStratumURL=$(get_publicip_from_web_service 4 || get_default_privateip 4)
+fi
 if [ -z "$blckntifypass" ]; then
 DEFAULT_blckntifypass=blocknotifypassword
 input_box "Blocknotify Password" \
@@ -116,6 +119,7 @@ StratumInternalIP='"${NewStratumInternalIP}"'
 StratumUser='"${NewStratumUser}"'
 StratumPass='"'"''"${NewStratumPass}"''"'"'
 AutoExchange='"${AutoExchange}"'
+UsingDomain='"${UsingDomain}"'
 # Unless you do some serious modifications this installer will not work with any other repo of yiimp!
 YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.$generate.conf >/dev/null 2>&1
