@@ -35,7 +35,12 @@ fi
 # MariaDB
 echo Installing MariaDB Repository...
 hide_output sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8;
-sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirrors.accretive-networks.net/mariadb/repo/10.3/ubuntu xenial main'
+if [[ ("$DISTRO" == "16") ]]; then
+sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirrors.accretive-networks.net/mariadb/repo/10.4/ubuntu xenial main';
+else
+sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirror.timeweb.ru/mariadb/repo/10.4/ubuntu xenial main';
+fi
+wait $!
 
 # Upgrade System Files
 echo Updating system packages...
@@ -92,7 +97,7 @@ wait $!
 apt_install libgmp3-dev libmysqlclient-dev libcurl4-gnutls-dev libkrb5-dev \
 libldap2-dev libidn11-dev gnutls-dev librtmp-dev build-essential libtool  \
 autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libssl-dev \
-git pwgen mariadb-client fail2ban;
+git pwgen mariadb-client fail2ban libpsl-dev libnghttp2-dev;
 wait $!
 
 echo Downloading selected YiiMP Repo...

@@ -38,4 +38,4 @@ sudo rm -r /etc/nginx/sites-enabled/default
 restart_service nginx;
 wait $!
 
-restart_service php7.2-fpm;
+restart_service php7.3-fpm;

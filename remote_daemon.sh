@@ -34,7 +34,11 @@ fi
 # MariaDB
 echo Installing MariaDB Repository...
 hide_output sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8;
-sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] https://mirrors.evowise.com/mariadb/repo/10.3/ubuntu xenial main';
+if [[ ("$DISTRO" == "16") ]]; then
+sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirrors.accretive-networks.net/mariadb/repo/10.4/ubuntu xenial main';
+else
+sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirror.timeweb.ru/mariadb/repo/10.4/ubuntu xenial main';
+fi
 wait $!
 
 # Upgrade System Files
@@ -131,7 +135,7 @@ cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 sudo rm -r db-5.3.28.tar.gz db-5.3.28
 echo -e "$GREEN Berkeley 5.3 Completed...$COL_RESET"
 
-echo Building OpenSSL 1.0.2g, this may take several minutes...
+echo -e "Building OpenSSL 1.0.2g, this may take several minutes...$COL_RESET"
 cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 hide_output sudo wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz --no-check-certificate
 hide_output sudo tar -xf openssl-1.0.2g.tar.gz

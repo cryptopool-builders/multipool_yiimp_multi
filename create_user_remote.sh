@@ -14,8 +14,12 @@ sudo apt-get -q -q update
 apt_get_quiet install dialog python3 python3-pip acl nano git || exit 1
 fi
 
-if [ "`lsb_release -d | sed 's/.*:\s*//' | sed 's/16\.04\.[0-9]/16.04/' `" != "Ubuntu 16.04 LTS" ]; then
-echo "Ultimate Crypto-Server Setup Installer only supports being installed on Ubuntu 16.04, sorry. You are running:"
+if [ "`lsb_release -d | sed 's/.*:\s*//' | sed 's/18\.04\.[0-9]/18.04/' `" == "Ubuntu 18.04 LTS" ]; then
+  DISTRO=18
+elif [ "`lsb_release -d | sed 's/.*:\s*//' | sed 's/16\.04\.[0-9]/16.04/' `" != "Ubuntu 16.04 LTS" ]; then
+  DISTRO=16
+else
+echo "Ultimate Crypto-Server Setup Installer only supports being installed on Ubuntu 16.04 or Ubuntu 18.04 , sorry. You are running:"
 echo
 lsb_release -d | sed 's/.*:\s*//'
 echo
@@ -179,6 +183,7 @@ fi
 echo 'STORAGE_USER='"${STORAGE_USER}"'
 STORAGE_ROOT='"${STORAGE_ROOT}"'
 PUBLIC_IP='"${PUBLIC_IP}"'
+DISTRO='"${DISTRO}"'
 PUBLIC_IPV6='"${PUBLIC_IPV6}"'' | sudo -E tee /etc/multipool.conf >/dev/null 2>&1
 
 sudo cp -r /tmp/functions.sh /etc/
