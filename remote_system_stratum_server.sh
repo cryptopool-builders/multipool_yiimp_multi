@@ -34,11 +34,11 @@ fi
 
 # MariaDB
 echo Installing MariaDB Repository...
-hide_output sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8;
+hide_output sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
 if [[ ("$DISTRO" == "16") ]]; then
-sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirrors.accretive-networks.net/mariadb/repo/10.4/ubuntu xenial main';
+sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirror.timeweb.ru/mariadb/repo/10.4/ubuntu xenial main'
 else
-sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirror.timeweb.ru/mariadb/repo/10.4/ubuntu xenial main';
+sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.timeweb.ru/mariadb/repo/10.4/ubuntu bionic main'
 fi
 wait $!
 
@@ -94,12 +94,19 @@ fi
 hide_output sudo apt-get update;
 wait $!
 
+if [[ ("$DISTRO" == "16") ]]; then
+apt_install libgmp3-dev libmysqlclient-dev libcurl4-gnutls-dev libkrb5-dev \
+libldap2-dev libidn11-dev gnutls-dev librtmp-dev build-essential libtool  \
+autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libssl-dev \
+git pwgen mariadb-client fail2ban;
+wait $!
+else
 apt_install libgmp3-dev libmysqlclient-dev libcurl4-gnutls-dev libkrb5-dev \
 libldap2-dev libidn11-dev gnutls-dev librtmp-dev build-essential libtool  \
 autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libssl-dev \
 git pwgen mariadb-client fail2ban libpsl-dev libnghttp2-dev;
 wait $!
-
+fi
 echo Downloading selected YiiMP Repo...
 hide_output sudo git clone $YiiMPRepo $STORAGE_ROOT/yiimp/yiimp_setup/yiimp;
 if [[ ("$CoinPort" == "y" || "$CoinPort" == "Y" || "$CoinPort" == "yes" || "$CoinPort" == "Yes" || "$CoinPort" == "YES") ]]; then

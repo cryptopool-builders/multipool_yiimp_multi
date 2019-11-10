@@ -33,11 +33,11 @@ apt_install software-properties-common;
 fi
 # MariaDB
 echo Installing MariaDB Repository...
-hide_output sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8;
+hide_output sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
 if [[ ("$DISTRO" == "16") ]]; then
-sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirrors.accretive-networks.net/mariadb/repo/10.4/ubuntu xenial main';
+sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirror.timeweb.ru/mariadb/repo/10.4/ubuntu xenial main'
 else
-sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirror.timeweb.ru/mariadb/repo/10.4/ubuntu xenial main';
+sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.timeweb.ru/mariadb/repo/10.4/ubuntu bionic main'
 fi
 wait $!
 
@@ -96,7 +96,7 @@ protobuf-compiler libqrencode-dev libzmq3-dev \
 python3 python3-dev python3-pip \
 wget curl git sudo coreutils bc \
 haveged pollinate unzip mariadb-client \
-unattended-upgrades cron ntp fail2ban screen;
+unattended-upgrades cron ntp fail2ban screen automake cmake;
 wait $!
 
 sudo mkdir -p $STORAGE_ROOT/yiimp/yiimp_setup/tmp
@@ -151,6 +151,18 @@ wait $!
 
 cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 sudo rm -r openssl-1.0.2g.tar.gz openssl-1.0.2g
+
+echo -e " Building bls-signatures, this may take several minutes...$COL_RESET"
+cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
+hide_output sudo wget 'https://github.com/codablock/bls-signatures/archive/v20181101.zip'
+hide_output sudo unzip v20181101.zip
+cd bls-signatures-20181101
+hide_output sudo cmake .
+hide_output sudo make install
+cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
+sudo rm -r v20181101.zip bls-signatures-20181101
+echo -e "$GREEN bls-signatures Completed...$COL_RESET"
+wait $!
 
 sudo cp -r /tmp/blocknotify /usr/bin
 sudo chmod +x /usr/bin/blocknotify
