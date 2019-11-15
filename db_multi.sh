@@ -42,6 +42,8 @@ echo Importing YiiMP Default database values...
 cd $STORAGE_ROOT/yiimp/yiimp_setup/yiimp/sql
 # import sql dump
 sudo zcat 2019-11-10-yiimp.sql.gz | sudo mysql -u root -p"${DBRootPassword}" yiimpfrontend
+sudo mysql -u root -p"${DBRootPassword}" yiimpfrontend --force < 2018-09-22-workers.sql
+
 sudo sed -i '/max_connections/c\max_connections         = 800' /etc/mysql/my.cnf
 sudo sed -i '/thread_cache_size/c\thread_cache_size       = 512' /etc/mysql/my.cnf
 sudo sed -i '/tmp_table_size/c\tmp_table_size          = 128M' /etc/mysql/my.cnf
