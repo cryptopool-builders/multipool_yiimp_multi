@@ -26,11 +26,11 @@ wait $!
 # Make additional conf directories, move and generate needed configurations.
 sudo mkdir -p /etc/nginx/cryptopool.builders
 sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.old
-sudo cp -r /tmp/nginx_confs/nginx.conf /etc/nginx/
-sudo cp -r /tmp/nginx_confs/general.conf /etc/nginx/cryptopool.builders
-sudo cp -r /tmp/nginx_confs/php_fastcgi.conf /etc/nginx/cryptopool.builders
-sudo cp -r /tmp/nginx_confs/security.conf /etc/nginx/cryptopool.builders
-sudo cp -r /tmp/nginx_confs/letsencrypt.conf /etc/nginx/cryptopool.builders
+sudo cp -r /tmp/nginx.conf /etc/nginx/
+sudo cp -r /tmp/general.conf /etc/nginx/cryptopool.builders
+sudo cp -r /tmp/php_fastcgi.conf /etc/nginx/cryptopool.builders
+sudo cp -r /tmp/security.conf /etc/nginx/cryptopool.builders
+sudo cp -r /tmp/letsencrypt.conf /etc/nginx/cryptopool.builders
 
 # Removing default nginx site configs.
 sudo rm -r /etc/nginx/conf.d/default.conf

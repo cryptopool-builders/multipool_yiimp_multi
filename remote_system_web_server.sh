@@ -126,10 +126,12 @@ echo -e "$GREEN Done...$COL_RESET"
 
 echo -e " Downloading CryptoPool.builders YiiMP Repo...$COL_RESET"
 hide_output sudo git clone $YiiMPRepo $STORAGE_ROOT/yiimp/yiimp_setup/yiimp;
+wait $!
 if [[ ("$CoinPort" == "y" || "$CoinPort" == "Y" || "$CoinPort" == "yes" || "$CoinPort" == "Yes" || "$CoinPort" == "YES") ]]; then
 	cd $STORAGE_ROOT/yiimp/yiimp_setup/yiimp
 	sudo git fetch
 	sudo git checkout multi-port
+	wait $!
 fi
 echo -e "$GREEN Done...$COL_RESET"
 echo -e "$GREEN Web server system completed...$COL_RESET"

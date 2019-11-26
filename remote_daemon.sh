@@ -39,9 +39,9 @@ fi
 echo -e " Installing MariaDB Repository...$COL_RESET"
 hide_output sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
 if [[ ("$DISTRO" == "16") ]]; then
-  sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirror.one.com/mariadb/repo/10.4/ubuntu xenial main'
+  sudo add-apt-repository 'deb [arch=amd64,arm64,i386,ppc64el] http://mirror.one.com/mariadb/repo/10.4/ubuntu xenial main';
 else
-  sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.one.com/mariadb/repo/10.4/ubuntu bionic main'
+  sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.one.com/mariadb/repo/10.4/ubuntu bionic main';
 fi
 wait $!
 
@@ -105,22 +105,26 @@ sudo mkdir -p $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
 
 echo -e " Building Berkeley 4.8, this may take several minutes...$COL_RESET"
-  sudo mkdir -p $STORAGE_ROOT/berkeley/db4/
+  sudo mkdir -p $STORAGE_ROOT/berkeley/db4/;
   hide_output sudo wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz';
+  wait $!
   hide_output sudo tar -xzvf db-4.8.30.NC.tar.gz;
+  wait $!
   cd db-4.8.30.NC/build_unix/
   hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$STORAGE_ROOT/berkeley/db4/;
   wait $!
   hide_output sudo make install;
   wait $!
-  cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
+  cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp;
   sudo rm -r db-4.8.30.NC.tar.gz db-4.8.30.NC;
 echo -e "$GREEN Berkeley 4.8 Completed...$COL_RESET"
 
 echo -e " Building Berkeley 5.1, this may take several minutes...$COL_RESET"
-  sudo mkdir -p $STORAGE_ROOT/berkeley/db5/
+  sudo mkdir -p $STORAGE_ROOT/berkeley/db5/;
   hide_output sudo wget 'http://download.oracle.com/berkeley-db/db-5.1.29.tar.gz';
+  wait $!
   hide_output sudo tar -xzvf db-5.1.29.tar.gz;
+  wait $!
   cd db-5.1.29/build_unix/
   hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$STORAGE_ROOT/berkeley/db5/;
   wait $!
@@ -133,7 +137,9 @@ echo -e "$GREEN Berkeley 5.1 Completed...$COL_RESET"
 echo -e " Building Berkeley 5.3, this may take several minutes...$COL_RESET"
   sudo mkdir -p $STORAGE_ROOT/berkeley/db5.3/
   hide_output sudo wget 'http://anduin.linuxfromscratch.org/BLFS/bdb/db-5.3.28.tar.gz';
+  wait $!
   hide_output sudo tar -xzvf db-5.3.28.tar.gz;
+  wait $!
   cd db-5.3.28/build_unix/
   hide_output sudo ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$STORAGE_ROOT/berkeley/db5.3/;
   wait $!
@@ -146,7 +152,9 @@ echo -e "$GREEN Berkeley 5.3 Completed...$COL_RESET"
 echo -e "Building OpenSSL 1.0.2g, this may take several minutes...$COL_RESET"
   cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
   hide_output sudo wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz --no-check-certificate;
+  wait $!
   hide_output sudo tar -xf openssl-1.0.2g.tar.gz;
+  wait $!
   cd openssl-1.0.2g
   hide_output sudo ./config --prefix=${STORAGE_ROOT}/openssl --openssldir=${STORAGE_ROOT}/openssl shared zlib;
   wait $!
@@ -161,7 +169,9 @@ echo -e "$GREEN OpenSSL 1.0.2g Completed...$COL_RESET"
 echo -e " Building bls-signatures, this may take several minutes...$COL_RESET"
   cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
   hide_output sudo wget 'https://github.com/codablock/bls-signatures/archive/v20181101.zip';
+  wait $!
   hide_output sudo unzip v20181101.zip;
+  wait $!
   cd bls-signatures-20181101
   hide_output sudo cmake .;
   wait $!
