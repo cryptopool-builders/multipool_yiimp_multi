@@ -12,19 +12,6 @@ else
   wireguard='false'
 fi
 
-# Set if user is using domain name or not to avoid confusing questions if only using server ip.
-dialog --title "Using Domain Name" \
---yesno "Are you using a domain name? Example: example.com?
-Make sure the DNS is updated!" 7 60
-response=$?
-case $response in
-   0) UsingDomain=yes;;
-   1) UsingDomain=no;;
-   255) echo "[ESC] key pressed.";;
-esac
-
-if [[ ("$UsingDomain" == "yes") ]]; then
-
 dialog --title "Using Sub-Domain" \
 --yesno "Are you using a sub-domain for the main website domain? Example pool.example.com?" 7 60
 response=$?
@@ -72,16 +59,6 @@ response=$?
      1) InstallSSL=no;;
      255) echo "[ESC] key pressed.";;
 esac
-
-else
-  # If user is not using a domain and is just using the server IP these fileds can be automatically detected.
-
-  # Sets server IP automatically
-DomainName=$(get_publicip_from_web_service 4 || get_default_privateip 4)
-StratumURL=$(get_publicip_from_web_service 4 || get_default_privateip 4)
-UsingSubDomain=no
-InstallSSL=no
-fi
 
 if [ -z "${SupportEmail:-}" ]; then
 DEFAULT_SupportEmail=root@localhost
@@ -398,7 +375,6 @@ YiiMPPanelName=Panel$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '
 echo 'STORAGE_USER='"${STORAGE_USER}"'
 STORAGE_ROOT='"${STORAGE_ROOT}"'
 
-UsingDomain='"${UsingDomain}"'
 DomainName='"${DomainName}"'
 UsingSubDomain='"${UsingSubDomain}"'
 StratumURL='"${StratumURL}"'

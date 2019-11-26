@@ -60,7 +60,6 @@ exit
 fi
 fi
 
-if [[ ("$UsingDomain" == "yes") ]]; then
 if [ -z "${NewStratumURL:-}" ]; then
 DEFAULT_NewStratumURL=stratum.$DomainName
 input_box "Stratum URL" \
@@ -74,10 +73,6 @@ if [ -z "$NewStratumURL" ]; then
 # user hit ESC/cancel
 exit
 fi
-fi
-
-else
-NewStratumURL=$(get_publicip_from_web_service 4 || get_default_privateip 4)
 fi
 
 if [ -z "${blckntifypass:-}" ]; then
@@ -119,7 +114,6 @@ StratumUserDBPassword=$(openssl rand -base64 29 | tr -d "=+/")
 echo 'STORAGE_USER='"${STORAGE_USER}"'
 STORAGE_ROOT='"${STORAGE_ROOT}"'
 
-UsingDomain='"${UsingDomain}"'
 DomainName='"${DomainName}"'
 StratumURL='"${NewStratumURL}"'
 AutoExchange='"${AutoExchange}"'
