@@ -79,4 +79,3 @@ restart_service nginx;
 wait $!
 restart_service php7.3-fpm;
 wait $!
-exit 0

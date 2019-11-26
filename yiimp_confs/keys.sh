@@ -34,5 +34,3 @@ define('"'"'EXCH_POLONIEX_SECRET'"'"', '"'"''"'"');
 define('"'"'EXCH_STOCKSEXCHANGE_SECRET'"'"', '"'"''"'"');
 define('"'"'EXCH_YOBIT_SECRET'"'"', '"'"''"'"');
 ' | sudo -E tee /etc/yiimp/keys.php >/dev/null 2>&1;
-
-exit 0

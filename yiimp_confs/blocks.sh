@@ -26,5 +26,3 @@ sleep 20
 done
 exec bash' | sudo -E tee $STORAGE_ROOT/yiimp/site/crons/blocks.sh >/dev/null 2>&1;
 sudo chmod +x $STORAGE_ROOT/yiimp/site/crons/blocks.sh;
-
-exit 0
