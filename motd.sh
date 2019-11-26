@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-
-
 #####################################################
 # Created by cryptopool.builders for crypto use...
 #####################################################
@@ -8,6 +6,8 @@
 source /etc/functions.sh
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
+
+cd /tmp
 
 apt_install lsb-release figlet update-motd \
 landscape-common update-notifier-common

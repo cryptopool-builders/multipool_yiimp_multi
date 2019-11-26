@@ -8,7 +8,7 @@ source /etc/functions.sh
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 
-echo "Installing mail system"
+echo -e " Installing mail system...$COL_RESET"
 
 echo ${DomainName} | hide_output sudo tee -a /etc/hostname
 sudo hostname "${DomainName}"
@@ -31,4 +31,5 @@ sudo sed -i '/root:/a '$whoami':     '${SupportEmail}'' /etc/aliases
 sudo newaliases
 wait $!
 sudo adduser $whoami mail
+echo -e "$GREEN Done...$COL_RESET"
 exit 0

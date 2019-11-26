@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
-
-
 #####################################################
 # Created by cryptopool.builders for crypto use...
-#####################################################
+#
 # Needs to be ran after the first reboot of the system after permissions are set
 #####################################################
 
 source /etc/functions.sh
-
 sleep 5
 hide_output yiimp checkup
 # Prevents error when trying to log in to admin panel the first time...

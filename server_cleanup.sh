@@ -8,13 +8,14 @@ source /etc/functions.sh
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 
-echo Installing cron screens to crontab...
+echo -e " Installing cron screens to crontab...$COL_RESET"
 (crontab -l 2>/dev/null; echo "@reboot sleep 20 && /home/crypto-data/yiimp/starts/screens.start.sh") | crontab -
 (crontab -l 2>/dev/null; echo "@reboot source /etc/functions.sh") | crontab -
 (crontab -l 2>/dev/null; echo "@reboot source /etc/multipool.conf") | crontab -
 sudo cp -r /tmp/first_boot.sh $STORAGE_ROOT/yiimp/
+echo -e "$GREEN Done...$COL_RESET"
 
-echo Creating YiiMP Screens startup script...
+echo -e " Creating YiiMP Screens startup script...$COL_RESET"
 echo '#!/usr/bin/env bash
 source /etc/multipool.conf
 # Ugly way to remove junk coins from initial YiiMP database on first boot
@@ -53,4 +54,5 @@ CRONS=$STORAGE_ROOT/yiimp/site/crons
 
 echo "source /etc/multipool.conf" | hide_output tee -a ~/.bashrc
 echo "source $STORAGE_ROOT/yiimp/.prescreens.start.conf" | hide_output tee -a ~/.bashrc
+echo -e "$GREEN Done...$COL_RESET"
 exit 0

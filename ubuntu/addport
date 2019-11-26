@@ -1,0 +1,143 @@
+#!/usr/bin/env bash
+
+source /etc/functions.sh
+source /etc/multipool.conf
+source $STORAGE_ROOT/yiimp/.yiimp.conf
+#####################################################
+# Dedicated Port config generator
+# Created by cryptopool.builders for multipool
+# This generator will modify the main algo.conf file
+# Create the new coin.algo.conf file
+# And update the stratum start file
+#####################################################
+
+clear
+
+# Generate random open PORT
+function EPHYMERAL_PORT(){
+    LPORT=2768;
+    UPORT=6999;
+    while true; do
+        MPORT=$[$LPORT + ($RANDOM % $UPORT)];
+        (echo "" >/dev/tcp/127.0.0.1/${MPORT}) >/dev/null 2>&1
+        if [ $? -ne 0 ]; then
+            echo $MPORT;
+            return 0;
+        fi
+    done
+}
+
+coinport=$(EPHYMERAL_PORT)
+
+cd /home/crypto-data/yiimp/site/stratum/config
+echo "Thanks for using the addport script by cryptopool.builders."
+echo
+echo "addport will randomly selects an open port for the coin between ports 2768 and 6999 and open the port in UFW."
+echo "It will also create a new symbol.algo.conf in /home/crypto-data/yiimp/site/stratum/config"
+echo "and will create a new stratum.symbol run file in /usr/bin."
+echo
+
+echo 
+echo -e "$RED Make sure coin symbol is all UPPER case.$COL_RESET"
+read -e -p "Please enter the coin SYMBOL : " coinsymbol
+echo ""
+echo -e "$RED Make sure algo is in all lower case and a valid algo in yiimp.$COL_RESET"
+read -e -p "Please enter the coin algo : " coinalgo
+
+# Make the coin symbol lower case
+
+coinsymbollower=${coinsymbol,,}
+
+# Copy the default algo.conf to the new coin.algo.conf
+cp -r $coinalgo.conf $coinsymbollower.$coinalgo.conf
+
+# Insert the port in to the new coin.algo.conf
+sed -i '/port/c\port = '${coinport}'' $coinsymbollower.$coinalgo.conf
+
+# Insert the include 
+sed -i -e '$a\
+[WALLETS]\
+include = '${coinsymbol}'' $coinsymbollower.$coinalgo.conf
+
+# Insert the exclude
+sed -i -e '$a\
+[WALLETS]\
+exclude = '${coinsymbol}'' $coinalgo.conf
+
+
+# New coin stratum start file
+
+echo '#####################################################
+# Source code from https://codereview.stackexchange.com/questions/55077/small-bash-script-to-sta$
+# Updated by cryptopool.builders for crypto use...
+#####################################################
+
+source /etc/multipool.conf
+source $STORAGE_ROOT/yiimp/.yiimp.conf
+STRATUM_DIR=$STORAGE_ROOT/yiimp/site/stratum
+LOG_DIR=$STORAGE_ROOT/yiimp/site/log
+#!/usr/bin/env bash
+
+'""''"${coinsymbollower}"''""'="screen -dmS '""''"${coinsymbollower}"''""' bash $STRATUM_DIR/run.sh '""''"${coinsymbollower}"''""'.'""''"${coinalgo}"''""'"
+'""''"${coinsymbollower}"''""'stop="'screen -X -S ${coinsymbollower} quit'"
+
+startstop_'""''"${coinsymbollower}"''""'() {
+    cmd=$1
+    case $cmd in
+        stop) $'""''"${coinsymbollower}"''""'stop ;;
+        start) $'""''"${coinsymbollower}"''""' ;;
+        restart)
+            $'""''"${coinsymbollower}"''""'stop
+            sleep 1
+            $'""''"${coinsymbollower}"''""'
+            ;;
+    esac
+}
+
+case "$1" in
+    start|stop|restart) cmd=$1 ;;
+    *)
+        shift
+        servicenames=${@-servicenames}
+        echo "usage: $0 [start|stop|restart] algo"
+        exit 1
+esac
+
+
+shift
+
+for name; do
+    case "$name" in
+    '""''"${coinsymbollower}"''""') startstop_'""''"${coinsymbollower}"''""' $cmd ;;
+    *) startstop_service $cmd $name ;;
+    esac
+done ' | sudo -E tee $STORAGE_ROOT/yiimp/site/stratum/config/stratum.${coinsymbollower} >/dev/null 2>&1
+sudo chmod +x $STORAGE_ROOT/yiimp/site/stratum/config/stratum.${coinsymbollower}
+
+sudo cp -r stratum.${coinsymbollower} /usr/bin 
+sudo ufw allow $coinport
+echo
+echo "Adding stratum.${coinsymbollower} to crontab for autostart at system boot."
+(crontab -l 2>/dev/null; echo "@reboot sleep 10 && bash stratum.${coinsymbollower} start ${coinsymbollower}") | crontab -
+echo
+echo -e "$YELLOW Starting your new stratum...$COL_RESET"
+bash stratum.${coinsymbollower} start ${coinsymbollower}
+echo -e "$GREEN Your new stratum is started...Do NOT run the start command manually...$COL_RESET"
+echo
+echo -e "To use your new stratum type,$BLUE stratum.${coinsymbollower} start|stop|restart ${coinsymbollower} $COL_RESET"
+echo
+echo -e "To see the stratum screen type,$MAGENTA screen -r ${coinsymbollower} $COL_RESET"
+echo
+echo -e "The assigned dedicated port for this coins stratum is :$YELLOW $coinport $COL_RESET"
+echo
+echo "Make sure to add this to the Dedicated Port section in your YiiMP admin area!"
+
+echo "Donations for continued support of this script are welcomed at:"
+echo
+echo "BTC 3DvcaPT3Kio8Hgyw4ZA9y1feNnKZjH7Y21"
+echo "BCH qrf2fhk2pfka5k649826z4683tuqehaq2sc65nfz3e"
+echo "ETH 0x6A047e5410f433FDBF32D7fb118B6246E3b7C136"
+echo "LTC MLS5pfgb7QMqBm3pmBvuJ7eRCRgwLV25Nz"
+
+cd ~
+exit 0

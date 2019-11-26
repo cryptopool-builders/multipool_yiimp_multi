@@ -7,8 +7,14 @@ source /etc/multipool.conf
 source /etc/functions.sh
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 
+if [ -f "$STORAGE_ROOT/yiimp/.wireguard_public.conf" ]; then
+  source "$STORAGE_ROOT/yiimp/.wireguard_public.conf"
+else
+  wireguard='false'
+fi
+
 # Get the IP addresses of the local network interface(s).
-if [ -z "$NewDaemonInternalIP" ]; then
+if [ -z "${NewDaemonInternalIP:-}" ]; then
 DEFAULT_NewDaemonInternalIP='10.0.0.x'
 input_box "Daemon Server Private IP" \
 "Enter the private IP address of the Daemon Server, as given to you by your provider.
@@ -23,7 +29,7 @@ exit
 fi
 fi
 
-if [ -z "$NewDaemonUser" ]; then
+if [ -z "${NewDaemonUser:-}" ]; then
 DEFAULT_NewDaemonUser='yiimpadmin'
 input_box "Daemon Server User Name" \
 "Enter the user name of the Daemon Server.
@@ -38,7 +44,7 @@ exit
 fi
 fi
 
-if [ -z "$NewDaemonPass" ]; then
+if [ -z "${NewDaemonPass:-}" ]; then
 DEFAULT_NewDaemonPass='password'
 input_box "Daemon Server User Password" \
 "Enter the user password of the Daemon Server.
@@ -54,16 +60,20 @@ exit
 fi
 fi
 
-#Generate random conf file name, random StratumDBUser and StratumDBPassword
+#Generate random conf file name.
 generate=$(openssl rand -base64 9 | tr -d "=+/")
 
 # Save the global options in $STORAGE_ROOT/yiimp/.yiimp.conf so that standalone
 # tools know where to look for data.
 echo 'STORAGE_USER='"${STORAGE_USER}"'
 STORAGE_ROOT='"${STORAGE_ROOT}"'
-DaemonInternalIP='"${NewDaemonInternalIP}"'
+
 DaemonUser='"${NewDaemonUser}"'
 DaemonPass='"'"''"${NewDaemonPass}"''"'"'
+DaemonInternalIP='"${NewDaemonInternalIP}"'
+
+wireguard='"${wireguard}"'
+
 # Unless you do some serious modifications this installer will not work with any other repo of yiimp!
 YiiMPRepo='https://github.com/cryptopool-builders/yiimp.git'
 ' | sudo -E tee $STORAGE_ROOT/yiimp/.$generate.conf >/dev/null 2>&1

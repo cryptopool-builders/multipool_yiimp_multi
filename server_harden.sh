@@ -14,7 +14,7 @@ source $STORAGE_ROOT/yiimp/.yiimp.conf
 (crontab -l 2>/dev/null; echo "@reboot source /etc/functions.sh") | crontab -
 (crontab -l 2>/dev/null; echo "@reboot source /etc/multipool.conf") | crontab -
 
-echo Boosting server performance for YiiMP...
+echo -e " Boosting server performance for YiiMP...$COL_RESET"
 # Boost Network Performance by Enabling TCP BBR
 hide_output sudo apt install -y --install-recommends linux-generic-hwe-16.04;
 wait $!
@@ -32,5 +32,5 @@ echo 'net.ipv4.tcp_sack = 1' | hide_output sudo tee -a /etc/sysctl.conf
 echo 'net.ipv4.tcp_no_metrics_save = 1' | hide_output sudo tee -a /etc/sysctl.conf
 echo 'net.core.netdev_max_backlog = 5000' | hide_output sudo tee -a /etc/sysctl.conf
 
-echo Tuning complete...
+echo -e "$GREEN Done...$COL_RESET"
 exit 0

@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-
-
 #####################################################
 # Created by cryptopool.builders for crypto use...
 #####################################################
@@ -8,6 +6,12 @@
 source /etc/functions.sh
 source /etc/multipool.conf
 source $STORAGE_ROOT/yiimp/.yiimp.conf
+
+if [ -d "$HOME/multipool/yiimp_multi" ]; then
+  cd $HOME/multipool/yiimp_multi
+else
+  cd $HOME
+fi
 
 apt_install lsb-release figlet update-motd \
 landscape-common update-notifier-common
@@ -29,4 +33,9 @@ run-parts /etc/update-motd.d/ | sudo tee /etc/motd
 ' | sudo -E tee /usr/bin/motd >/dev/null 2>&1
 
 sudo chmod +x /usr/bin/motd
-cd $HOME/multipool/yiimp_multi
+
+if [ -d "$HOME/multipool/yiimp_multi" ]; then
+  cd $HOME/multipool/yiimp_multi
+else
+  cd $HOME
+fi

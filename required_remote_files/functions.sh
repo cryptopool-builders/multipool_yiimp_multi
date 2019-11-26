@@ -3,9 +3,34 @@
 # Updated by cryptopool.builders for crypto use...
 #####################################################
 
+ESC_SEQ="\x1b["
+COL_RESET=$ESC_SEQ"39;49;00m"
+RED=$ESC_SEQ"31;01m"
+GREEN=$ESC_SEQ"32;01m"
+YELLOW=$ESC_SEQ"33;01m"
+BLUE=$ESC_SEQ"34;01m"
+MAGENTA=$ESC_SEQ"35;01m"
+CYAN=$ESC_SEQ"36;01m"
+
+function spinner
+ {
+ 		local pid=$!
+ 		local delay=0.75
+ 		local spinstr='|/-\'
+ 		while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+ 				local temp=${spinstr#?}
+ 				printf " [%c]  " "$spinstr"
+ 				local spinstr=$temp${spinstr%"$temp"}
+ 				sleep $delay
+ 				printf "\b\b\b\b\b\b"
+ 		done
+ 		printf "    \b\b\b\b"
+ }
+
+
 function hide_output {
 		OUTPUT=$(tempfile)
-		$@ &> $OUTPUT
+		$@ &> $OUTPUT & spinner
 		E=$?
 		if [ $E != 0 ]; then
 		echo
@@ -19,23 +44,8 @@ function hide_output {
 		rm -f $OUTPUT
 }
 
-function spinner
-{
-		local pid=$!
-		local delay=0.75
-		local spinstr='|/-\'
-		while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
-				local temp=${spinstr#?}
-				printf " [%c]  " "$spinstr"
-				local spinstr=$temp${spinstr%"$temp"}
-				sleep $delay
-				printf "\b\b\b\b\b\b"
-		done
-		printf "    \b\b\b\b"
-}
-
 function apt_get_quiet {
-		DEBIAN_FRONTEND=noninteractive hide_output sudo apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@" & spinner
+		DEBIAN_FRONTEND=noninteractive hide_output sudo apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" "$@"
 }
 
 function apt_install {

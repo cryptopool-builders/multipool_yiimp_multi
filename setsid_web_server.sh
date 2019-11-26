@@ -20,6 +20,7 @@ WebServer=${WebInternalIP}
 # The scripts to run on the remote server.
 script_create_user=${dir}'/multipool/yiimp_multi/create_user_remote.sh'
 script_system_web=${dir}'/multipool/yiimp_multi/remote_system_web_server.sh'
+script_self_ssl=${dir}'/multipool/yiimp_multi/self_ssl.sh'
 script_web_web=${dir}'/multipool/yiimp_multi/remote_web_web_server.sh'
 script_nginx_web=${dir}'/multipool/yiimp_multi/nginx_upgrade.sh'
 script_clean_web=${dir}'/multipool/yiimp_multi/server_cleanup.sh'
@@ -36,11 +37,25 @@ header=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/00-header'
 sysinfo=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/10-sysinfo'
 footer=${dir}'/multipool/yiimp_multi/ubuntu/etc/update-motd.d/90-footer'
 first_boot=${dir}'/multipool/yiimp_multi/first_boot.sh'
-nginx_conf=${dir}'/multipool/yiimp_multi/ubuntu/etc/nginx/nginx.conf'
+nginx_conf=${dir}'/multipool/yiimp_multi/nginx_confs/nginx.conf'
+nginx_general=${dir}'/multipool/yiimp_multi/nginx_confs/general.conf'
+nginx_letsencrypt=${dir}'/multipool/yiimp_multi/nginx_confs/letsencrypt.conf'
+nginx_php=${dir}'/multipool/yiimp_multi/nginx_confs/php_fastcgi.conf'
+nginx_security=${dir}'/multipool/yiimp_multi/nginx_confs/security.conf'
+nginx_domain_nonssl=${dir}'/multipool/yiimp_multi/nginx_domain_nonssl.sh'
+nginx_domain_ssl=${dir}'/multipool/yiimp_multi/nginx_domain_ssl.sh'
+nginx_subdomain_nonssl=${dir}'/multipool/yiimp_multi/nginx_subdomain_nonssl.sh'
+nginx_subdomain_ssl=${dir}'/multipool/yiimp_multi/nginx_subdomain_ssl.sh'
+yiimp_conf=${dir}'/multipool/yiimp_multi/yiimp_confs/yiimpserverconfig.sh'
+yiimp_blocks=${dir}'/multipool/yiimp_multi/yiimp_confs/blocks.sh'
+yiimp_keys=${dir}'/multipool/yiimp_multi/yiimp_confs/keys.sh'
+yiimp_loop2=${dir}'/multipool/yiimp_multi/yiimp_confs/loop2.sh'
+yiimp_main=${dir}'/multipool/yiimp_multi/yiimp_confs/main.sh'
 
 # Desired location of the scripts on the remote server.
 remote_create_user_path='/tmp/create_user_remote.sh'
 remote_system_web_path='/tmp/remote_system_web_server.sh'
+remote_self_ssl_path='/tmp/self_ssl.sh'
 remote_web_web_path='/tmp/remote_web_web_server.sh'
 remote_nginx_web_path='/tmp/nginx_upgrade.sh'
 remote_clean_web_path='/tmp/server_cleanup.sh'
@@ -86,6 +101,7 @@ SSH_OPTIONS="${SSH_OPTIONS} -oUserKnownHostsFile=/dev/null"
 # Load in a base 64 encoded version of the script.
 B64_user=`base64 --wrap=0 ${script_create_user}`
 B64_system=`base64 --wrap=0 ${script_system_web}`
+B64_ssl=`base64 --wrap=0 ${script_self_ssl}`
 B64_mail=`base64 --wrap=0 ${script_sendmail_web}`
 B64_web=`base64 --wrap=0 ${script_web_web}`
 B64_nginx=`base64 --wrap=0 ${script_nginx_web}`
@@ -105,6 +121,10 @@ system_user="${system_user} sh -c 'nohup ${remote_create_user_path}'"
 system_web="base64 -d - > ${remote_system_web_path} <<< ${B64_system};"
 system_web="${system_web} chmod u+x ${remote_system_web_path};"
 system_web="${system_web} sh -c 'nohup ${remote_system_web_path}'"
+
+system_ssl="base64 -d - > ${remote_self_ssl_path} <<< ${B64_ssl};"
+system_ssl="${system_ssl} chmod u+x ${remote_self_ssl_path};"
+system_ssl="${system_ssl} sh -c 'nohup ${remote_self_ssl_path}'"
 
 web_web="base64 -d - > ${remote_web_web_path} <<< ${B64_web};"
 web_web="${web_web} chmod u+x ${remote_web_web_path};"
@@ -145,14 +165,30 @@ cat $sysinfo | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/10-
 cat $footer | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/90-footer'
 cat $first_boot | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/first_boot.sh'
 cat $nginx_conf | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/nginx.conf'
+cat $nginx_general | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/general.conf'
+cat $nginx_letsencrypt | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/letsencrypt.conf'
+cat $nginx_php | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/php_fastcgi.conf'
+cat $nginx_security | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/security.conf'
+cat $nginx_domain_nonssl | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/nginx.domain_nonssl.sh'
+cat $nginx_domain_ssl | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/nginx.domain_ssl.sh'
+cat $nginx_subdomain_nonssl | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/nginx.subdomain_nonssl.sh'
+cat $nginx_subdomain_ssl | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/nginx.subdomain_ssl.sh'
+cat $yiimp_conf | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/yiimpserverconfig.sh'
+cat $yiimp_blocks | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/blocks.sh'
+cat $yiimp_keys | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/keys.sh'
+cat $yiimp_loop2 | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/loop2.sh'
+cat $yiimp_main | setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} 'cat > /tmp/main.sh'
 
 # Execute scripts on remote server
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_user}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_web}"
+setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_ssl}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${web_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${nginx_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${clean_web}"
+if [[ ("$UsingDomain" == "Yes") ]]; then
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_mail}"
+fi
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${motd_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${harden_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${ssh}"
