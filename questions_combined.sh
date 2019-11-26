@@ -323,6 +323,7 @@ YiiMPPanelName=Panel$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo '
 # tools know where to look for data.
 echo 'STORAGE_USER='"${STORAGE_USER}"'
 STORAGE_ROOT='"${STORAGE_ROOT}"'
+PRIMARY_HOSTNAME='"${DomainName}"'
 
 DomainName='"${DomainName}"'
 UsingSubDomain='"${UsingSubDomain}"'

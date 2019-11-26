@@ -24,6 +24,7 @@ while true; do
 ${PHP_CLI} runconsole.php cronjob/runLoop2
 sleep 60
 done
-exec bash' | sudo -E tee $STORAGE_ROOT/yiimp/site/crons/loop2.sh >/dev/null 2>&1
-sudo chmod +x $STORAGE_ROOT/yiimp/site/crons/loop2.sh
+exec bash' | sudo -E tee $STORAGE_ROOT/yiimp/site/crons/loop2.sh >/dev/null 2>&1;
+sudo chmod +x $STORAGE_ROOT/yiimp/site/crons/loop2.sh;
+
 exit 0

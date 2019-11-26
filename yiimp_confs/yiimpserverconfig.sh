@@ -109,7 +109,7 @@ $configCustomPorts = array(
 // mBTC Coefs per algo (default is 1.0)
 $configAlgoNormCoef = array(
 // '"'"'x11'"'"' => 5.0,
-);' | sudo -E tee $STORAGE_ROOT/yiimp/site/configuration/serverconfig.php >/dev/null 2>&1
+);' | sudo -E tee $STORAGE_ROOT/yiimp/site/configuration/serverconfig.php >/dev/null 2>&1;
 
 else
 
@@ -212,7 +212,7 @@ $configCustomPorts = array(
 // mBTC Coefs per algo (default is 1.0)
 $configAlgoNormCoef = array(
 // '"'"'x11'"'"' => 5.0,
-);' | sudo -E tee $STORAGE_ROOT/yiimp/site/configuration/serverconfig.php >/dev/null 2>&1
+);' | sudo -E tee $STORAGE_ROOT/yiimp/site/configuration/serverconfig.php >/dev/null 2>&1;
 fi
 
 exit 0

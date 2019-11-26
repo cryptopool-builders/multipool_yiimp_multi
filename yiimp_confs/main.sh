@@ -23,7 +23,7 @@ while true; do
 ${PHP_CLI} runconsole.php cronjob/run
 sleep 90
 done
-exec bash' | sudo -E tee $STORAGE_ROOT/yiimp/site/crons/main.sh >/dev/null 2>&1
-sudo chmod +x $STORAGE_ROOT/yiimp/site/crons/main.sh
+exec bash' | sudo -E tee $STORAGE_ROOT/yiimp/site/crons/main.sh >/dev/null 2>&1;
+sudo chmod +x $STORAGE_ROOT/yiimp/site/crons/main.sh;
 
 exit 0

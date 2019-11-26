@@ -33,5 +33,6 @@ define('"'"'EXCH_NOVA_SECRET'"'"', '"'"''"'"');
 define('"'"'EXCH_POLONIEX_SECRET'"'"', '"'"''"'"');
 define('"'"'EXCH_STOCKSEXCHANGE_SECRET'"'"', '"'"''"'"');
 define('"'"'EXCH_YOBIT_SECRET'"'"', '"'"''"'"');
-' | sudo -E tee /etc/yiimp/keys.php >/dev/null 2>&1
+' | sudo -E tee /etc/yiimp/keys.php >/dev/null 2>&1;
+
 exit 0

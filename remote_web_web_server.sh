@@ -37,11 +37,12 @@ if [[ ("$UsingSubDomain" == "y" || "$UsingSubDomain" == "Y" || "$UsingSubDomain"
       source /tmp/nginx_subdomain_ssl.sh;
     fi
       else
-        sudo chmod u+x /tmp/nginx_domain_nonssl.sh;
-        source /tmp/nginx_domain_nonssl.sh;
     if [[ ("$InstallSSL" == "y" || "$InstallSSL" == "Y" || "$InstallSSL" == "yes" || "$InstallSSL" == "Yes" || "$InstallSSL" == "YES") ]]; then
       sudo chmod u+x /tmp/nginx_domain_ssl.sh;
       source /tmp/nginx_domain_ssl.sh;
+    else
+      sudo chmod u+x /tmp/nginx_domain_nonssl.sh;
+      source /tmp/nginx_domain_nonssl.sh;
     fi
 fi
 echo -e "$GREEN Done...$COL_RESET"
