@@ -70,11 +70,13 @@ server {
 		return 301 https://'"${DomainName}"'$request_uri;
 	}
 }
-' | sudo -E tee /etc/nginx/sites-available/${DomainName}.conf >/dev/null 2>&1
+' | sudo -E tee /etc/nginx/sites-available/${DomainName}.conf >/dev/null 2>&1;
 
-sudo ln -s /etc/nginx/sites-available/${DomainName}.conf /etc/nginx/sites-enabled/${DomainName}.conf
-sudo ln -s $STORAGE_ROOT/yiimp/site/web /var/www/${DomainName}/html
+sudo ln -s /etc/nginx/sites-available/${DomainName}.conf /etc/nginx/sites-enabled/${DomainName}.conf;
+sudo ln -s $STORAGE_ROOT/yiimp/site/web /var/www/${DomainName}/html;
 
-restart_service nginx
-restart_service php7.3-fpm
+restart_service nginx;
+wait $!
+restart_service php7.3-fpm;
+wait $!
 exit 0

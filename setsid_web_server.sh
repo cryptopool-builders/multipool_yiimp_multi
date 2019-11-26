@@ -186,9 +186,7 @@ setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_ssl}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${web_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${nginx_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${clean_web}"
-if [[ ("$UsingDomain" == "Yes") ]]; then
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${system_mail}"
-fi
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${motd_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${harden_web}"
 setsid ssh ${SSH_OPTIONS} ${WebUser}@${WebServer} "${ssh}"

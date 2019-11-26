@@ -16,6 +16,8 @@ else
   source /etc/functions.sh
 fi
 
+echo -e " Begin remote server creations, installer may look hung...$COL_RESET"
+
 if [ ! -f /usr/bin/dialog ] || [ ! -f /usr/bin/python3 ] || [ ! -f /usr/bin/pip3 ] || [ ! -f /usr/bin/acl ] || [ ! -f /usr/bin/nano ] || [ ! -f /usr/bin/git ] ; then
 sudo apt-get -q -q update
 apt_get_quiet install dialog python3 python3-pip acl nano apt-transport-https git curl || exit 1
@@ -80,14 +82,6 @@ ARCHITECTURE=$(uname -m)
       echo "Your architecture is $ARCHITECTURE"
       exit
     fi
-fi
-
-# Make sure our functions are loaded
-if [ -f /etc/functions.sh ]; then
-  source /etc/functions.sh
-else
-  sudo cp -r /tmp/functions.sh /etc/
-  source /etc/functions.sh
 fi
 
 echo -e " Setting up some needed global variables...$COL_RESET"

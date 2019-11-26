@@ -30,33 +30,33 @@ echo -e "$GREEN Done...$COL_RESET"
 
 echo -e " Creating nginx web configuration files...$COL_RESET"
 if [[ ("$UsingSubDomain" == "y" || "$UsingSubDomain" == "Y" || "$UsingSubDomain" == "yes" || "$UsingSubDomain" == "Yes" || "$UsingSubDomain" == "YES") ]]; then
-  sudo chmod u+x /tmp/nginx_subdomain_nonssl.sh
-  source /tmp/nginx_subdomain_nonssl.sh
+  sudo chmod u+x /tmp/nginx_subdomain_nonssl.sh;
+  source /tmp/nginx_subdomain_nonssl.sh;
     if [[ ("$InstallSSL" == "y" || "$InstallSSL" == "Y" || "$InstallSSL" == "yes" || "$InstallSSL" == "Yes" || "$InstallSSL" == "YES") ]]; then
-      sudo chmod u+x /tmp/nginx_subdomain_ssl.sh
-      source /tmp/nginx_subdomain_ssl.sh
+      sudo chmod u+x /tmp/nginx_subdomain_ssl.sh;
+      source /tmp/nginx_subdomain_ssl.sh;
     fi
       else
-        sudo chmod u+x /tmp/nginx_domain_nonssl.sh
-        source /tmp/nginx_domain_nonssl.sh
+        sudo chmod u+x /tmp/nginx_domain_nonssl.sh;
+        source /tmp/nginx_domain_nonssl.sh;
     if [[ ("$InstallSSL" == "y" || "$InstallSSL" == "Y" || "$InstallSSL" == "yes" || "$InstallSSL" == "Yes" || "$InstallSSL" == "YES") ]]; then
-      sudo chmod u+x /tmp/nginx_domain_ssl.sh
-      source /tmp/nginx_domain_ssl.sh
+      sudo chmod u+x /tmp/nginx_domain_ssl.sh;
+      source /tmp/nginx_domain_ssl.sh;
     fi
 fi
 echo -e "$GREEN Done...$COL_RESET"
 
 echo -e " Creating YiiMP configuration files...$COL_RESET"
-sudo chmod u+x /tmp/keys.sh
-source /tmp/keys.sh
-sudo chmod u+x /tmp/yiimpserverconfig.sh
-source /tmp/yiimpserverconfig.sh
-sudo chmod u+x /tmp/main.sh
-source /tmp/main.sh
-sudo chmod u+x /tmp/loop2.sh
-source /tmp/loop2.sh
-sudo chmod u+x /tmp/blocks.sh
-source /tmp/blocks.sh
+sudo chmod u+x /tmp/keys.sh;
+source /tmp/keys.sh;
+sudo chmod u+x /tmp/yiimpserverconfig.sh;
+source /tmp/yiimpserverconfig.sh;
+sudo chmod u+x /tmp/main.sh;
+source /tmp/main.sh;
+sudo chmod u+x /tmp/loop2.sh;
+source /tmp/loop2.sh;
+sudo chmod u+x /tmp/blocks.sh;
+source /tmp/blocks.sh;
 echo -e "$GREEN Done...$COL_RESET"
 
 echo -e " Setting correct folder permissions...$COL_RESET"

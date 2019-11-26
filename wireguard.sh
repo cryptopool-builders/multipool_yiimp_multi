@@ -24,9 +24,9 @@ if [[ ("$server_type" == "db") ]]; then
   dbpublic=${PUBLIC_IP}
   mypublic="$(sudo cat /etc/wireguard/publickey)"
 
-  echo'Public Ip: '"${dbpublic}"'
+  echo 'Public Ip: '"${dbpublic}"'
   Public Key: '"${mypublic}"'
-  wireguard=true
+  wireguard='true'
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_public.conf >/dev/null 2>&1;
 
   echo Please begin the Wireguard installation on your other servers...
@@ -48,9 +48,9 @@ elif [[ ("$server_type" == "dbshared") ]]; then
   dbpublic=${PUBLIC_IP}
   mypublic="$(sudo cat /etc/wireguard/publickey)"
 
-  echo'Public Ip: '"${dbpublic}"'
+  echo 'Public Ip: '"${dbpublic}"'
   Public Key: '"${mypublic}"'
-  wireguard=true
+  wireguard='true'
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_public.conf >/dev/null 2>&1;
 
   echo Please begin the Wireguard installation on your other servers...
@@ -78,9 +78,9 @@ elif [[ ("$server_type" == "web") ]]; then
   webpublic=${PUBLIC_IP}
   clear
 
-  echo'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${webpublic}"':6121 allowed-ips ${webinternal}/32
+  echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${webpublic}"':6121 allowed-ips ${webinternal}/32
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_command.conf >/dev/null 2>&1;
-  echo' wireguard=true
+  echo 'wireguard=true
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_public.conf >/dev/null 2>&1;
 
   echo "Copy this command and run it on the DB Server, Stratum Server, and Daemon Server"
@@ -107,9 +107,9 @@ elif [[ ("$server_type" == "stratum") ]]; then
   stratpublic=${PUBLIC_IP}
   clear
 
-  echo'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${stratpublic}"':6121 allowed-ips ${webinternal}/32
+  echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${stratpublic}"':6121 allowed-ips ${webinternal}/32
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_command.conf >/dev/null 2>&1;
-  echo' wireguard=true
+  echo 'wireguard=true
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_public.conf >/dev/null 2>&1;
 
   echo "Copy this command and run it on the DB Server, Web Server, and Daemon Server"
@@ -136,9 +136,9 @@ elif [[ ("$server_type" == "additional") ]]; then
   additionalpublic=${PUBLIC_IP}
   clear
 
-  echo'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${additionalpublic}"':6121 allowed-ips ${webinternal}/32
+  echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${additionalpublic}"':6121 allowed-ips ${webinternal}/32
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_command.conf >/dev/null 2>&1;
-  echo' wireguard=true
+  echo 'wireguard=true
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_public.conf >/dev/null 2>&1;
 
   echo "Copy this command and run it on the DB Server, Web Server, and Daemon Server, any other additional servers"
@@ -165,9 +165,9 @@ elif [[ ("$server_type" == "daemon") ]]; then
   daemonpublic=${PUBLIC_IP}
   clear
 
-  echo'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${daemonpublic}"':6121 allowed-ips ${webinternal}/32
+  echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${daemonpublic}"':6121 allowed-ips ${webinternal}/32
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_command.conf >/dev/null 2>&1;
-  echo' wireguard=true
+  echo 'wireguard=true
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_public.conf >/dev/null 2>&1;
 
   echo "Copy this command and run it on the DB Server, Web Server, and Stratum Server"
