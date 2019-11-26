@@ -8,6 +8,13 @@
 #####################################################
 
 # Need this in case user has a provider that offers private IP's and doesnt re-run the multipool installer after user creation
+# Make sure our functions are loaded
+if [ -f /etc/functions.sh ]; then
+  source /etc/functions.sh
+else
+  sudo cp -r /tmp/functions.sh /etc/
+  source /etc/functions.sh
+fi
 
 if [ ! -f /usr/bin/dialog ] || [ ! -f /usr/bin/python3 ] || [ ! -f /usr/bin/pip3 ] || [ ! -f /usr/bin/acl ] || [ ! -f /usr/bin/nano ] || [ ! -f /usr/bin/git ] ; then
 sudo apt-get -q -q update
