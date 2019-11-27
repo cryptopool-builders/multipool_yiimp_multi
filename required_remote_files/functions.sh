@@ -30,7 +30,7 @@ function spinner
 
 function hide_output {
 		OUTPUT=$(tempfile)
-		$@ &> $OUTPUT & spinner
+		$@ &> $OUTPUT
 		E=$?
 		if [ $E != 0 ]; then
 		echo
