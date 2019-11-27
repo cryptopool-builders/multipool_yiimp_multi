@@ -20,12 +20,12 @@ sudo mkdir -p $STORAGE_ROOT/ssl;
 
 # Generate a new private key.
 	# Set the umask so the key file is never world-readable.
-	(umask 077; hide_output sudo openssl genrsa -out $STORAGE_ROOT/ssl/ssl_private_key.pem 2048);
+	hide_output sudo openssl genrsa -out $STORAGE_ROOT/ssl/ssl_private_key.pem 2048;
     wait $!
 
 	# Generate a certificate signing request.
 	CSR=$STORAGE_ROOT/ssl/ssl_cert_sign_req-$$.csr;
-	hide_output sudo openssl req -new -key $STORAGE_ROOT/ssl/ssl_private_key.pem -out $CSR -sha256 -subj '/CN=$PRIMARY_HOSTNAME';
+	hide_output sudo openssl req -new -key $STORAGE_ROOT/ssl/ssl_private_key.pem -out $CSR -sha256 -subj "/CN=$PRIMARY_HOSTNAME";
   wait $!
 
 	# Generate the self-signed certificate.
@@ -47,5 +47,5 @@ sudo mkdir -p $STORAGE_ROOT/ssl;
 # 2048 bits of bits per the latest recommendations.
 hide_output sudo openssl dhparam -out /etc/nginx/dhparam.pem 2048;
 wait $!
-
+sudo chmod 077 $STORAGE_ROOT/ssl/ssl_private_key.pem
 echo -e "$GREEN Initial Self Signed SSL Generation completed...$COL_RESET"
