@@ -14,6 +14,7 @@ hide_output sudo certbot certonly --webroot -d "${DomainName}" --register-unsafe
 wait $!
 # Configure Certbot to reload NGINX after success renew:
 sudo mkdir -p /etc/letsencrypt/renewal-hooks/post/;
+sudo rm /etc/nginx/sites-available/${DomainName}.conf;
 echo '#!/bin/bash\nnginx -t && systemctl reload nginx' | sudo -E tee /etc/letsencrypt/renewal-hooks/post/nginx-reload.sh >/dev/null 2>&1;
 sudo chmod a+x /etc/letsencrypt/renewal-hooks/post/nginx-reload.sh;
 # Remove the '"${DomainName}"'.conf that had the self signed SSL and replace with the new file.
@@ -83,9 +84,6 @@ server {
 	}
 }
 ' | sudo -E tee /etc/nginx/sites-available/${DomainName}.conf >/dev/null 2>&1;
-
-sudo ln -s /etc/nginx/sites-available/${DomainName}.conf /etc/nginx/sites-enabled/${DomainName}.conf;
-sudo ln -s $STORAGE_ROOT/yiimp/site/web /var/www/${DomainName}/html;
 
 restart_service nginx;
 wait $!
