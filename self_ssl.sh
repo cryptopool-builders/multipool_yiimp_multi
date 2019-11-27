@@ -69,8 +69,7 @@ sudo mkdir -p $STORAGE_ROOT/ssl;
 # in the rest of the notes in case that ever changes.
 if [ ! -f $STORAGE_ROOT/ssl/ssl_private_key.pem ]; then
 	# Set the umask so the key file is never world-readable.
-	(umask 077; hide_output \
-		sudo openssl genrsa -out $STORAGE_ROOT/ssl/ssl_private_key.pem 2048);
+	(umask 077; hide_output sudo openssl genrsa -out $STORAGE_ROOT/ssl/ssl_private_key.pem 2048);
     wait $!
 fi
 
@@ -79,25 +78,21 @@ fi
 # so we can offer the user a control panel to install a better certificate.
 if [ ! -f $STORAGE_ROOT/ssl/ssl_certificate.pem ]; then
 	# Generate a certificate signing request.
-	CSR=/tmp/ssl_cert_sign_req-$$.csr
-	hide_output \
-	sudo openssl req -new -key $STORAGE_ROOT/ssl/ssl_private_key.pem -out $CSR \
-	  -sha256 -subj "/CN=$PRIMARY_HOSTNAME";
+	CSR=$STORAGE_ROOT/ssl/ssl_cert_sign_req-$$.csr
+	hide_output sudo openssl req -new -key $STORAGE_ROOT/ssl/ssl_private_key.pem -out $CSR -sha256 -subj '/CN=$PRIMARY_HOSTNAME'
     wait $!
 
 	# Generate the self-signed certificate.
 	CERT=$STORAGE_ROOT/ssl/$PRIMARY_HOSTNAME-selfsigned-$(date --rfc-3339=date | sed s/-//g).pem
-	hide_output \
-	sudo openssl x509 -req -days 365 \
-	  -in $CSR -signkey $STORAGE_ROOT/ssl/ssl_private_key.pem -out $CERT;
-    wait $!
+	hide_output sudo openssl x509 -req -days 365 -in $CSR -signkey $STORAGE_ROOT/ssl/ssl_private_key.pem -out $CERT
+  wait $!
 
 	# Delete the certificate signing request because it has no other purpose.
-sudo rm -f $CSR;
+  sudo rm -f $CSR;
 
 	# Symlink the certificate into the system certificate path, so system services
 	# can find it.
-sudo ln -s $CERT $STORAGE_ROOT/ssl/ssl_certificate.pem;
+  sudo ln -s $CERT $STORAGE_ROOT/ssl/ssl_certificate.pem;
 fi
 
 # Generate some Diffie-Hellman cipher bits.
