@@ -31,12 +31,7 @@ source $STORAGE_ROOT/yiimp/.yiimp.conf
 # provides Perfect Forward Secrecy.
 
 # Show a status line if we are going to take any action in this file.
-if  [ ! -f /usr/bin/openssl ] \
- || [ ! -f $STORAGE_ROOT/ssl/ssl_private_key.pem ] \
- || [ ! -f $STORAGE_ROOT/ssl/ssl_certificate.pem ] \
- || [ ! -f $STORAGE_ROOT/ssl/dh2048.pem ]; then
 echo -e "Creating initial SSL certificate...$COL_RESET"
-fi
 
 # Install openssl.
 
@@ -67,16 +62,13 @@ sudo mkdir -p $STORAGE_ROOT/ssl;
 #
 # Since we properly seed /dev/urandom in system.sh we should be fine, but I leave
 # in the rest of the notes in case that ever changes.
-if [ ! -f $STORAGE_ROOT/ssl/ssl_private_key.pem ]; then
 	# Set the umask so the key file is never world-readable.
 	(umask 077; hide_output sudo openssl genrsa -out $STORAGE_ROOT/ssl/ssl_private_key.pem 2048);
     wait $!
-fi
 
 # Generate a self-signed SSL certificate because things like nginx, dovecot,
 # etc. won't even start without some certificate in place, and we need nginx
 # so we can offer the user a control panel to install a better certificate.
-if [ ! -f $STORAGE_ROOT/ssl/ssl_certificate.pem ]; then
 	# Generate a certificate signing request.
 	CSR=$STORAGE_ROOT/ssl/ssl_cert_sign_req-$$.csr;
 	hide_output sudo openssl req -new -key $STORAGE_ROOT/ssl/ssl_private_key.pem -out $CSR -sha256 -subj '/CN=$PRIMARY_HOSTNAME';
@@ -95,15 +87,11 @@ if [ ! -f $STORAGE_ROOT/ssl/ssl_certificate.pem ]; then
 	# can find it.
   sudo ln -s $CERT $STORAGE_ROOT/ssl/ssl_certificate.pem;
   wait $!
-fi
 
 # Generate some Diffie-Hellman cipher bits.
 # openssl's default bit length for this is 1024 bits, but we'll create
 # 2048 bits of bits per the latest recommendations.
-if [ ! -f /etc/nginx/dhparam.pem ]; then
-  hide_output \
-sudo openssl dhparam -out /etc/nginx/dhparam.pem 2048;
-wait $!
-fi
+  hide_output sudo openssl dhparam -out /etc/nginx/dhparam.pem 2048;
+  wait $!
 
 echo -e "$GREEN Initial Self Signed SSL Generation completed...$COL_RESET"
