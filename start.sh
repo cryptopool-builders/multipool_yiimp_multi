@@ -48,3 +48,4 @@ echo You can access your admin panel at, http://${DomainName}/site/${AdminPanel}
 echo
 echo By default all stratum ports are blocked by the firewall. To allow a port through, from the command prompt type sudo ufw allow port number.
 echo Database user names and passwords can be found in $STORAGE_ROOT/yiimp_setup/.my.cnf
+exit 0

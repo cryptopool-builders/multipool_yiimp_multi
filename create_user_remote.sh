@@ -18,6 +18,16 @@ fi
 
 echo -e " Begin remote server creations, installer may look hung...$COL_RESET"
 
+# Get logged in user name
+whoami=`whoami`
+echo -e " Modifying existing user $whoami for multipool support."
+sudo usermod -aG sudo ${whoami}
+
+echo '# yiimp
+# It needs passwordless sudo functionality.
+'""''"${whoami}"''""' ALL=(ALL) NOPASSWD:ALL
+' | sudo -E tee /etc/sudoers.d/${whoami} >/dev/null 2>&1
+
 if [ ! -f /usr/bin/dialog ] || [ ! -f /usr/bin/python3 ] || [ ! -f /usr/bin/pip3 ] || [ ! -f /usr/bin/acl ] || [ ! -f /usr/bin/nano ] || [ ! -f /usr/bin/git ] ; then
 sudo apt-get -q -q update
 apt_get_quiet install dialog python3 python3-pip acl nano apt-transport-https git curl || exit 1

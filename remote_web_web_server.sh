@@ -29,19 +29,19 @@ sudo sed -i "s|ROOTDIR=/data/yiimp|ROOTDIR=${STORAGE_ROOT}/yiimp/site|g" /bin/yi
 echo -e "$GREEN Done...$COL_RESET"
 
 echo -e " Creating nginx web configuration files...$COL_RESET"
-sudo chmod u+x /tmp/nginx_domain_nonssl.sh;
-source /tmp/nginx_domain_nonssl.sh;
 if [[ ("$UsingSubDomain" == "y" || "$UsingSubDomain" == "Y" || "$UsingSubDomain" == "yes" || "$UsingSubDomain" == "Yes" || "$UsingSubDomain" == "YES") ]]; then
-  sudo chmod u+x /tmp/nginx_subdomain_nonssl.sh;
-  source /tmp/nginx_subdomain_nonssl.sh;
+  cd $HOME/multipool/yiimp_single
+  source nginx_subdomain_nonssl.sh
     if [[ ("$InstallSSL" == "y" || "$InstallSSL" == "Y" || "$InstallSSL" == "yes" || "$InstallSSL" == "Yes" || "$InstallSSL" == "YES") ]]; then
-      sudo chmod u+x /tmp/nginx_subdomain_ssl.sh;
-      source /tmp/nginx_subdomain_ssl.sh;
+      cd $HOME/multipool/yiimp_single
+      source nginx_subdomain_ssl.sh
     fi
       else
+        cd $HOME/multipool/yiimp_single
+        source nginx_domain_nonssl.sh
     if [[ ("$InstallSSL" == "y" || "$InstallSSL" == "Y" || "$InstallSSL" == "yes" || "$InstallSSL" == "Yes" || "$InstallSSL" == "YES") ]]; then
-      sudo chmod u+x /tmp/nginx_domain_ssl.sh;
-      source /tmp/nginx_domain_ssl.sh;
+      cd $HOME/multipool/yiimp_single
+      source nginx_domain_ssl.sh
     fi
 fi
 echo -e "$GREEN Done...$COL_RESET"
