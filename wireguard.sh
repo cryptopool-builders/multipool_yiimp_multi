@@ -78,7 +78,7 @@ elif [[ ("$server_type" == "web") ]]; then
   webpublic=${PUBLIC_IP}
   clear
 
-  echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${webpublic}"':6121 allowed-ips ${webinternal}/32
+  echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${webpublic}"':6121 allowed-ips '"${webinternal}"'/32
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_command.conf >/dev/null 2>&1;
   echo 'wireguard=true
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_public.conf >/dev/null 2>&1;
@@ -107,7 +107,7 @@ elif [[ ("$server_type" == "stratum") ]]; then
   stratpublic=${PUBLIC_IP}
   clear
 
-  echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${stratpublic}"':6121 allowed-ips ${webinternal}/32
+  echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${stratpublic}"':6121 allowed-ips '"${stratinternal}"'/32
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_command.conf >/dev/null 2>&1;
   echo 'wireguard=true
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_public.conf >/dev/null 2>&1;
@@ -136,7 +136,7 @@ elif [[ ("$server_type" == "additional") ]]; then
   additionalpublic=${PUBLIC_IP}
   clear
 
-  echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${additionalpublic}"':6121 allowed-ips ${webinternal}/32
+  echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${additionalpublic}"':6121 allowed-ips '"${additionalinternal}"'/32
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_command.conf >/dev/null 2>&1;
   echo 'wireguard=true
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_public.conf >/dev/null 2>&1;
@@ -165,7 +165,7 @@ elif [[ ("$server_type" == "daemon") ]]; then
   daemonpublic=${PUBLIC_IP}
   clear
 
-  echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${daemonpublic}"':6121 allowed-ips ${webinternal}/32
+  echo 'sudo wg set wg0 peer '"${mypublic}"' endpoint '"${daemonpublic}"':6121 allowed-ips '"${daemoninternal}"'/32
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_command.conf >/dev/null 2>&1;
   echo 'wireguard=true
   ' | sudo -E tee $STORAGE_ROOT/yiimp/.wireguard_public.conf >/dev/null 2>&1;
