@@ -17,7 +17,7 @@ define('"'"'YAAMP_HTDOCS'"'"', '"'"''"${STORAGE_ROOT}/yiimp/site/web"''"'"');
 
 define('"'"'YAAMP_BIN'"'"', '"'"'/bin'"'"');
 
-define('"'"'YAAMP_DBHOST'"'"', '"'"''"localhost"''"'"');
+define('"'"'YAAMP_DBHOST'"'"', '"'"''"${DBInternalIP}"''"'"');
 define('"'"'YAAMP_DBNAME'"'"', '"'"''"${YiiMPDBName}"''"'"');
 define('"'"'YAAMP_DBUSER'"'"', '"'"''"${YiiMPPanelName}"''"'"');
 define('"'"'YAAMP_DBPASSWORD'"'"', '"'"''"${PanelUserDBPassword}"''"'"');
