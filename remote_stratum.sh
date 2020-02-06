@@ -12,9 +12,17 @@ echo -e " Building stratum server...$COL_RESET"
 sudo cp -r /tmp/.yiimp.conf $STORAGE_ROOT/yiimp/
 source $STORAGE_ROOT/yiimp/.yiimp.conf
 
+# copy addport to /usr/bin
+sudo chmod +x /tmp/addport
+sudo chmod +x /tmp/addport_multi
+sudo cp -r /tmp/addport /usr/bin
+sudo cp -r /tmp/addport_multi /usr/bin
+
+# make needed directories
 sudo mkdir -p $STORAGE_ROOT/yiimp/site/stratum
 sudo mkdir -p $STORAGE_ROOT/yiimp/starts
 
+# build blocknotify and stratum
 echo -e " Building blocknotify and stratum...$COL_RESET"
 cd $STORAGE_ROOT/yiimp/yiimp_setup/yiimp/blocknotify
 blckntifypass=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
@@ -30,7 +38,6 @@ if [[ ("$AutoExchange" == "y" || "$AutoExchange" == "Y" || "$AutoExchange" == "y
 fi
 hide_output sudo make
 wait $!
-
 echo -e " Building stratum folder structure and copying files...$COL_RESET"
 cd $STORAGE_ROOT/yiimp/yiimp_setup/yiimp/stratum
 sudo cp -a config.sample/. $STORAGE_ROOT/yiimp/site/stratum/config
@@ -40,6 +47,7 @@ cd $STORAGE_ROOT/yiimp/yiimp_setup/yiimp
 sudo cp -r $STORAGE_ROOT/yiimp/yiimp_setup/yiimp/blocknotify/blocknotify $STORAGE_ROOT/yiimp/site/stratum
 sudo cp -r $STORAGE_ROOT/yiimp/yiimp_setup/yiimp/blocknotify/blocknotify /usr/bin
 
+# create run files
 sudo rm -r $STORAGE_ROOT/yiimp/site/stratum/config/run.sh
 echo '#!/usr/bin/env bash
 source /etc/multipool.conf
@@ -53,7 +61,6 @@ sleep 2
 done
 exec bash' | sudo -E tee $STORAGE_ROOT/yiimp/site/stratum/config/run.sh >/dev/null 2>&1
 sudo chmod +x $STORAGE_ROOT/yiimp/site/stratum/config/run.sh
-
 sudo rm -r $STORAGE_ROOT/yiimp/site/stratum/run.sh
 echo '#!/usr/bin/env bash
 source /etc/multipool.conf
@@ -62,6 +69,7 @@ cd '""''"${STORAGE_ROOT}"''""'/yiimp/site/stratum/config/ && ./run.sh $*
 ' | sudo -E tee $STORAGE_ROOT/yiimp/site/stratum/run.sh >/dev/null 2>&1
 sudo chmod +x $STORAGE_ROOT/yiimp/site/stratum/run.sh
 
+# sed the config files with the needed updated information
 echo -e " Updating stratum config files with database connection info...$COL_RESET"
 cd $STORAGE_ROOT/yiimp/site/stratum/config
 sudo sed -i 's/password = tu8tu5/password = '${blckntifypass}'/g' *.conf
@@ -122,5 +130,5 @@ blocknotify="${blocknotify} chmod +x ${remote_script_blocknotify_path}; > /dev/n
 # Execute scripts on remote server
 setsid ssh ${SSH_OPTIONS} ${DaemonUser}@${DaemonServer} "${blocknotify}"
 
-echo -e "$GREEN Stratum server build complete...$COL_RESET" 
+echo -e "$GREEN Stratum server build complete...$COL_RESET"
 exit 0
