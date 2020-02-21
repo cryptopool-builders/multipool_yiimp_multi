@@ -37,16 +37,32 @@ echo "It will also create a new symbol.algo.conf in /home/crypto-data/yiimp/site
 echo "and will create a new stratum.symbol run file in /usr/bin."
 echo
 
-echo 
+echo
 echo -e "$RED Make sure coin symbol is all UPPER case.$COL_RESET"
 read -e -p "Please enter the coin SYMBOL : " coinsymbol
 echo ""
 echo -e "$RED Make sure algo is in all lower case and a valid algo in yiimp.$COL_RESET"
 read -e -p "Please enter the coin algo : " coinalgo
 
-# Make the coin symbol lower case
+# Make sure the stratum.symbol config doesnt exist and that the algo file does.
+if [ -f $STORAGE_ROOT/yiimp/site/stratum/config/stratum.${coinsymbollower} ]; then
+  echo -e -p "A file for ${coinsymbol} already exists. Are you sure you want to overwrite? A new port will be generated."
+  read -r -e -p "Do you need to use a specific github branch of the coin (y/n) : " overwrite
+  if [[ ("$overwrite" == "n" || "$overwrite" == "N" || "$overwrite" == "no" || "$overwrite" == "NO") ]]; then
+    echo -e -p "later gator..."
+    exit 0
+  fi
+if [ ! -f /home/crypto-data/yiimp/site/stratum/config/$coinalgo.conf ]; then
+  echo -e -p "Sorry that algo config file doesn't exist in /home/crypto-data/yiimp/site/stratum/config/ please double check and try again."
+  exit 0
+fi
 
+# Make the coin symbol lower case
 coinsymbollower=${coinsymbol,,}
+# make sure algo is lower as well since we are Here
+coinalgo=${coinalgo,,}
+# and might as well make sure the symbol is upper case
+coinsymbol=${coinsymbol^^}
 
 # Copy the default algo.conf to the new coin.algo.conf
 cp -r $coinalgo.conf $coinsymbollower.$coinalgo.conf
@@ -54,7 +70,7 @@ cp -r $coinalgo.conf $coinsymbollower.$coinalgo.conf
 # Insert the port in to the new coin.algo.conf
 sed -i '/port/c\port = '${coinport}'' $coinsymbollower.$coinalgo.conf
 
-# Insert the include 
+# Insert the include
 sed -i -e '$a\
 [WALLETS]\
 include = '${coinsymbol}'' $coinsymbollower.$coinalgo.conf
@@ -114,7 +130,7 @@ for name; do
 done ' | sudo -E tee $STORAGE_ROOT/yiimp/site/stratum/config/stratum.${coinsymbollower} >/dev/null 2>&1
 sudo chmod +x $STORAGE_ROOT/yiimp/site/stratum/config/stratum.${coinsymbollower}
 
-sudo cp -r stratum.${coinsymbollower} /usr/bin 
+sudo cp -r stratum.${coinsymbollower} /usr/bin
 sudo ufw allow $coinport
 echo
 echo "Adding stratum.${coinsymbollower} to crontab for autostart at system boot."
