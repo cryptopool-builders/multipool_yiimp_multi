@@ -5,7 +5,7 @@
 
 source /etc/functions.sh
 
-RESULT=$(dialog --stdout --nocancel --default-item 1 --title "Ultimate Crypto-Server Setup Installer v1.43" --menu "Choose one" -1 63 10 \
+RESULT=$(dialog --stdout --nocancel --default-item 1 --title "Ultimate Crypto-Server Setup Installer v1.44" --menu "Choose one" -1 63 10 \
 ' ' "- Required if your Host does Not provide Private IPs -" \
 1 "Install Wireguard Network" \
 ' ' "- Three Server Configuration -" \
