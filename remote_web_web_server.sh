@@ -30,14 +30,14 @@ echo -e "$GREEN Done...$COL_RESET"
 
 echo -e " Creating nginx web configuration files...$COL_RESET"
 if [[ ("$UsingSubDomain" == "y" || "$UsingSubDomain" == "Y" || "$UsingSubDomain" == "yes" || "$UsingSubDomain" == "Yes" || "$UsingSubDomain" == "YES") ]]; then
-  source /tmp/nginx_subdomain_nonssl.sh
+  source /tmp/nginx_subdomain_nonssl.sh;
     if [[ ("$InstallSSL" == "y" || "$InstallSSL" == "Y" || "$InstallSSL" == "yes" || "$InstallSSL" == "Yes" || "$InstallSSL" == "YES") ]]; then
-      source /tmp/nginx_subdomain_ssl.sh
+      source /tmp/nginx_subdomain_ssl.sh;
     fi
       else
-        source /tmp/nginx_domain_nonssl.sh
+        source /tmp/nginx_domain_nonssl.sh;
     if [[ ("$InstallSSL" == "y" || "$InstallSSL" == "Y" || "$InstallSSL" == "yes" || "$InstallSSL" == "Yes" || "$InstallSSL" == "YES") ]]; then
-      source /tmp/nginx_domain_ssl.sh
+      source /tmp/nginx_domain_ssl.sh;
     fi
 fi
 echo -e "$GREEN Done...$COL_RESET"
