@@ -184,5 +184,12 @@ echo -e "$GREEN bls-signatures Completed...$COL_RESET"
 sudo cp -r /tmp/blocknotify /usr/bin
 sudo chmod +x /usr/bin/blocknotify
 
+echo '#####################################################
+# Created by cryptopool.builders for crypto use...
+#####################################################
+#!/bin/bash
+blocknotify '""''"${StratumInternalIP}"''""':$1 $2 $3' | sudo -E tee /usr/bin/blocknotify.sh >/dev/null 2>&1
+sudo chmod +x /usr/bin/blocknotify.sh
+
 echo -e "$GREEN Daemon server build completed...$COL_RESET"
 exit 0

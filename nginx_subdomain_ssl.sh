@@ -12,7 +12,7 @@ sudo mkdir -p /var/www/_letsencrypt;
 wait $!
 sudo chown www-data /var/www/_letsencrypt;
 wait $!
-hide_output sudo certbot certonly --webroot -d "${DomainName}" --register-unsafely-without-email -w /var/www/_letsencrypt -n --agree-tos --force-renewal;
+sudo certbot certonly --webroot -d "${DomainName}" --register-unsafely-without-email -w /var/www/_letsencrypt -n --agree-tos --force-renewal && wait$!;
 wait $!
 # Configure Certbot to reload NGINX after success renew:
 sudo mkdir -p /etc/letsencrypt/renewal-hooks/post/;

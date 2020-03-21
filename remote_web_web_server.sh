@@ -68,6 +68,12 @@ sudo chmod g+w $STORAGE_ROOT -R
 echo -e "$GREEN Done...$COL_RESET"
 
 #Updating YiiMP files for cryptopool.builders build
+#Set Insternal IP to .0/26
+internalrpcip=$WebInternalIP
+internalrpcip="${WebInternalIP::-1}"
+internalrpcip="${internalrpcip::-1}"
+internalrpcip=$internalrpcip.0/26
+
 echo -e " Adding the cryptopool.builders flare to YiiMP...$COL_RESET"
 sudo sed -i 's/YII MINING POOLS/'${DomainName}' Mining Pool/g' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/index.php
 sudo sed -i 's/domain/'${DomainName}'/g' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/index.php
@@ -77,13 +83,10 @@ sudo sed -i "s|serverconfig.php|${STORAGE_ROOT}/yiimp/site/configuration/serverc
 sudo sed -i "s|serverconfig.php|${STORAGE_ROOT}/yiimp/site/configuration/serverconfig.php|g" $STORAGE_ROOT/yiimp/site/web/run.php
 sudo sed -i "s|serverconfig.php|${STORAGE_ROOT}/yiimp/site/configuration/serverconfig.php|g" $STORAGE_ROOT/yiimp/site/web/yaamp/yiic.php
 sudo sed -i "s|serverconfig.php|${STORAGE_ROOT}/yiimp/site/configuration/serverconfig.php|g" $STORAGE_ROOT/yiimp/site/web/yaamp/modules/thread/CronjobController.php
-if [ -z "$StratumInternalIP" ]; then
-sudo sed -i '/# onlynet=ipv4/i\        echo "rpcallowip='${WebInternalIP}'\\n";\n        echo "rpcallowip='${DBInternalIP}'\\n";' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/coin_form.php
-sudo sed -i "s|blocknotify=\/var\/stratum\/blocknotify 127.0.0.1|blocknotify=blocknotify ${DBInternalIP}|g" $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/coin_form.php
-else
-sudo sed -i '/# onlynet=ipv4/i\        echo "rpcallowip='${WebInternalIP}'\\n";\n        echo "rpcallowip='${DBInternalIP}'\\n";\n        echo "rpcallowip='${StratumInternalIP}'\\n";' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/coin_form.php
-sudo sed -i "s|blocknotify=\/var\/stratum\/blocknotify 127.0.0.1|blocknotify=blocknotify ${StratumInternalIP}|g" $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/coin_form.php
-fi
+
+sudo sed -i '/# onlynet=ipv4/i\    echo "rpcallowip='${internalrpcip}'\\n";\n' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/coin_form.php
+sudo sed -i 's/internalipsed/'${DaemonInternalIP}'/g' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/coin_form.php
+
 sudo sed -i "s|/root/backup|${STORAGE_ROOT}/yiimp/site/backup|g" $STORAGE_ROOT/yiimp/site/web/yaamp/core/backend/system.php
 sudo sed -i 's/service $webserver start/sudo service $webserver start/g' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/thread/CronjobController.php
 sudo sed -i 's/service nginx stop/sudo service nginx stop/g' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/thread/CronjobController.php
