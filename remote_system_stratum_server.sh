@@ -107,7 +107,7 @@ else
 apt_install libgmp3-dev libmysqlclient-dev libcurl4-gnutls-dev libkrb5-dev \
 libldap2-dev libidn11-dev gnutls-dev librtmp-dev build-essential libtool  \
 autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils \
-git pwgen mariadb-client fail2ban libpsl-dev libnghttp2-dev gnupg2 ca-certificates lsb-release libsodium-dev default-libmysqlclient-dev \
+git pwgen mariadb-client fail2ban libpsl-dev libnghttp2-dev gnupg2 ca-certificates lsb-release libsodium-dev \
 libnghttp2-dev librtmp-dev libssh2-1 libssh2-1-dev libldap2-dev libidn11-dev libpsl-dev libkrb5-dev;
 wait $!
 fi
