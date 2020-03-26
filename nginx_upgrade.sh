@@ -34,6 +34,14 @@ sudo cp -r /tmp/php_fastcgi.conf /etc/nginx/cryptopool.builders
 sudo cp -r /tmp/security.conf /etc/nginx/cryptopool.builders
 sudo cp -r /tmp/letsencrypt.conf /etc/nginx/cryptopool.builders
 
+# stupid changes
+if [[ ! -e '/etc/nginx/sites-available' ]]; then
+  sudo mkdir -p /etc/nginx/sites-available
+fi
+if [[ ! -e '/etc/nginx/sites-enabled' ]]; then
+  sudo mkdir -p /etc/nginx/sites-enabled
+fi
+
 # Removing default nginx site configs.
 if [ -f /etc/nginx/conf.d/default.conf ]; then
 sudo rm -r /etc/nginx/conf.d/default.conf
