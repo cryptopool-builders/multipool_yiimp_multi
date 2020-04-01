@@ -20,7 +20,7 @@ wait $!
 
 sudo sed -i 's/inet_interfaces = all/inet_interfaces = loopback-only/g' /etc/postfix/main.cf
 sudo sed -i 's/mydestination/# mydestination/g' /etc/postfix/main.cf
-sudo sed -i '/#mydestination/i mydestination = $myhostname, localhost.$mydomain, $mydomain' /etc/postfix/main.cf
+sudo sed -i '/# mydestination/i mydestination = $myhostname, localhost.$mydomain, $mydomain' /etc/postfix/main.cf
 
 sudo systemctl restart postfix
 wait $!

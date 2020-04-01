@@ -15,7 +15,7 @@ wait $!
 sudo certbot certonly --webroot -d "${DomainName}" --register-unsafely-without-email -w /var/www/_letsencrypt -n --agree-tos --force-renewal && wait$!;
 wait $!
 # Check to make sure certbot installed ok, if not keep the self generated ssl config.
-if [ -f /etc/letsencrypt/live/'"${DomainName}"'/fullchain.pem ]; then
+if [ -f /etc/letsencrypt/live/${DomainName}/fullchain.pem ]; then
 # Configure Certbot to reload NGINX after success renew:
 sudo mkdir -p /etc/letsencrypt/renewal-hooks/post/;
 wait $!
