@@ -151,7 +151,7 @@ echo -e "$GREEN Berkeley 5.3 Completed...$COL_RESET"
 
 echo -e "Building OpenSSL 1.0.2g, this may take several minutes...$COL_RESET"
   cd $STORAGE_ROOT/yiimp/yiimp_setup/tmp
-  hide_output sudo wget https://www.openssl.org/source/openssl-1.0.2g.tar.gz --no-check-certificate;
+  hide_output sudo wget https://www.openssl.org/source/old/1.0.2/openssl-1.0.2g.tar.gz --no-check-certificate;
   wait $!
   hide_output sudo tar -xf openssl-1.0.2g.tar.gz;
   wait $!
