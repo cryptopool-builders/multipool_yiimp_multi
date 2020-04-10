@@ -212,7 +212,7 @@ remote_script='/tmp/remote.sh'
 SSH_ASKPASS_SCRIPT=/tmp/ssh-askpass-script
 cat > ${SSH_ASKPASS_SCRIPT} <<EOL
 #!/usr/bin/env bash
-echo '${stratum_one_pass}'
+echo ${stratum_one_pass}
 EOL
 chmod u+x ${SSH_ASKPASS_SCRIPT}
 
